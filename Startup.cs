@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,9 +14,17 @@ namespace ecomFront
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public static string ConnectionString { get; private set; }
+        public IConfigurationRoot ConfigurationRoot { get; set; }
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+
+            ConfigurationRoot = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appSettings.json")
+                .Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -52,6 +61,8 @@ namespace ecomFront
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            ConnectionString = ConfigurationRoot.GetConnectionString("MySQLConnection");
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ecomFront.Models;
+using MySql.Data.MySqlClient;
 
 namespace ecomFront.Controllers
 {
@@ -20,6 +21,18 @@ namespace ecomFront.Controllers
 
         public IActionResult Index()
         {
+            Console.WriteLine(Startup.ConnectionString);
+            using (MySqlConnection con = new MySqlConnection(Startup.ConnectionString))
+            {
+                Console.WriteLine(con.State.ToString());
+                con.Open();
+                var cmd = new MySqlCommand("select * from criteria", con);
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Console.WriteLine(Convert.ToInt32(reader["id_criteria"]));
+                }
+            }
             return View();
         }
 
