@@ -6,34 +6,42 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ecomFront.Models;
-using MySql.Data.MySqlClient;
+using Microsoft.AspNetCore.Identity;
 
 namespace ecomFront.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(SignInManager<ApplicationUser> signInManager, ILogger<HomeController> logger)
         {
+            _signInManager = signInManager;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-            Console.WriteLine(Startup.ConnectionString);
-            using (MySqlConnection con = new MySqlConnection(Startup.ConnectionString))
+            if (User.Identity.IsAuthenticated)
             {
-                Console.WriteLine(con.State.ToString());
-                con.Open();
-                var cmd = new MySqlCommand("select * from criteria", con);
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    Console.WriteLine(Convert.ToInt32(reader["id_criteria"]));
-                }
+                return View();
             }
-            return View();
+            return LocalRedirect("/Identity/Account/Login");
+        }
+
+        public async Task<IActionResult> Logout(string returnUrl = null)
+        {
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User logged out.");
+            if (returnUrl != null)
+            {
+                return LocalRedirect(returnUrl);
+            }
+            else
+            {
+                return LocalRedirect("/Identity/Account/Logout");
+            }
         }
 
         public IActionResult Privacy()

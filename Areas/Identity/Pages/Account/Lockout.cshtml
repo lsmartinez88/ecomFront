@@ -1,0 +1,21 @@
+﻿@page
+@model LockoutModel
+@{
+    Layout = "./Manage/_Layout.cshtml";
+    ViewData["Title"] = "Usuario bloqueado";
+}
+
+
+<div class="content d-flex justify-content-center align-items-center">
+    <form class="login-form" action="index.html">
+        <div class="card mb-0">
+            <div class="card-body">
+                <div class="text-center mb-3">
+                    <i class="icon-warning icon-5x text-secondary p-3 mb-3 mt-1 text-warning"></i>
+                    <h2 class="font-weight-semibold mb-1">@ViewData["Title"]</h2>
+                    <span class="d-block text-muted">Por favor, reintente mas tarde</span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

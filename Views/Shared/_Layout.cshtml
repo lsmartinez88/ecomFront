@@ -55,7 +55,7 @@
         </div>
 
         <div class="navbar-collapse collapse flex-lg-1 mx-lg-3 order-2 order-lg-1" id="navbar-search">
-            
+            hola
         </div>
 
         <div class="d-flex justify-content-end align-items-center flex-1 flex-lg-0 order-1 order-lg-2">
@@ -202,11 +202,13 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="navbar-nav-link navbar-nav-link-toggler">
+                    <a href="#" onclick="document.getElementById('logoutForm').submit()" class="navbar-nav-link navbar-nav-link-toggler">
                         <i class="icon-switch2"></i>
                     </a>
                 </li>
             </ul>
+            <form asp-area="" asp-controller="Home" asp-action="Logout" method="post" id="logoutForm" autocomplete="off"></form>
+
         </div>
     </div>
     <!-- /main navbar -->
@@ -246,44 +248,12 @@
                         </div>
 
                         <div class="sidebar-user-material-footer">
-                            <a href="#user-nav" class="d-flex justify-content-between align-items-center text-shadow-dark dropdown-toggle" data-toggle="collapse"><span>My account</span></a>
+                            <a href="#user-nav" class="d-flex justify-content-between align-items-center text-shadow-dark dropdown-toggle" data-toggle="collapse"><span>Mi Cuenta</span></a>
                         </div>
                     </div>
 
                     <div class="collapse border-bottom" id="user-nav">
-                        <ul class="nav nav-sidebar">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="icon-user-plus"></i>
-                                    <span>My profile</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="icon-coins"></i>
-                                    <span>My balance</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="icon-comment-discussion"></i>
-                                    <span>Messages</span>
-                                    <span class="badge badge-teal badge-pill align-self-center ml-auto">58</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="icon-cog5"></i>
-                                    <span>Account settings</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="icon-switch2"></i>
-                                    <span>Logout</span>
-                                </a>
-                            </li>
-                        </ul>
+                       <partial name="_LoginPartial" />
                     </div>
                 </div>
                 <!-- /user menu -->

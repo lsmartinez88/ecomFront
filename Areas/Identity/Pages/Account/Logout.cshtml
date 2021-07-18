@@ -1,0 +1,23 @@
+﻿@page
+@model LogoutModel
+@{
+    ViewData["Title"] = "Usuario Deslogueado";
+    Layout = "./Manage/_Layout.cshtml";
+}
+
+<div class="content d-flex justify-content-center align-items-center">
+    <form class="login-form" action="index.html">
+        <div class="card mb-0">
+            <div class="card-body">
+                <div class="text-center mb-3">
+                    <i class="icon-exit icon-2x text-secondary border-secondary border-3 rounded-pill p-3 mb-3 mt-1"></i>
+                    <h5 class="mb-3">@ViewData["Title"]</h5>
+                    <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-primary btn-block">
+                        <i class="icon-lock mr-2"></i>
+                        Loguearse
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

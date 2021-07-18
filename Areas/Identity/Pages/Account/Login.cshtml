@@ -1,0 +1,75 @@
+﻿@page
+@model LoginModel
+
+@{
+    Layout = "./Manage/_Layout.cshtml";
+    ViewData["Title"] = "Log in";
+}
+
+<!-- Content area -->
+<div class="content d-flex justify-content-center align-items-center">
+
+    <!-- Login form -->
+    <form class="login-form" id="account" method="post">
+        <div class="card mb-0">
+            <div class="card-body">
+                <div class="text-center mb-3">
+                    <i class="icon-users2 icon-2x text-secondary border-secondary border-3 rounded-pill p-3 mb-3 mt-1"></i>
+                    <h5 class="mb-0">Loguearse en tu cuenta</h5>
+                    <span class="d-block text-muted">Tus credenciales</span>
+                </div>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group form-group-feedback form-group-feedback-left">
+                    <input asp-for="Input.User" class="form-control" placeholder="Usuario">
+                    <div class="form-control-feedback">
+                        <i class="icon-user text-muted"></i>
+                    </div>
+                    <span asp-validation-for="Input.User" class="text-danger"></span>
+
+                </div>
+
+                <div class="form-group form-group-feedback form-group-feedback-left">
+                    <input asp-for="Input.Password" class="form-control" placeholder="Password">
+                    <div class="form-control-feedback">
+                        <i class="icon-lock2 text-muted"></i>
+                    </div>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group d-flex align-items-center">
+                    <label class="custom-control custom-checkbox">
+                        <input asp-for="Input.RememberMe" class="custom-control-input" checked>
+                        <span class="custom-control-label">Recordarme</span>
+                    </label>
+
+                    <a id="forgot-password" asp-page="./ForgotPassword" class="ml-auto">Olvide Mi Password</a>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                </div>
+
+                <div class="form-group text-center text-muted content-divider">
+                    <span class="px-2">¿No tenés cuenta?</span>
+                </div>
+
+                <div class="form-group">
+                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-light btn-block">Registrarse</a>
+                </div>
+
+                @*<span class="form-text text-center text-muted">By continuing, you're confirming that you've read our <a href="#">Terms &amp; Conditions</a> and <a href="#">Cookie Policy</a></span>*@
+            </div>
+        </div>
+    </form>
+    <!-- /login form -->
+
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+<!-- /content area -->
