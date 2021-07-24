@@ -79,13 +79,13 @@ namespace ecomFront.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("Usuario Logueado.");
-                 
+
                     if (!string.IsNullOrEmpty(returnUrl)){
                         return LocalRedirect(returnUrl);
                     }
                     else
                     {
-                        return RedirectToAction("index", "home");
+                        return RedirectToAction("Home", "Index");
                     }
                 }
                 if (result.IsLockedOut)

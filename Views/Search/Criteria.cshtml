@@ -1,0 +1,1469 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@{
+    Layout = "_Layout";
+}
+<!-- Page header -->
+<div class="page-header page-header-light">
+    <div class="page-header-content header-elements-lg-inline">
+        <div class="page-title d-flex">
+            <h4><i class="icon-arrow-left52 mr-2"></i>#4. Muñecos Impresos en 3D</h4>
+            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+        </div>
+    </div>
+</div>
+
+<div class="page-header page-header-light">
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                <a asp-area="" asp-controller="Search" asp-action="Searches" class="breadcrumb-item"><i class="icon-search4 mr-2"></i> Busqueda</a>
+                <span class="breadcrumb-item active">Criterios</span>
+            </div>
+
+            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+        </div>
+
+        <div class="header-elements d-none">
+            <div class="breadcrumb justify-content-center">
+                <a href="#" class="breadcrumb-elements-item">
+                    <i class="icon-comment-discussion mr-2"></i>
+                    Necesito Ayuda
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+<div class="content">
+
+    <!-- Task manager table -->
+    <div class="card">
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+            <div class="datatable-header">
+                <table class="table tasks-list table-lg dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                    <thead>
+                        <tr role="row">
+                            <th  tabindex="0"  rowspan="1" colspan="1" aria-sort="descending"  style="width: 20px;">#</th>
+                            <th  tabindex="0"  rowspan="1" colspan="1" style="width: 40%;">Descripcion</th>
+                            <th  tabindex="0"  rowspan="1" colspan="1" style="width: 10%;">Filtro</th>
+                            <th  tabindex="0"  rowspan="1" colspan="1" style="width: 15%;"># items</th>
+                            <th  tabindex="0"  rowspan="1" colspan="1" style="width: 15%;">Condicion</th>
+                            <th  tabindex="0"  rowspan="1" colspan="1" style="width: 15%;">Atributos</th>
+                            <th style="width: 100px;" rowspan="1" colspan="1" aria-label="">
+                                <i class="icon-checkmark3"></i>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="odd">
+                            <td class="sorting_1">#25</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">New blog layout</a></div>
+                                <div class="text-muted">Grumbled ripely eternal sniffed the when hello less much..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-danger dropdown-toggle" data-toggle="dropdown">Blocker</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    22 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved" selected="selected">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td class="sorting_1">#24</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Create UI design model</a></div>
+                                <div class="text-muted">One morning, when Gregor Samsa woke from troubled..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-danger dropdown-toggle" data-toggle="dropdown">Blocker</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    22 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="sorting_1">#23</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">New icons set for an iOS app</a></div>
+                                <div class="text-muted">A collection of textile samples lay spread out on the table..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-primary dropdown-toggle" data-toggle="dropdown">Normal</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    22 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold" selected="selected">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td class="sorting_1">#22</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Create ad campaign banners set</a></div>
+                                <div class="text-muted">That he had recently cut out of an illustrated magazine..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-primary dropdown-toggle" data-toggle="dropdown">Normal</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    22 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved" selected="selected">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="table-active table-border-double"><td colspan="8" class="font-weight-semibold">Yesterday</td></tr>
+                        <tr class="odd">
+                            <td class="sorting_1">#21</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Edit the draft for the icons</a></div>
+                                <div class="text-muted">You've got to get enough sleep. Other travelling salesmen..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-warning dropdown-toggle" data-toggle="dropdown">High</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    21 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid" selected="selected">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td class="sorting_1">#20</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Fix validation issues and commit</a></div>
+                                <div class="text-muted">But who knows, maybe that would be the best thing for me..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-danger dropdown-toggle" data-toggle="dropdown">Blocker</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    22 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved" selected="selected">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="sorting_1">#19</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Support tickets list doesn't support commas</a></div>
+                                <div class="text-muted">I'd have gone up to the boss and told him just what i think..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-primary dropdown-toggle" data-toggle="dropdown">Normal</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    21 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed" selected="selected">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td class="sorting_1">#18</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Help Web devs with HTML integration</a></div>
+                                <div class="text-muted">Samsa was a travelling salesman - and above it there hung..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-success dropdown-toggle" data-toggle="dropdown">Low</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    21 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved" selected="selected">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="table-active table-border-double"><td colspan="8" class="font-weight-semibold">2 days ago</td></tr>
+                        <tr class="odd">
+                            <td class="sorting_1">#17</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Another icon set</a></div>
+                                <div class="text-muted">A wonderful serenity has taken possession of my entire soul..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-success dropdown-toggle" data-toggle="dropdown">Low</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    20 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid" selected="selected">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td class="sorting_1">#16</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">iOS application design mockups</a></div>
+                                <div class="text-muted">Sweet mornings of spring which I enjoy with my whole heart..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-danger dropdown-toggle" data-toggle="dropdown">Blocker</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    21 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="sorting_1">#15</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">UI/UX design review</a></div>
+                                <div class="text-muted">I am alone, and feel the charm of existence in this spot..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-primary dropdown-toggle" data-toggle="dropdown">Normal</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    20 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold" selected="selected">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td class="sorting_1">#14</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Marketing campaign review</a></div>
+                                <div class="text-muted">Which was created for the bliss of souls like mine..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-success dropdown-toggle" data-toggle="dropdown">Low</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    20 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="sorting_1">#13</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Fix website issues on mobile</a></div>
+                                <div class="text-muted">I am so happy, my dear friend, so absorbed in the exquisite..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-warning dropdown-toggle" data-toggle="dropdown">High</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    21 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid" selected="selected">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="table-active table-border-double"><td colspan="8" class="font-weight-semibold">Last week</td></tr>
+                        <tr class="even">
+                            <td class="sorting_1">#12</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Add updated responsive styles</a></div>
+                                <div class="text-muted">I should be incapable of drawing a single stroke at the present..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-primary dropdown-toggle" data-toggle="dropdown">Normal</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    17 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="sorting_1">#11</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Merge latest changes</a></div>
+                                <div class="text-muted">When, while the lovely valley teems with vapour around me..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-danger dropdown-toggle" data-toggle="dropdown">Blocker</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    16 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix" selected="selected">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td class="sorting_1">#10</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Create landing page for a new app</a></div>
+                                <div class="text-muted">A few stray gleams steal into the inner sanctuary, I throw..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-warning dropdown-toggle" data-toggle="dropdown">High</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    17 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="sorting_1">#9</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Update JS code in app.js file</a></div>
+                                <div class="text-muted">When I hear the buzz of the little world among the stalks..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-warning dropdown-toggle" data-toggle="dropdown">High</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    15 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold" selected="selected">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td class="sorting_1">#8</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Combine .js files in /app/js/</a></div>
+                                <div class="text-muted">Insects and flies, then I feel the presence of the Almighty..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-primary dropdown-toggle" data-toggle="dropdown">Normal</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    14 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved" selected="selected">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="sorting_1">#7</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Create application Photoshop draft</a></div>
+                                <div class="text-muted">Who formed us in his own image, and the breath of that universal..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-danger dropdown-toggle" data-toggle="dropdown">Blocker</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    20 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid" selected="selected">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td class="sorting_1">#6</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Cartoon characters for app ads</a></div>
+                                <div class="text-muted">My friend, when darkness overspreads my eyes, and heaven..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-primary dropdown-toggle" data-toggle="dropdown">Normal</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    17 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold" selected="selected">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="sorting_1">#5</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Google AdWords campain graphics</a></div>
+                                <div class="text-muted">Seem to dwell in my soul and absorb its power, like the form..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-success dropdown-toggle" data-toggle="dropdown">Low</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    18 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid" selected="selected">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td class="sorting_1">#4</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Monthly statistics report</a></div>
+                                <div class="text-muted">I sink under the weight of the splendour of these visions..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-danger dropdown-toggle" data-toggle="dropdown">Blocker</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    19 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="sorting_1">#3</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Create invoice template</a></div>
+                                <div class="text-muted">Far far away, behind the word mountains, far from the..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-warning dropdown-toggle" data-toggle="dropdown">High</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    20 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved" selected="selected">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td class="sorting_1">#2</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Add images to the product gallery</a></div>
+                                <div class="text-muted">Countries Vokalia and Consonantia, there live the blind..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-primary dropdown-toggle" data-toggle="dropdown">Normal</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    21 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed" selected="selected">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="sorting_1">#1</td>
+
+                            <td>
+                                <div class="font-weight-semibold"><a href="task_manager_detailed.html">Update User profile page</a></div>
+                                <div class="text-muted">A small river named Duden flows by their place and supplies it..</div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="badge badge-success dropdown-toggle" data-toggle="dropdown">Low</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-danger border-danger"></span> Blocker</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-warning border-warning"></span> High priority</a>
+                                        <a href="#" class="dropdown-item"><span class="badge badge-mark mr-2 bg-primary border-primary"></span> Normal priority</a>
+                                        <a href="#" class="dropdown-item active"><span class="badge badge-mark mr-2 bg-success border-success"></span> Low priority</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-inline-flex align-items-center">
+                                    <i class="icon-calendar2 mr-2"></i>
+                                    19 January, 15
+                                </div>
+                            </td>
+                            <td>
+                                <select name="status" class="custom-select">
+                                    <option value="open">Open</option>
+                                    <option value="hold">On hold</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="dublicate">Dublicate</option>
+                                    <option value="invalid">Invalid</option>
+                                    <option value="wontfix">Wontfix</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                                <a href="#"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="32" height="32" alt=""></a>
+                            </td>
+                            <td class="text-center">
+                                <div class="list-icons">
+                                    <div class="dropdown">
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-rotate-ccw2"></i> Reassign</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Edit task</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Remove</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div><div class="datatable-footer"><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 25 of 25 entries</div><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><a class="paginate_button previous disabled" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="-1" id="DataTables_Table_0_previous">←</a><span><a class="paginate_button current" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a></span><a class="paginate_button next disabled" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="-1" id="DataTables_Table_0_next">→</a></div></div>
+        </div>
+    </div>
+    <!-- /task manager table -->
+
+</div>

@@ -50,6 +50,7 @@ namespace ecomFront
                 options.ValidationInterval = TimeSpan.FromSeconds(10);
             });
 
+            services.AddAuthorization();
             services.ConfigureApplicationCookie(options =>
             {
                 options.LogoutPath = "/Identity/Account/Login";
@@ -72,7 +73,7 @@ namespace ecomFront
             //services.AddScoped<IConfigurationData, ConfigurationData>();
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-               .AddEntityFrameworkStores<ApplicationDbContext>();
+               .AddEntityFrameworkStores<ApplicationDbContext>();           
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -92,6 +93,8 @@ namespace ecomFront
                 options.Lockout.MaxFailedAccessAttempts = 10 ;
                 options.Lockout.AllowedForNewUsers = false  ;
             });
+
+            services.AddAuthentication();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -126,7 +129,7 @@ namespace ecomFront
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                   pattern: "{controller=Home}/{action=Index}/{id?}");
+                   pattern: "{controller=Home}/{action=Index}");
                 endpoints.MapRazorPages();
             });
 

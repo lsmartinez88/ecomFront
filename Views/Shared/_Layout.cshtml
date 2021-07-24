@@ -1,4 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> signInManager;
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    var usuario = await UserManager.GetUserAsync(User);
+    
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -47,20 +57,22 @@
             </button>
         </div>
 
-        <div class="navbar-brand text-center text-lg-left">
-            <a href="index.html" class="d-inline-block">
-                <img src="../../../../global_assets/images/logo_light.png" class="d-none d-sm-block" alt="">
-                <img src="../../../../global_assets/images/logo_icon_light.png" class="d-sm-none" alt="">
-            </a>
+        <div class="navbar-brand text-center text-lg-left p-0">
+            <div class="d-inline-block">
+                <embed src="../../../../global_assets/images/logo_color_sin_texto.svg" class="d-none d-sm-block mt-2 " style="height:40px;" />
+            </div>
+            <div class="d-inline-block">
+                <embed src="../../../../global_assets/images/texto_blanco.svg" class="d-none d-sm-block mb-1 ml-2" style="height:20px;" />
+            </div>
         </div>
 
         <div class="navbar-collapse collapse flex-lg-1 mx-lg-3 order-2 order-lg-1" id="navbar-search">
-            hola
+
         </div>
 
         <div class="d-flex justify-content-end align-items-center flex-1 flex-lg-0 order-1 order-lg-2">
             <ul class="navbar-nav flex-row">
-                <li class="nav-item nav-item-dropdown-lg dropdown">
+                @*<li class="nav-item nav-item-dropdown-lg dropdown">
                     <a href="#" class="navbar-nav-link navbar-nav-link-toggler dropdown-toggle" data-toggle="dropdown">
                         <i class="icon-make-group"></i>
                         <span class="d-none d-lg-inline-block ml-2">BackOffice</span>
@@ -107,7 +119,7 @@
                             </div>
                         </div>
                     </div>
-                </li>
+                </li>*@
 
                 <li class="nav-item nav-item-dropdown-lg dropdown">
                     <a href="#" class="navbar-nav-link navbar-nav-link-toggler dropdown-toggle" data-toggle="dropdown">
@@ -116,65 +128,16 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right dropdown-content wmin-lg-350">
-                        <div class="dropdown-content-header">
-                            <span class="font-size-sm line-height-sm text-uppercase font-weight-semibold">Latest activity</span>
-                            <a href="#" class="text-body"><i class="icon-search4 font-size-base"></i></a>
-                        </div>
-
                         <div class="dropdown-content-body dropdown-scrollable">
                             <ul class="media-list">
                                 <li class="media">
                                     <div class="mr-3">
-                                        <a href="#" class="btn btn-success rounded-pill btn-icon"><i class="icon-mention"></i></a>
+                                        <a href="#" class="btn btn-success rounded-pill btn-icon"><i class="icon-gear"></i></a>
                                     </div>
 
                                     <div class="media-body">
-                                        <a href="#">Taylor Swift</a> mentioned you in a post "Angular JS. Tips and tricks"
-                                        <div class="font-size-sm text-muted mt-1">4 minutes ago</div>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="mr-3">
-                                        <a href="#" class="btn btn-pink rounded-pill btn-icon"><i class="icon-paperplane"></i></a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        Special offers have been sent to subscribed users by <a href="#">Donna Gordon</a>
-                                        <div class="font-size-sm text-muted mt-1">36 minutes ago</div>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="mr-3">
-                                        <a href="#" class="btn btn-primary rounded-pill btn-icon"><i class="icon-plus3"></i></a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        <a href="#">Chris Arney</a> created a new <span class="font-weight-semibold">Design</span> branch in <span class="font-weight-semibold">Limitless</span> repository
-                                        <div class="font-size-sm text-muted mt-1">2 hours ago</div>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="mr-3">
-                                        <a href="#" class="btn btn-purple rounded-pill btn-icon"><i class="icon-truck"></i></a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        Shipping cost to the Netherlands has been reduced, database updated
-                                        <div class="font-size-sm text-muted mt-1">Feb 8, 11:30</div>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="mr-3">
-                                        <a href="#" class="btn btn-warning rounded-pill btn-icon"><i class="icon-comment"></i></a>
-                                    </div>
-
-                                    <div class="media-body">
-                                        New review received on <a href="#">Server side integration</a> services
-                                        <div class="font-size-sm text-muted mt-1">Feb 2, 10:20</div>
+                                        El análisis correspondiente a la ejecucion <a href="#">#1324</a> esta disponible!
+                                        <div class="font-size-sm text-muted mt-1">la semana pasada</div>
                                     </div>
                                 </li>
 
@@ -184,18 +147,39 @@
                                     </div>
 
                                     <div class="media-body">
-                                        <strong>January, 2018</strong> - 1320 new users, 3284 orders, $49,390 revenue
-                                        <div class="font-size-sm text-muted mt-1">Feb 1, 05:46</div>
+                                        La solicitud de ejecucion fue recibida. Enviaremos un mail informando cuando este disponible!
+                                        <div class="font-size-sm text-muted mt-1">la semana pasada</div>
+                                    </div>
+                                </li>
+
+                                <li class="media">
+                                    <div class="mr-3">
+                                        <a href="#" class="btn btn-pink rounded-pill btn-icon"><i class="icon-cash3"></i></a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        Su pago fue acreditado con exito. <a href="#">Ver recibo.</a>
+                                        <div class="font-size-sm text-muted mt-1">la semana pasada</div>
+                                    </div>
+                                </li>
+
+                                <li class="media">
+                                    <div class="mr-3">
+                                        <a href="#" class="btn btn-primary rounded-pill btn-icon"><i class="icon-search4"></i></a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        La busqueda <a href="#"> #12 </a> fue guardada correctamente!
+                                        <div class="font-size-sm text-muted mt-1">2 horas atrás</div>
                                     </div>
                                 </li>
                             </ul>
                         </div>
 
                         <div class="dropdown-content-footer bg-light">
-                            <a href="#" class="font-size-sm line-height-sm text-uppercase font-weight-semibold text-body mr-auto">All activity</a>
+                            <a href="#" class="font-size-sm line-height-sm text-uppercase font-weight-semibold text-body mr-auto">TODA LA ACTIVIDAD</a>
                             <div>
-                                <a href="#" class="text-body" data-popup="tooltip" title="Clear list"><i class="icon-checkmark3"></i></a>
-                                <a href="#" class="text-body ml-2" data-popup="tooltip" title="Settings"><i class="icon-gear"></i></a>
+                                <a href="#" class="text-body" data-popup="tooltip" title="Limpiar Lista"><i class="icon-checkmark3"></i></a>
                             </div>
                         </div>
                     </div>
@@ -207,8 +191,7 @@
                     </a>
                 </li>
             </ul>
-            <form asp-area="" asp-controller="Home" asp-action="Logout" method="post" id="logoutForm" autocomplete="off"></form>
-
+            <form asp-area="" asp-controller="Home" asp-action="Logout" method="post" id="logoutForm" autocomplete="off"></form> 
         </div>
     </div>
     <!-- /main navbar -->
@@ -229,7 +212,7 @@
                                         <i class="icon-wrench"></i>
                                     </button>
                                 </div>
-                                <a href="#" class="flex-1 text-center"><img src="../../../../global_assets/images/placeholders/placeholder.jpg" class="img-fluid rounded-circle shadow-sm" width="80" height="80" alt=""></a>
+                                <a href="#" class="flex-1 text-center"><img src="../../../../global_assets/images/logo_unlam.png" class="img-fluid rounded-circle shadow-sm" width="80" height="80" alt=""></a>
                                 <div class="flex-1 text-right">
                                     <button type="button" class="btn btn-outline-light border-transparent btn-icon rounded-pill btn-sm sidebar-control sidebar-main-resize d-none d-lg-inline-flex">
                                         <i class="icon-transmission"></i>
@@ -242,8 +225,8 @@
                             </div>
 
                             <div class="text-center">
-                                <h6 class="mb-0 text-white text-shadow-dark mt-3">Victoria Baker</h6>
-                                <span class="font-size-sm text-white text-shadow-dark">Santa Ana, CA</span>
+                                <h6 class="mb-0 text-white text-shadow-dark mt-3"> @usuario.Nombre @usuario.Apellido </h6>
+                                        <span class="font-size-sm text-white text-shadow-dark">@Context.User.Identity.Name</span>
                             </div>
                         </div>
 
@@ -253,35 +236,34 @@
                     </div>
 
                     <div class="collapse border-bottom" id="user-nav">
-                       <partial name="_LoginPartial" />
+                        <partial name="_LoginPartial" />
                     </div>
                 </div>
                 <!-- /user menu -->
                 <!-- Main navigation -->
                 <div class="sidebar-section">
                     <ul class="nav nav-sidebar" data-nav-type="accordion">
-
                         <!-- Main -->
-                        <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs mt-1">Main</div> <i class="icon-menu" title="Main"></i></li>
+                        <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs mt-1">Principal</div> <i class="icon-menu" title="Main"></i></li>
                         <li class="nav-item">
-                            <a href="index.html" class="nav-link active">
-                                <i class="icon-home4"></i>
+                            <a asp-area="" asp-controller="Search" asp-action="Searches" class="nav-link @(ViewData["MenuOption"]?.ToString() == "Searches" ? "active" : "")">
+                                <i class="icon-search4"></i>
                                 <span>
-                                    Dashboard
+                                    Busquedas
                                 </span>
                             </a>
                         </li>
                         <li class="nav-item nav-item-submenu">
-                            <a href="#" class="nav-link"><i class="icon-copy"></i> <span>Layouts</span></a>
+                            <a href="#" class="nav-link"><i class="icon-statistics"></i> <span>Analisis Disponibles</span></a>
 
                             <ul class="nav nav-group-sub" data-submenu-title="Layouts">
-                                <li class="nav-item"><a href="index.html" class="nav-link active">Default layout</a></li>
-                                <li class="nav-item"><a href="../../../../layout_2/LTR/material/full/index.html" class="nav-link">Layout 2</a></li>
-                                <li class="nav-item"><a href="../../../../layout_3/LTR/material/full/index.html" class="nav-link">Layout 3</a></li>
-                                <li class="nav-item"><a href="../../../../layout_4/LTR/material/full/index.html" class="nav-link">Layout 4</a></li>
-                                <li class="nav-item"><a href="../../../../layout_5/LTR/material/full/index.html" class="nav-link">Layout 5</a></li>
-                                <li class="nav-item"><a href="../../../../layout_6/LTR/material/full/index.html" class="nav-link">Layout 6</a></li>
-                                <li class="nav-item"><a href="../../../../layout_7/LTR/material/full/index.html" class="nav-link disabled">Layout 7 <span class="badge bg-transparent align-self-center ml-auto">Coming soon</span></a></li>
+                                <li class="nav-item"><a href="#" class="nav-link disabled">Zapatillas Running...<span class="badge bg-transparent align-self-center ml-auto">En Proceso</span></a></li>
+                                <li class="nav-item"><a href="#" class="nav-link active">[23\07] Iphone 7 128...</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link">[23\07] Zapatillas Running...</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link">[16\07] Muñecos Impresos...</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link">[15\07] Iphone 7 128...</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link">[10\06] Muñecos Impresos...</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link">[07\06] Iphone 7 128...</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -301,7 +283,7 @@
             </div>
             <!-- /inner content -->
         </div>
-        <!-- /main content 
+        <!-- /main content -->
     </div>
     <!-- /page content -->
 

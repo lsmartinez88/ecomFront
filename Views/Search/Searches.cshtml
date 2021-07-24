@@ -1,0 +1,299 @@
+﻿@{
+    ViewData["Title"] = "Searches";
+    ViewData["MenuOption"] = "Searches";
+}
+@{
+    Layout = "_Layout";
+}
+<!-- Page header -->
+<div class="page-header page-header-light">
+    <div class="page-header-content header-elements-lg-inline">
+        <div class="page-title d-flex">
+            <h4><i class="icon-arrow-left52 mr-2"></i> Busquedas</h4>
+            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+        </div>
+
+        <div class="header-elements d-none">
+            <div class="d-flex justify-content-center">
+                <a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
+                    <i class="icon-plus3 text-pink"></i>
+                    <span>Agregar</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-header page-header-light">
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                <span class="breadcrumb-item active">Busquedas</span>
+            </div>
+
+            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+        </div>
+
+        <div class="header-elements d-none">
+            <div class="breadcrumb justify-content-center">
+                <a href="#" class="breadcrumb-elements-item">
+                    <i class="icon-comment-discussion mr-2"></i>
+                    Necesito Ayuda
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+<!-- Content area -->
+<div class="content">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card border-left-3 border-left-primary rounded-left-0">
+                <div class="card-body">
+                    <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
+                        <div>
+                            <h6><span class="font-weight-semibold">#4. Muñecos Impresos en 3D</span></h6>
+                            <p class="mb-3">Criterio: <span class="font-weight-semibold">"Impresion 3D"</span> | Categorias: <span class="font-weight-semibold">15</span> | Ejecuciones: <span class="font-weight-semibold">2</span> </p>
+
+                            <a href="#">
+                                <img src="http://resources.mlstatic.com/category/images/3af293a4-0866-4f65-98b5-923ae81529b2.png" class="rounded-circle" width="36" height="36" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="http://resources.mlstatic.com/category/images/c8f22c9a-0ab2-48b6-b0e8-f29cb640f766.png" class="rounded-circle" width="36" height="36" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="http://resources.mlstatic.com/category/images/1e6ef969-44b2-4ffd-abc6-053a6ed4fde8.png" class="rounded-circle" width="36" height="36" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="http://resources.mlstatic.com/category/images/26e5f7ec-7138-4b72-8ddd-16765704a55e.png" class="rounded-circle" width="36" height="36" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="http://resources.mlstatic.com/category/images/5b9b09c9-3526-4d24-bd8e-90b806771a9e.png" class="rounded-circle" width="36" height="36" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="http://resources.mlstatic.com/category/images/d88ff79e-0218-4072-a0cd-8cf3b617f9b9.png" class="rounded-circle" width="36" height="36" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="http://resources.mlstatic.com/category/images/d3a18e0a-b5f7-4098-918f-e220f09368c7.png" class="rounded-circle" width="36" height="36" alt="">
+                            </a>
+                            <a href="#" class="text-body">&nbsp;<i class="icon-elipsis"></i></a>
+                        </div>
+
+                        <ul class="list list-unstyled mb-0 mt-3 mt-sm-0 ml-auto text-sm-right">
+                            <li><span class="text-muted">23 Jun. 2021</span></li>
+                            <li>
+                                <span class="badge badge-flat border-purple text-purple">CATEGORIA</span>
+                            </li>
+                            <li>
+                            <li><a href="#">4496 items</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
+                    <span>Ultima Ejecucion: <span class="font-weight-semibold">15 jun. 2021</span> </span>
+
+                    <ul class="list-inline mb-0 mt-2 mt-sm-0">
+                        <li class="list-inline-item dropdown position-static">
+                            <a href="#" class="text-body dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></a>
+
+                            <div class="dropdown-menu dropdown-menu-right" style="">
+                                <a asp-area="" asp-controller="Search" asp-action="Criteria" asp-route-searchId="3" class="dropdown-item"><i class="icon-search4"></i> Criterios</a>
+                                <a href="#" class="dropdown-item"><i class="icon-gear"></i> Ejecuciones</a>
+                                <a href="#" class="dropdown-item"><i class="icon-cash3"></i> Pagos</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Editar</a>
+                                <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Eliminar</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card border-left-3 border-left-danger rounded-left-0">
+                <div class="card-body">
+                    <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
+                        <div>
+                            <h6><span class="font-weight-semibold">#6. Iphone 7 128 GB. Usado</span></h6>
+                            <p class="mb-3">
+                                Link: <a href="https://articulo.mercadolibre.com.ar/MLA-923972164-iphone-7-128-gb-plata-100-bateria-excelente-estado-_JM">
+                                    iPhone 7 128 Gb Plata | 100% Bateria | Excelente Estado!!
+                                </a>
+                            </p>
+
+
+                            <a href="#">
+                                <img src="https://http2.mlstatic.com/D_685904-MLA46707048020_072021-I.jpg" class="rounded-circle" width="36" height="36" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="https://http2.mlstatic.com/D_898259-MLA46278598044_062021-O.jpg" class="rounded-circle" width="36" height="36" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="https://http2.mlstatic.com/D_643144-MLA46278505559_062021-O.jpg" class="rounded-circle" width="36" height="36" alt="">
+                            </a>
+                            <a href="#" class="text-body">&nbsp;<i class="icon-plus22"></i></a>
+                        </div>
+
+                        <ul class="list list-unstyled mb-0 mt-3 mt-sm-0 ml-auto text-sm-right">
+                            <li><span class="text-muted">23 Jun. 2021</span></li>
+                            <li>
+                                <span class="badge badge-flat border-secondary text-secondary">PUBLICACION</span>
+                            </li>
+                            <li>
+                            <li><a href="#">1461 items</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
+                    <span>Ultima Ejecucion: <span class="font-weight-semibold">15 jun. 2021</span> </span>
+
+                    <ul class="list-inline mb-0 mt-2 mt-sm-0">
+                        <li class="list-inline-item dropdown position-static">
+                            <a href="#" class="text-body dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></a>
+
+                            <div class="dropdown-menu dropdown-menu-right" style="">
+                                <a href="#" class="dropdown-item"><i class="icon-search4"></i> Criterios</a>
+                                <a href="#" class="dropdown-item"><i class="icon-gear"></i> Ejecuciones</a>
+                                <a href="#" class="dropdown-item"><i class="icon-cash3"></i> Pagos</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Editar</a>
+                                <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Eliminar</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card border-left-3 border-left-success rounded-left-0">
+                <div class="card-body">
+                    <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
+                        <div>
+                            <h6><span class="font-weight-semibold">#5. Zapatillas Running Dama</span></h6>
+                            <p class="mb-3">Artibutos: <span class="font-weight-semibold">8</span> | Ejecuciones: <span class="font-weight-semibold">2</span> </p>
+
+                            <a href="#">
+                                <img src="http://resources.mlstatic.com/category/images/bbb37c22-1d20-4a89-bd9e-f5b5aec332bc.png" class="rounded-circle" width="36" height="36" alt="">
+                            </a>
+                            <a href="#" class="text-body">&nbsp;<i class="icon-plus22"></i></a>
+                        </div>
+
+                        <ul class="list list-unstyled mb-0 mt-3 mt-sm-0 ml-auto text-sm-right">
+                            <li><span class="text-muted">23 Jun. 2021</span></li>
+                            <li>
+                                <span class="badge badge-flat border-purple text-purple">CATEGORIA</span>
+                            </li>
+                            <li>
+                            <li><a href="#">9823 items</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
+                    <span>Ultima Ejecucion: <span class="font-weight-semibold">15 jun. 2021</span> </span>
+
+                    <ul class="list-inline mb-0 mt-2 mt-sm-0">
+                        <li class="list-inline-item dropdown position-static">
+                            <a href="#" class="text-body dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></a>
+
+                            <div class="dropdown-menu dropdown-menu-right" style="">
+                                <a href="#" class="dropdown-item"><i class="icon-search4"></i> Criterios</a>
+                                <a href="#" class="dropdown-item"><i class="icon-gear"></i> Ejecuciones</a>
+                                <a href="#" class="dropdown-item"><i class="icon-cash3"></i> Pagos</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item"><i class="icon-pencil7"></i> Editar</a>
+                                <a href="#" class="dropdown-item"><i class="icon-cross2"></i> Eliminar</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @* <div class="card">
+        <div class="card-header header-elements-lg-inline">
+            <h5 class="card-title">Data Governance course</h5>
+
+            <div class="header-elements">
+                <ul class="list-inline list-inline-dotted mb-0 mt-2 mt-lg-0">
+                    <li class="list-inline-item">Rating: <span class="font-weight-semibold">4.85</span></li>
+                    <li class="list-inline-item">
+                        <i class="icon-star-full2 font-size-base text-warning"></i>
+                        <i class="icon-star-full2 font-size-base text-warning"></i>
+                        <i class="icon-star-full2 font-size-base text-warning"></i>
+                        <i class="icon-star-full2 font-size-base text-warning"></i>
+                        <i class="icon-star-full2 font-size-base text-warning"></i>
+                        <span class="text-muted ml-1">(439)</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Lessons</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Duration</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><a href="#">Introduction</a></td>
+                        <td>One morning, when Gregor Samsa woke from troubled dreams, he found himself</td>
+                        <td>10 hours</td>
+                        <td><span class="badge badge-secondary">Closed</span></td>
+                        <td>Oct 21st, 2016</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><a href="#">Design tools</a></td>
+                        <td>He lay on his armour-like back, and if he lifted his head a little he could</td>
+                        <td>20 hours</td>
+                        <td><span class="badge badge-primary">Registration</span></td>
+                        <td>Oct 22nd, 2016</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><a href="#">Workspace</a></td>
+                        <td>The bedding was hardly able to cover it and seemed ready to slide off moment</td>
+                        <td>35 hours</td>
+                        <td><span class="badge badge-danger">On time</span></td>
+                        <td>Oct 23rd, 2016</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><a href="#">Creating effects</a></td>
+                        <td>A collection of textile samples lay spread out on the table - Samsa salesman</td>
+                        <td>25 hours</td>
+                        <td><span class="badge badge-danger">On time</span></td>
+                        <td>Oct 24th, 2016</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><a href="#">Digital design</a></td>
+                        <td>Drops of rain could be heard hitting the pane, which made him feel quite sad</td>
+                        <td>50 hours</td>
+                        <td><span class="badge badge-danger">On time</span></td>
+                        <td>Oct 25th, 2016</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    *@
+</div>
+
+<!-- /content area -->
