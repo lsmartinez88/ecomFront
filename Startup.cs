@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ecomFront.Data;
 using ecomFront.Models;
+using ecomFront.Models.DbFirstModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -68,7 +69,11 @@ namespace ecomFront
                 options.ValueCountLimit = int.MaxValue;
             });
 
+            services.AddScoped<ISearchData, SearchData>();
+
+
             services.AddDbContextPool<ApplicationDbContext>(options => options.UseMySql(Startup.ConnectionString, ServerVersion.AutoDetect(Startup.ConnectionString)));
+            services.AddDbContextPool<DBFirstDbContext>(options => options.UseMySql(Startup.ConnectionString, ServerVersion.AutoDetect(Startup.ConnectionString)));
 
             //services.AddScoped<IConfigurationData, ConfigurationData>();
 

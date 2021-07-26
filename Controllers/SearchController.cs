@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ecomFront.Data;
 using ecomFront.Models;
+using ecomFront.Models.DbFirstModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,14 +17,21 @@ namespace ecomFront.Controllers
     {
         private UserManager<ApplicationUser> _userManager;
         private readonly ILogger<SearchController> _logger;
-        public SearchController(UserManager<ApplicationUser> userManager, ILogger<SearchController> logger)
+        private ISearchData _searchData;
+
+        public SearchController(UserManager<ApplicationUser> userManager, 
+                                ILogger<SearchController> logger,
+                                ISearchData searchData)
         {
             _userManager = userManager;
             _logger = logger;
+            _searchData = searchData;
         }
 
         public IActionResult Searches()
         {
+            var searches = _searchData.GetSearches(6);
+
             if (User.Identity.IsAuthenticated)
             {
                 return View();

@@ -1,0 +1,20 @@
+--Este comando sirve para actualizar las entidades del proyecto basandose en las 
+--que estan definidas en la base de datos
+
+Scaffold-DBContext  
+-Connection name=MySQLConnection 
+-provider Pomelo.EntityFrameworkCore.MySql 
+-OutputDir Models\DbFirstModels 
+-Context DBFirstDbContext 
+-Tables auth
+-force
+
+
+-- Estos comandos son para ejecutar y actualizar el modelo de la base de datos
+-- Estan vinculados al context CodeFirst
+
+add-migration "" --Context ApplicationDbContext
+remove-migration --context applicationdbcontext
+
+update-database
+
