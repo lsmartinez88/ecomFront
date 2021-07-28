@@ -85,7 +85,7 @@ namespace ecomFront.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        return RedirectToAction("Home", "Index");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 if (result.IsLockedOut)

@@ -8,6 +8,9 @@ namespace ecomFront.Data
 {
     public interface ISearchData
     {
-        List<Search> GetSearches(int UserId);
+        List<Search> GetFullSearches(int UserId);
+        List<Criterion> GetFullCriteriasBySearchId(int ?SearchId);
+        Category GetCategoryById(string idCategory);
+
     }
 }

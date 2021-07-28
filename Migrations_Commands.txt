@@ -2,12 +2,7 @@
 --que estan definidas en la base de datos
 
 Scaffold-DBContext  
--Connection name=MySQLConnection 
--provider Pomelo.EntityFrameworkCore.MySql 
--OutputDir Models\DbFirstModels 
--Context DBFirstDbContext 
--Tables auth
--force
+-Connection name=MySQLConnection -provider Pomelo.EntityFrameworkCore.MySql -OutputDir Models\DbFirstModels -Context DBFirstDbContext -Tables auth, category, category_attribute_values,category_attributes, city, country, criteria, criteria_attributes, events, executions, searches, state, users -force
 
 
 -- Estos comandos son para ejecutar y actualizar el modelo de la base de datos
