@@ -1,14 +1,17 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@using ecomFront.Models.SearchViewModels
+@using ecomFront.Common
+
 @{
+    ViewData["Title"] = "Home Page";
     Layout = "_Layout";
 }
+@model CriteriaListViewModel
+
 <!-- Page header -->
 <div class="page-header page-header-light">
     <div class="page-header-content header-elements-lg-inline">
         <div class="page-title d-flex">
-            <h4><i class="icon-arrow-left52 mr-2"></i><span class="font-weight-semibold">CRITERIOS</span> | Muñecos Impresos en 3D</h4>
+            <h4><i class="icon-search4 mr-2"></i> <span class="font-weight-semibold">Criterios <i class="icon-arrow-right13"></i> </span> Muñecos Impresos en 3D</h4>
             <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
         </div>
         <div class="header-elements d-none">
@@ -47,170 +50,70 @@
 
     <!-- Task manager table -->
     <div class="card">
-        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-            <div class="datatable-header">
-                <table class="table tasks-list table-lg dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
-                    <thead>
-                        <tr role="row" class="text-center">
-                            <th  rowspan="1" colspan="1" style="width: 15px;">#</th>
-                            <th  rowspan="1" colspan="1" style="width: 40%;">Descripcion</th>
-                            <th  rowspan="1" colspan="1" style="width: 20%;">Filtro</th>
-                            <th  rowspan="1" colspan="1" style="width: 10%;"># items</th>
-                            <th  rowspan="1" colspan="1" style="width: 15%;">Condicion</th>
-                            <th style="width: 100px;" rowspan="1" colspan="1" aria-label="">
-                                <i class="icon-checkmark3"></i>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="odd">
-                            <td>3</td>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr class="text-center">
+                        <th >#</th>
+                        <th style="width:30%" class="text-left">Descripcion</th>
+                        <th style="width:20%" class="text-left">Filtro</th>
+                        <th># items</th>
+                        <th>Condicion</th>
+                        <th>Atributos</th>
+                        <th class="text-center" style="width: 30px;"><i class="icon-menu-open2"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var criteriaItem in Model.criteriaItems)
+                    {
+                        <tr>
+                            <td class="text-center"> #@criteriaItem.criteria.IdCriteria</td>
                             <td>
-                                <div class="font-weight-semibold"><a href="https://www.mercadolibre.com.ar/c/souvenirs-cotillon-y-fiestas">Souvenirs, Cotillón y Fiestas</a></div>
-                                <div class="text-muted"></div>
+                                <div class="font-weight-semibold"><a href="@criteriaItem.criteria.Category.Linkml">@criteriaItem.criteria.Category.Nameml</a></div>
+                            </td>
+                            <td>@criteriaItem.criteria.SearchCriteria</td>
+                            <td class="text-center" >@criteriaItem.criteria.Quantity</td>
+                            <td class="text-center">
+                                @if (criteriaItem.criteria.ItemCondition == ItemCondition.Nuevo)
+                                {
+                                    <span class="badge badge-indigo ">NUEVO</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-light">USADO</span>
+                                }
                             </td>
                             <td class="text-center">
-                                Impresion 3D
-                            </td>
-                            <td class="text-center">
-                                2039
-                            </td>
-                            <td class="text-center">
-                                <span class="badge badge-light">USADO</span>
-
+                                @if (criteriaItem.criteria.CriteriaAttributes?.Count() > 0)
+                                {                                    
+                                    var atributosHtml = "";
+                                    foreach (var atributo in criteriaItem.criteria.CriteriaAttributes)
+                                    {
+                                        atributosHtml += "<strong>" + atributo.NameAttributeml + "</strong>: " + atributo.NameAttributeValueml + "<br>";
+                                    }
+                                    <button type="button" class="btn btn-link" data-popup="popover" title="" data-html="true" data-content="@atributosHtml">Ver Atributos</button>
+                                }
                             </td>
                             <td class="text-center">
                                 <div class="list-icons">
                                     <div class="dropdown">
-                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
+                                        <a href="#" class="list-icons-item" data-toggle="dropdown">
+                                            <i class="icon-menu9"></i>
+                                        </a>
+
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item"><i class="icon-check"></i> Ver Atributos (2)</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item"><i class="icon-eye"></i> Ver Items</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-file-pdf"></i> Export to .pdf</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-file-excel"></i> Export to .csv</a>
+                                            <a href="#" class="dropdown-item"><i class="icon-file-word"></i> Export to .doc</a>
                                         </div>
                                     </div>
                                 </div>
                             </td>
                         </tr>
-                        <tr class="odd">
-                            <td>4</td>
-                            <td>
-                                <div class="font-weight-semibold"><a href="https://www.mercadolibre.com.ar/c/souvenirs-cotillon-y-fiestas">Juegos de Mate</a></div>
-                                <div class="text-muted">Hogar, Muebles y Jardín <i class="icon-arrow-right22"></i> Bazar y Cocina <i class="icon-arrow-right22"></i> Café, Té y Mate  </div>
-                            </td>
-                            <td class="text-center">
-                                Impresion 3D
-                            </td>
-                            <td class="text-center">
-                                200
-                            </td>
-                            <td class="text-center">
-                                <span class="badge badge-secondary">NUEVO</span>
+                                    }
 
-                            </td>
-                            <td class="text-center">
-                                <div class="list-icons">
-                                    <div class="dropdown">
-                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item"><i class="icon-check"></i> Ver Atributos (2)</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item"><i class="icon-eye"></i> Ver items</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="odd">
-                            <td>5</td>
-                            <td>
-                                <div class="font-weight-semibold"><a href="https://www.mercadolibre.com.ar/c/souvenirs-cotillon-y-fiestas">Macetas</a></div>
-                                <div class="text-muted">Hogar, Muebles y Jardín <i class="icon-arrow-right22"></i> Macetas y Maceteros <i class="icon-arrow-right22"></i>Aire Libre </div>
-                            </td>
-                            <td class="text-center">
-                                Impresion 3D
-                            </td>
-                            <td class="text-center">
-                                2039
-                            </td>
-                            <td class="text-center">
-                                <span class="badge badge-light">USADO</span>
-
-                            </td>
-                            <td class="text-center">
-                                <div class="list-icons">
-                                    <div class="dropdown">
-                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item"><i class="icon-check"></i> Ver Atributos (2)</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item"><i class="icon-eye"></i> Ver items</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="odd">
-                            <td>3</td>
-                            <td>
-                                <div class="font-weight-semibold"><a href="https://www.mercadolibre.com.ar/c/souvenirs-cotillon-y-fiestas">Veladores y Lámparas de Mesa</a></div>
-                                <div class="text-muted">Hogar, Muebles y Jardín <i class="icon-arrow-right22"></i> Lámparas</div>
-                            </td>
-                            <td class="text-center">
-                                Impresion 3D
-                            </td>
-                            <td class="text-center">
-                                1243
-                            </td>
-                            <td class="text-center">
-                                <span class="badge badge-light">USADO</span>
-
-                            </td>
-                            <td class="text-center">
-                                <div class="list-icons">
-                                    <div class="dropdown">
-                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item"><i class="icon-check"></i> Ver Atributos (2)</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item"><i class="icon-eye"></i> Ver items</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="odd">
-                            <td>3</td>
-                            <td>
-                                <div class="font-weight-semibold"><a href="https://www.mercadolibre.com.ar/c/souvenirs-cotillon-y-fiestas">Accesorios para Celulares</a></div>
-                                <div class="text-muted">Celulares y Teléfonos</div>
-                            </td>
-                            <td class="text-center">
-                                Impresion 3D
-                            </td>
-                            <td class="text-center">
-                                543
-                            </td>
-                            <td class="text-center">
-                                <span class="badge badge-secondary">NUEVO</span>
-
-                            </td>
-                            <td class="text-center">
-                                <div class="list-icons">
-                                    <div class="dropdown">
-                                        <a href="#" class="list-icons-item" data-toggle="dropdown"><i class="icon-menu9"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item"><i class="icon-check"></i> Ver Atributos (2)</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item"><i class="icon-eye"></i> Ver items</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div><div class="datatable-footer"><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Mostrand 1 a 5 de 5 criterios</div><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><a class="paginate_button previous disabled" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="-1" id="DataTables_Table_0_previous">←</a><span><a class="paginate_button current" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a></span><a class="paginate_button next disabled" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="-1" id="DataTables_Table_0_next">→</a></div></div>
+                </tbody>
+            </table>
         </div>
     </div>
     <!-- /task manager table -->

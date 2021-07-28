@@ -7,31 +7,41 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ecomFront.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using ecomFront.Services;
 using ecomFront.Data;
+using ecomFront.Models.MLModels;
 
 namespace ecomFront.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private ISearchData _searchData;
+        private IAuthData _authData;
+
         public HomeController(SignInManager<ApplicationUser> signInManager, ILogger<HomeController> logger,
-                                ISearchData searchData)
+                                IAuthData authData)
         {
             _signInManager = signInManager;
             _logger = logger;
-            _searchData = searchData;
+            _authData = authData;
         }
 
         public IActionResult Index()
         {
-            try
+            /*try
             {
-                var resp = _searchData.GetSearches(3);
+                List<CategoryML> resp = MLService.GetBaseCategories();
+                foreach (CategoryML item in resp)
+                {
+                    CategoryML item2 = MLService.GetCategoryById(item.Id);
+                }
             }
-            catch (Exception e) { }
+            catch (Exception e) { }*/
+
+
             if (User.Identity.IsAuthenticated)
             {
                 return View();

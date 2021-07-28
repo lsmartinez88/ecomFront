@@ -8,10 +8,6 @@ namespace ecomFront.Models.DbFirstModels
 {
     public partial class DBFirstDbContext : DbContext
     {
-        public DBFirstDbContext()
-        {
-        }
-
         public DBFirstDbContext(DbContextOptions<DBFirstDbContext> options)
             : base(options)
         {
@@ -21,11 +17,17 @@ namespace ecomFront.Models.DbFirstModels
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<CategoryAttribute> CategoryAttributes { get; set; }
         public virtual DbSet<CategoryAttributeValue> CategoryAttributeValues { get; set; }
+
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
+
         public virtual DbSet<CriteriaAttribute> CriteriaAttributes { get; set; }
         public virtual DbSet<Criterion> Criteria { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Execution> Executions { get; set; }
         public virtual DbSet<Search> Searches { get; set; }
+        public virtual DbSet<State> States { get; set; }
+
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -190,6 +192,69 @@ namespace ecomFront.Models.DbFirstModels
                     .HasForeignKey(d => d.CategoryAttributeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_lhewwqb2xaq3fi4249a16v6in");
+            });
+
+            modelBuilder.Entity<City>(entity =>
+            {
+                entity.HasKey(e => e.IdCity)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("city");
+
+                entity.HasIndex(e => e.StateId, "FK_ogqc1b0omhdvgo6vojoj95hv7");
+
+                entity.Property(e => e.IdCity).HasColumnName("id_city");
+
+                entity.Property(e => e.Latitud)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("latitud");
+
+                entity.Property(e => e.Longitud)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("longitud");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.StateId)
+                    .IsRequired()
+                    .HasColumnName("state_id");
+
+                entity.Property(e => e.Version).HasColumnName("version");
+
+                entity.HasOne(d => d.State)
+                    .WithMany(p => p.Cities)
+                    .HasForeignKey(d => d.StateId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ogqc1b0omhdvgo6vojoj95hv7");
+            });
+
+            modelBuilder.Entity<Country>(entity =>
+            {
+                entity.HasKey(e => e.IdCountry)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("country");
+
+                entity.Property(e => e.IdCountry).HasColumnName("id_country");
+
+                entity.Property(e => e.Currency)
+                    .HasMaxLength(255)
+                    .HasColumnName("currency");
+
+                entity.Property(e => e.Latitud).HasColumnName("latitud");
+
+                entity.Property(e => e.Longitud).HasColumnName("longitud");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(255)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Version).HasColumnName("version");
             });
 
             modelBuilder.Entity<CriteriaAttribute>(entity =>
@@ -394,6 +459,35 @@ namespace ecomFront.Models.DbFirstModels
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_2ef0djn72ytqoh6k0c2f10w49");
+            });
+
+            modelBuilder.Entity<State>(entity =>
+            {
+                entity.HasKey(e => e.IdState)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("state");
+
+                entity.HasIndex(e => e.CountryId, "FK_lxoqjm8644epv72af3k3jpalx");
+
+                entity.Property(e => e.IdState).HasColumnName("id_state");
+
+                entity.Property(e => e.CountryId).HasColumnName("country_id");
+
+                entity.Property(e => e.Latitud).HasColumnName("latitud");
+
+                entity.Property(e => e.Longitud).HasColumnName("longitud");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(255)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Version).HasColumnName("version");
+
+                entity.HasOne(d => d.Country)
+                    .WithMany(p => p.States)
+                    .HasForeignKey(d => d.CountryId)
+                    .HasConstraintName("FK_lxoqjm8644epv72af3k3jpalx");
             });
 
             modelBuilder.Entity<User>(entity =>

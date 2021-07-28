@@ -12,16 +12,9 @@ using System.Threading.Tasks;
 
 namespace ecomFront.Services
 {
-    public class MLService
+    public static class MLService
     {
-        private static IAuthData _authData;
-
-        public MLService(IAuthData authData)
-        {
-            _authData = authData;
-        }
-
-        public Item GetItemById(String itemId)
+        public static Item GetItemById(String itemId)
         {
             HttpClient client = new HttpClient();
             String url = "https://api.mercadolibre.com/items/" + itemId;
@@ -57,7 +50,7 @@ namespace ecomFront.Services
             }
         }
 
-        public List<CategoryML> GetBaseCategories()
+        public static List<CategoryML> GetBaseCategories()
         {
             HttpClient client = new HttpClient();
             String url = "https://api.mercadolibre.com/sites/MLA/categories";
@@ -128,13 +121,13 @@ namespace ecomFront.Services
             }
         }
 
-        public static String GetAccessToken(Boolean refreshToken)
+        public static String GetAccessToken(Boolean refreshToken, IAuthData _authData)
         {
             List<Auth> tokenList = _authData.GetAuth();
             Auth auth = null;
              if (refreshToken)
              {
-                AuthML token = GetAccessToken("1586142976127673", "mBboRFhUNrkkNGaShPUqvMxPVO2iL97r");
+                AuthML token = GetAccessToken("1586142976127673", "mBboRFhUNrkkNGaShPUqvMxPVO2iL97r",_authData);
 
                 if (tokenList.Count == 0)
                 {
@@ -164,17 +157,17 @@ namespace ecomFront.Services
 
          }
 
-        public static AuthML GetAccessToken(String clientId, String clientSecret)
+        public static AuthML GetAccessToken(String clientId, String clientSecret, IAuthData _authData)
         {
             HttpClient client = new HttpClient();
             String url = "https://api.mercadolibre.com/oauth/token";
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url);
 
-            var param = new List<KeyValuePair<string, string>>
+            var param = new Dictionary<string, string>()
             {
-                new KeyValuePair<string, string>("grant_type", "client_credentials"),
-                new KeyValuePair<string, string>("client_id", clientId),
-                new KeyValuePair<string, string>("client_secret", clientSecret)
+                { "grant_type", "client_credentials" },
+                {"client_id", clientId},
+                {"client_secret", clientSecret }
             };
 
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

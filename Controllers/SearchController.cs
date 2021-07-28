@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ecomFront.Data;
+﻿using ecomFront.Data;
 using ecomFront.Models;
-using ecomFront.Models.DbFirstModels;
+using ecomFront.Models.SearchViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,14 +8,14 @@ using Microsoft.Extensions.Logging;
 
 namespace ecomFront.Controllers
 {
-    
+    [Authorize]
     public class SearchController : Controller
     {
         private UserManager<ApplicationUser> _userManager;
         private readonly ILogger<SearchController> _logger;
         private ISearchData _searchData;
 
-        public SearchController(UserManager<ApplicationUser> userManager, 
+        public SearchController(UserManager<ApplicationUser> userManager,
                                 ILogger<SearchController> logger,
                                 ISearchData searchData)
         {
@@ -30,18 +26,26 @@ namespace ecomFront.Controllers
 
         public IActionResult Searches()
         {
-           var searches = _searchData.GetSearches(6);
+            var userid = 3; //reemplazar por el user asociado al identity
 
-            if (User.Identity.IsAuthenticated)
+            var searchesVM = new SearchesViewModel
             {
-                return View();
-            }
-            return LocalRedirect("/Identity/Account/Login");
+                Searches = _searchData.GetFullSearches(userid)
+            };
+
+            return View(searchesVM);
         }
 
         public IActionResult Criteria(int? searchId)
         {
-            return View();
+            var criteriaListViewModel = new CriteriaListViewModel();
+            var criterias = _searchData.GetFullCriteriasBySearchId(searchId);
+            foreach (var criteria in criterias)
+            {
+                var cti = new CriteriaItemList(criteria);
+                criteriaListViewModel.criteriaItems.Add(cti);
+            }
+            return View(criteriaListViewModel);
         }
     }
 }
