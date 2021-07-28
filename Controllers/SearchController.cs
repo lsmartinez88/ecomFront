@@ -30,7 +30,7 @@ namespace ecomFront.Controllers
 
         public IActionResult Searches()
         {
-            var searches = _searchData.GetSearches(6);
+           var searches = _searchData.GetSearches(6);
 
             if (User.Identity.IsAuthenticated)
             {

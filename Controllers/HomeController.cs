@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ecomFront.Models;
 using Microsoft.AspNetCore.Identity;
+using ecomFront.Services;
+using ecomFront.Data;
 
 namespace ecomFront.Controllers
 {
@@ -14,15 +16,22 @@ namespace ecomFront.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly SignInManager<ApplicationUser> _signInManager;
-
-        public HomeController(SignInManager<ApplicationUser> signInManager, ILogger<HomeController> logger)
+        private ISearchData _searchData;
+        public HomeController(SignInManager<ApplicationUser> signInManager, ILogger<HomeController> logger,
+                                ISearchData searchData)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _searchData = searchData;
         }
 
         public IActionResult Index()
         {
+            try
+            {
+                var resp = _searchData.GetSearches(3);
+            }
+            catch (Exception e) { }
             if (User.Identity.IsAuthenticated)
             {
                 return View();

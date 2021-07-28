@@ -18,6 +18,15 @@ namespace ecomFront.Models.DbFirstModels
         }
 
         public virtual DbSet<Auth> Auths { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<CategoryAttribute> CategoryAttributes { get; set; }
+        public virtual DbSet<CategoryAttributeValue> CategoryAttributeValues { get; set; }
+        public virtual DbSet<CriteriaAttribute> CriteriaAttributes { get; set; }
+        public virtual DbSet<Criterion> Criteria { get; set; }
+        public virtual DbSet<Event> Events { get; set; }
+        public virtual DbSet<Execution> Executions { get; set; }
+        public virtual DbSet<Search> Searches { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -65,6 +74,341 @@ namespace ecomFront.Models.DbFirstModels
                     .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("token_type");
+
+                entity.Property(e => e.Version).HasColumnName("version");
+            });
+
+            modelBuilder.Entity<Category>(entity =>
+            {
+                entity.HasKey(e => e.IdCategoryml)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("category");
+
+                entity.Property(e => e.IdCategoryml).HasColumnName("id_categoryml");
+
+                entity.Property(e => e.FechaUltimaActualizacion)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("fecha_ultima_actualizacion");
+
+                entity.Property(e => e.IdCategoryPadre)
+                    .HasMaxLength(255)
+                    .HasColumnName("id_category_padre");
+
+                entity.Property(e => e.Level).HasColumnName("level");
+
+                entity.Property(e => e.Linkml)
+                    .HasMaxLength(255)
+                    .HasColumnName("linkml");
+
+                entity.Property(e => e.Nameml)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("nameml");
+
+                entity.Property(e => e.Pictureml)
+                    .HasMaxLength(255)
+                    .HasColumnName("pictureml");
+
+                entity.Property(e => e.TotalItemsml).HasColumnName("total_itemsml");
+
+                entity.Property(e => e.Version).HasColumnName("version");
+            });
+
+            modelBuilder.Entity<CategoryAttribute>(entity =>
+            {
+                entity.HasKey(e => e.IdCategoryAttribute)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("category_attributes");
+
+                entity.HasIndex(e => e.CategoryId, "FK_f7naqg5qirisgeu2t617ttdmt");
+
+                entity.Property(e => e.IdCategoryAttribute).HasColumnName("id_category_attribute");
+
+                entity.Property(e => e.AttributeGroupIdml)
+                    .HasMaxLength(255)
+                    .HasColumnName("attribute_group_idml");
+
+                entity.Property(e => e.AttributeGroupNameml)
+                    .HasMaxLength(255)
+                    .HasColumnName("attribute_group_nameml");
+
+                entity.Property(e => e.CategoryId)
+                    .IsRequired()
+                    .HasColumnName("category_id");
+
+                entity.Property(e => e.IdAttributeml)
+                    .HasMaxLength(255)
+                    .HasColumnName("id_attributeml");
+
+                entity.Property(e => e.Nameml)
+                    .HasMaxLength(255)
+                    .HasColumnName("nameml");
+
+                entity.Property(e => e.ValueTypeml)
+                    .HasMaxLength(255)
+                    .HasColumnName("value_typeml");
+
+                entity.Property(e => e.Version).HasColumnName("version");
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.CategoryAttributes)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_f7naqg5qirisgeu2t617ttdmt");
+            });
+
+            modelBuilder.Entity<CategoryAttributeValue>(entity =>
+            {
+                entity.HasKey(e => e.IdCategoryAttributeValue)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("category_attribute_values");
+
+                entity.HasIndex(e => e.CategoryAttributeId, "FK_lhewwqb2xaq3fi4249a16v6in");
+
+                entity.Property(e => e.IdCategoryAttributeValue).HasColumnName("id_category_attribute_value");
+
+                entity.Property(e => e.CategoryAttributeId).HasColumnName("category_attribute_id");
+
+                entity.Property(e => e.IdValueml)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("id_valueml");
+
+                entity.Property(e => e.Nameml)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("nameml");
+
+                entity.Property(e => e.Version).HasColumnName("version");
+
+                entity.HasOne(d => d.CategoryAttribute)
+                    .WithMany(p => p.CategoryAttributeValues)
+                    .HasForeignKey(d => d.CategoryAttributeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_lhewwqb2xaq3fi4249a16v6in");
+            });
+
+            modelBuilder.Entity<CriteriaAttribute>(entity =>
+            {
+                entity.HasKey(e => e.IdCriteriaAttribute)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("criteria_attributes");
+
+                entity.HasIndex(e => e.CriteriaId, "FK_hagiuai14q0ealdyv0o2ot4uh");
+
+                entity.Property(e => e.IdCriteriaAttribute).HasColumnName("id_criteria_attribute");
+
+                entity.Property(e => e.CriteriaId).HasColumnName("criteria_id");
+
+                entity.Property(e => e.IdAttributeValueml)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("id_attribute_valueml");
+
+                entity.Property(e => e.IdAttributeml)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("id_attributeml");
+
+                entity.Property(e => e.NameAttributeValueml)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("name_attribute_valueml");
+
+                entity.Property(e => e.NameAttributeml)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("name_attributeml");
+
+                entity.Property(e => e.Version).HasColumnName("version");
+
+                entity.HasOne(d => d.Criteria)
+                    .WithMany(p => p.CriteriaAttributes)
+                    .HasForeignKey(d => d.CriteriaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_hagiuai14q0ealdyv0o2ot4uh");
+            });
+
+            modelBuilder.Entity<Criterion>(entity =>
+            {
+                entity.HasKey(e => e.IdCriteria)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("criteria");
+
+                entity.HasIndex(e => e.SearchId, "FK_ilujai0v9b9t51ves787q0c14");
+
+                entity.HasIndex(e => e.CategoryId, "FK_lpl9nnvgafr7d8q1oicgxii49");
+
+                entity.Property(e => e.IdCriteria).HasColumnName("id_criteria");
+
+                entity.Property(e => e.CategoryId)
+                    .IsRequired()
+                    .HasColumnName("category_id");
+
+                entity.Property(e => e.ItemCondition)
+                    .HasMaxLength(255)
+                    .HasColumnName("item_condition");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.RelatedLink)
+                    .HasMaxLength(255)
+                    .HasColumnName("related_link");
+
+                entity.Property(e => e.SearchCriteria)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("search_criteria");
+
+                entity.Property(e => e.SearchId).HasColumnName("search_id");
+
+                entity.Property(e => e.Version).HasColumnName("version");
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.Criteria)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_lpl9nnvgafr7d8q1oicgxii49");
+
+                entity.HasOne(d => d.Search)
+                    .WithMany(p => p.Criteria)
+                    .HasForeignKey(d => d.SearchId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ilujai0v9b9t51ves787q0c14");
+            });
+
+            modelBuilder.Entity<Event>(entity =>
+            {
+                entity.HasKey(e => e.IdEvent)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("events");
+
+                entity.Property(e => e.IdEvent).HasColumnName("id_event");
+
+                entity.Property(e => e.Estado)
+                    .HasColumnType("bit(1)")
+                    .HasColumnName("estado");
+
+                entity.Property(e => e.FechaDesde)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fecha_desde");
+
+                entity.Property(e => e.FechaHasta)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fecha_hasta");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(255)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Version).HasColumnName("version");
+            });
+
+            modelBuilder.Entity<Execution>(entity =>
+            {
+                entity.HasKey(e => e.IdExecution)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("executions");
+
+                entity.HasIndex(e => e.SearchId, "FK_n99e6gu7gdsmy7yotcxs45out");
+
+                entity.Property(e => e.IdExecution).HasColumnName("id_execution");
+
+                entity.Property(e => e.DateCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date_created");
+
+                entity.Property(e => e.DateExecuted)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date_executed");
+
+                entity.Property(e => e.DateFinished)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date_finished");
+
+                entity.Property(e => e.ErrorDescription)
+                    .HasMaxLength(255)
+                    .HasColumnName("error_description");
+
+                entity.Property(e => e.ExecutionStatus)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("execution_status");
+
+                entity.Property(e => e.ListingQtty).HasColumnName("listing_qtty");
+
+                entity.Property(e => e.SearchId).HasColumnName("search_id");
+
+                entity.Property(e => e.Version).HasColumnName("version");
+
+                entity.HasOne(d => d.Search)
+                    .WithMany(p => p.Executions)
+                    .HasForeignKey(d => d.SearchId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_n99e6gu7gdsmy7yotcxs45out");
+            });
+
+            modelBuilder.Entity<Search>(entity =>
+            {
+                entity.HasKey(e => e.IdSearch)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("searches");
+
+                entity.HasIndex(e => e.UserId, "FK_2ef0djn72ytqoh6k0c2f10w49");
+
+                entity.Property(e => e.IdSearch).HasColumnName("id_search");
+
+                entity.Property(e => e.CatalogProductIdml)
+                    .HasMaxLength(255)
+                    .HasColumnName("catalog_product_idml");
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.ListingPermalink)
+                    .HasMaxLength(255)
+                    .HasColumnName("listing_permalink");
+
+                entity.Property(e => e.SearchType)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("search_type");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.Property(e => e.Version).HasColumnName("version");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Searches)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_2ef0djn72ytqoh6k0c2f10w49");
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(e => e.IdUser)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("users");
+
+                entity.Property(e => e.IdUser).HasColumnName("id_user");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("name");
 
                 entity.Property(e => e.Version).HasColumnName("version");
             });
