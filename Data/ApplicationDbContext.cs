@@ -14,6 +14,17 @@ namespace ecomFront.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
             Database.SetCommandTimeout(300);
+
+        }
+
+        public virtual DbSet<ListingGrouping> ListingGrouping { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ListingGrouping>()
+                .HasKey(c => new { c.CriteriaId, c.ExecutionId, c.GroupingType, c.Clasification });
         }
     }
 }

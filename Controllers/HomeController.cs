@@ -19,25 +19,23 @@ namespace ecomFront.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private IAuthData _authData;
+        private IGroupData _groupData;
 
         public HomeController(SignInManager<ApplicationUser> signInManager, ILogger<HomeController> logger,
-                                IAuthData authData)
+                                IGroupData groupData)
         {
             _signInManager = signInManager;
             _logger = logger;
-            _authData = authData;
+            _groupData = groupData;
         }
 
         public IActionResult Index()
         {
-            /*try
+           /* try
             {
-                List<CategoryML> resp = MLService.GetBaseCategories();
-                foreach (CategoryML item in resp)
-                {
-                    CategoryML item2 = MLService.GetCategoryById(item.Id);
-                }
+                List<ListingGrouping> resp = _groupData.GetGrouping(3, 3, "PAYMENT_METHODS");
+                List<ListingGrouping> resp3 = _groupData.GetGroupingByExecution(3, "PAYMENT_METHODS");
+
             }
             catch (Exception e) { }*/
 
