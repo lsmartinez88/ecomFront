@@ -5,3 +5,8 @@
  *  Place here all your custom js. Make sure it's loaded after app.js
  *
  * ---------------------------------------------------------------------------- */
+var colores = ["#25b372", "#45748a", "#f58646", "#2196F3",    "#8e70c1", "#ffd648", "#f35c86", "#333",
+    "#3F51B5", "#2196F3", "#00BCD4", "#e9f5fe",    "#45748a", "#e9f5fe", "#45748a", "#fdeeee",
+    "#fde7da", "#25b372", "#d3f0e3", "#00BCD4",    "#ccf2f6", "#999", "#555", "#f58646",
+    "#fdeeee", "#fff", "#eee", "#009688", "#cceae7",    "#d9dcf0", "#e8e2f3", "#fddee7", "#fff7da",
+    "#dae3e8", "#d3f0e3", "#ccf2f6", "#fde7da"]
