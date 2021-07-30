@@ -11,5 +11,6 @@ namespace ecomFront.Data
     {
         List<ListingGrouping> GetGrouping(int CriteriaId, int ExecutionId, String GroupingType);
         List<ListingGrouping> GetGroupingByExecution(int ExecutionId, String GroupingType);
+
     }
 }

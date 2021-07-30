@@ -31,7 +31,7 @@ namespace ecomFront.Controllers
 
         public IActionResult Index()
         {
-           /* try
+            /*try
             {
                 List<ListingGrouping> resp = _groupData.GetGrouping(3, 3, "PAYMENT_METHODS");
                 List<ListingGrouping> resp3 = _groupData.GetGroupingByExecution(3, "PAYMENT_METHODS");

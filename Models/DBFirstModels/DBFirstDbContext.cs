@@ -8,6 +8,7 @@ namespace ecomFront.Models.DbFirstModels
 {
     public partial class DBFirstDbContext : DbContext
     {
+
         public DBFirstDbContext(DbContextOptions<DBFirstDbContext> options)
             : base(options)
         {
@@ -17,17 +18,14 @@ namespace ecomFront.Models.DbFirstModels
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<CategoryAttribute> CategoryAttributes { get; set; }
         public virtual DbSet<CategoryAttributeValue> CategoryAttributeValues { get; set; }
-
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
-
         public virtual DbSet<CriteriaAttribute> CriteriaAttributes { get; set; }
         public virtual DbSet<Criterion> Criteria { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Execution> Executions { get; set; }
         public virtual DbSet<Search> Searches { get; set; }
         public virtual DbSet<State> States { get; set; }
-
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

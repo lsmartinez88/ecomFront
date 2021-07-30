@@ -45,14 +45,14 @@ namespace ecomFront.Controllers
         public JsonResult GetGroupingInfoPaymentMethod(int executionId)
         {
             List<ListingGrouping> groupInfo = _groupData.GetGroupingByExecution(executionId, GroupingType.PaymentMethod);            
-            return Json(groupInfo.Select(gi => new { clasification = gi.Clasification, qtty = gi.Quantity }).ToList());
+            return Json(groupInfo.Select(gi => new { clasification = gi.ItemGrouping.GroupDescription, qtty = gi.Quantity }).ToList());
         }
 
         [HttpPost]
         public JsonResult GetGroupingInfoShippingMethod(int executionId)
         {
             List<ListingGrouping> groupInfo = _groupData.GetGroupingByExecution(executionId, GroupingType.ShippingMethod);
-            return Json(groupInfo.Select(gi => new { clasification = gi.Clasification, qtty = gi.Quantity }).ToList());
+            return Json(groupInfo.Select(gi => new { clasification = gi.ItemGrouping.GroupDescription, qtty = gi.Quantity }).ToList());
         }
     }
 }

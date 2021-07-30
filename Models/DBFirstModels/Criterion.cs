@@ -20,6 +20,7 @@ namespace ecomFront.Models.DbFirstModels
         public long SearchId { get; set; }
         public string SearchCriteria { get; set; }
         public string ItemCondition { get; set; }
+
         public virtual Category Category { get; set; }
         public virtual Search Search { get; set; }
         public virtual ICollection<CriteriaAttribute> CriteriaAttributes { get; set; }

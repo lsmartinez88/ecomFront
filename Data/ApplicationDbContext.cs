@@ -18,13 +18,17 @@ namespace ecomFront.Data
         }
 
         public virtual DbSet<ListingGrouping> ListingGrouping { get; set; }
+        public virtual DbSet<ItemGrouping> ItemGrouping { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<ListingGrouping>()
-                .HasKey(c => new { c.CriteriaId, c.ExecutionId, c.GroupingType, c.Clasification });
+                .HasKey(c => new { c.CriteriaId, c.ExecutionId, c.GroupingType , c.ItemGroupingId });
+
+            modelBuilder.Entity<ItemGrouping>()
+            .HasAlternateKey(a => new { a.GroupingType, a.IdGrouping });
         }
     }
 }

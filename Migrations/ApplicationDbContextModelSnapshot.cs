@@ -222,6 +222,35 @@ namespace ecomFront.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("ecomFront.Models.ItemGrouping", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("GroupDescription")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("GroupingType")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("IdGrouping")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nameml")
+                        .HasColumnType("longtext");
+
+                    b.Property<long>("Version")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("GroupingType", "IdGrouping");
+
+                    b.ToTable("ItemGrouping");
+                });
+
             modelBuilder.Entity("ecomFront.Models.ListingGrouping", b =>
                 {
                     b.Property<int>("CriteriaId")
@@ -233,8 +262,8 @@ namespace ecomFront.Migrations
                     b.Property<string>("GroupingType")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("Clasification")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("ItemGroupingId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime(6)");
@@ -242,7 +271,9 @@ namespace ecomFront.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("CriteriaId", "ExecutionId", "GroupingType", "Clasification");
+                    b.HasKey("CriteriaId", "ExecutionId", "GroupingType", "ItemGroupingId");
+
+                    b.HasIndex("ItemGroupingId");
 
                     b.ToTable("front_listing_group");
                 });
@@ -296,6 +327,22 @@ namespace ecomFront.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ecomFront.Models.ListingGrouping", b =>
+                {
+                    b.HasOne("ecomFront.Models.ItemGrouping", "ItemGrouping")
+                        .WithMany("ListingGroupings")
+                        .HasForeignKey("ItemGroupingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ItemGrouping");
+                });
+
+            modelBuilder.Entity("ecomFront.Models.ItemGrouping", b =>
+                {
+                    b.Navigation("ListingGroupings");
                 });
 #pragma warning restore 612, 618
         }

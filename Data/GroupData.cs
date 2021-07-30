@@ -27,14 +27,21 @@ namespace ecomFront.Data
 
         public List<ListingGrouping> GetGroupingByExecution(int ExecutionId, string GroupingType)
         {
-            return _contextModel.ListingGrouping.Where(x => x.ExecutionId.Equals(ExecutionId)).Where(x => x.GroupingType.Equals(GroupingType)).GroupBy(x => new { x.ExecutionId, x.GroupingType, x.Clasification })
+            List<ListingGrouping> preLista = _contextModel.ListingGrouping.Where(x => x.ExecutionId.Equals(ExecutionId)).Where(x => x.GroupingType.Equals(GroupingType)).GroupBy(x => new { x.ExecutionId, x.GroupingType, x.ItemGroupingId })
                     .Select(x => new ListingGrouping
                     {
                         ExecutionId = x.Key.ExecutionId,
                         GroupingType = x.Key.GroupingType,
-                        Clasification = x.Key.Clasification,
+                        ItemGroupingId = x.Key.ItemGroupingId,
                         Quantity = x.Sum(i => i.Quantity)
                     }).ToList();
+
+            foreach (var item in preLista)
+            {
+                item.ItemGrouping = _contextModel.ItemGrouping.Find(item.ItemGroupingId);
+            }
+
+            return preLista;
         }
     }
 }

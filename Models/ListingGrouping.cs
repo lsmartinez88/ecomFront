@@ -14,9 +14,10 @@ namespace ecomFront.Models
         public int CriteriaId { get; set; }
         public int ExecutionId { get; set; }
         public String GroupingType { get; set; }
-        public String Clasification { get; set; }
         public int Quantity { get; set; }
         public DateTime CreationDate { get; set; }
+        public int ItemGroupingId { get; set; }
+        public virtual ItemGrouping ItemGrouping { get; set; }
 
     }
 }
