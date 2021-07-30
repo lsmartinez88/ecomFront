@@ -11,12 +11,12 @@
 <div class="page-header page-header-light">
     <div class="page-header-content header-elements-lg-inline">
         <div class="page-title d-flex">
-            <h4><i class="icon-search4 mr-2"></i> <span class="font-weight-semibold">Criterios <i class="icon-arrow-right13"></i> </span> Muñecos Impresos en 3D</h4>
+            <h4><i class="icon-search4 mr-2"></i> <span class="font-weight-semibold">Criterios <i class="icon-arrow-right13"></i> </span> @Model.search.Description</h4>
             <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
         </div>
         <div class="header-elements d-none">
             <div class="d-flex justify-content-center">
-                <a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
+                <a asp-area="" asp-controller="Search" asp-action="Executions" asp-route-searchId="@Model.search.IdSearch" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
                     <i class="icon-cog3 text-pink"></i>
                     <span>Ejecuciones</span>
                 </a>

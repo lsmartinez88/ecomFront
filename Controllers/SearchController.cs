@@ -38,7 +38,11 @@ namespace ecomFront.Controllers
 
         public IActionResult Criteria(int? searchId)
         {
-            var criteriaListViewModel = new CriteriaListViewModel();
+            var criteriaListViewModel = new CriteriaListViewModel
+            {
+                search = _searchData.GetSearch(searchId)
+            };
+
             var criterias = _searchData.GetFullCriteriasBySearchId(searchId);
             foreach (var criteria in criterias)
             {
@@ -46,6 +50,16 @@ namespace ecomFront.Controllers
                 criteriaListViewModel.criteriaItems.Add(cti);
             }
             return View(criteriaListViewModel);
+        }
+
+        public IActionResult Executions(int? searchId)
+        {
+            var executionsListViewModel = new ExecutionsListViewModel
+            {
+                search = _searchData.GetSearch(searchId),
+                ExecutionsList = _searchData.GetFullExecutionsBySearchId(searchId)
+            };
+            return View(executionsListViewModel);
         }
     }
 }

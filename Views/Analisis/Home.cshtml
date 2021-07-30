@@ -1,0 +1,56 @@
+﻿@using ecomFront.Models.SearchViewModels
+@using ecomFront.Common
+
+@{
+    ViewData["Title"] = "Home Analisis";
+    Layout = "_Layout";
+}
+@model HomeAnalisisViewModel
+<!-- Page header -->
+<div class="page-header page-header-light">
+    <div class="page-header-content header-elements-lg-inline">
+        <div class="header-elements d-none">
+            <div class="d-flex justify-content-center">
+                <a asp-area="" asp-controller="Pricing" asp-action="Home" asp-route-executionId="" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
+                    <i class="icon-coin-dollar icon-3x text-pink"></i>
+                    <span>Precios</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-header page-header-light">
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                <a asp-area="" asp-controller="Search" asp-action="Searches" class="breadcrumb-item"> Busqueda</a>
+                <span class="breadcrumb-item active">@Model.Search.Description</span>
+            </div>
+            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+        </div>
+        <div class="header-elements d-none">
+            <div class="breadcrumb justify-content-center">
+                <a href="#" class="breadcrumb-elements-item">
+                    <i class="icon-comment-discussion mr-2"></i>
+                    Necesito Ayuda
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+<div class="content">
+    <div class="row">
+        <div class="col-sm-6 col-xl-3">
+            <!-- Donut with details -->
+            <div class="card card-body text-center">
+                <h6 class="font-weight-semibold mb-0 mt-1">Publicaciones</h6>
+                <div class="font-size-sm text-muted mb-3">Medio de Pago</div>
+                <div class="svg-center" id="donut_basic_details"></div>
+            </div>
+            <!-- /donut with details -->
+        </div>
+    </div>
+</div>

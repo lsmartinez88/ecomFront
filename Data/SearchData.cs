@@ -23,6 +23,11 @@ namespace ecomFront.Data
             return _contextDbFirst.Categories.FirstOrDefault(c => c.IdCategoryml == idCategory);
         }
 
+        public Execution GetExecution(int? executionId)
+        {
+            return _contextDbFirst.Executions.FirstOrDefault(e => e.IdExecution == executionId);
+        }
+
         public List<Criterion> GetFullCriteriasBySearchId(int? SearchId)
         {
             return _contextDbFirst.Criteria
@@ -30,6 +35,14 @@ namespace ecomFront.Data
                     .Include(c => c.CriteriaAttributes)
                     .AsSplitQuery()
                     .Where(c => c.SearchId == SearchId)
+                    .ToList();
+        }
+
+        public List<Execution> GetFullExecutionsBySearchId(int? SearchId)
+        {
+            return _contextDbFirst.Executions
+                .Include(e => e.Search)
+                    .Where(e => e.SearchId == SearchId)
                     .ToList();
         }
 
@@ -44,6 +57,13 @@ namespace ecomFront.Data
                         .Where(s => s.UserId == UserId)
                         .AsSplitQuery()
                         .ToList();
+        }
+
+
+        public Search GetSearch(int? searchId)
+        {
+            return _contextDbFirst.Searches
+                .FirstOrDefault(s => s.IdSearch == searchId);
         }
     }
 }
