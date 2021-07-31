@@ -10,5 +10,22 @@ namespace ecomFront.Common
         public const string
             PaymentMethod = "PAYMENT_METHODS",
             ShippingMethod = "SHIPPING_METHODS";
+
+        private const string
+            PaymentMethodName = "Metodos de Pago",
+            ShippingMethodName = "Formas de Envio";
+
+        public static string GetName(string groupingType)
+        {
+            switch (groupingType)
+            {
+                case PaymentMethod:
+                    return PaymentMethodName;
+                case ShippingMethod:
+                    return ShippingMethodName;
+                default:
+                    return ""; 
+            }            
+        }
     }
 }

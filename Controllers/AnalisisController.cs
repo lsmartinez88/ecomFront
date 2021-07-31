@@ -1,7 +1,7 @@
 ﻿using ecomFront.Common;
 using ecomFront.Data;
 using ecomFront.Models;
-using ecomFront.Models.SearchViewModels;
+using ecomFront.Models.AnalisisViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -53,6 +53,26 @@ namespace ecomFront.Controllers
         {
             List<ListingGrouping> groupInfo = _groupData.GetGroupingByExecution(executionId, GroupingType.ShippingMethod);
             return Json(groupInfo.Select(gi => new { clasification = gi.ItemGrouping.GroupDescription, qtty = gi.Quantity }).ToList());
+        }
+
+        [HttpPost]
+        public JsonResult GetGroupingInfoFromCategories(int executionId, int criteriaId, string groupingType)
+        {
+            List<ListingGrouping> groupInfo = _groupData.GetGrouping(criteriaId, executionId, groupingType);
+            return Json(groupInfo.Select(gi => new { clasification = gi.ItemGrouping.GroupDescription, qtty = gi.Quantity }).ToList());            
+        }
+
+        public IActionResult GrouppingCategories(int executionId, string grouping)
+        {
+            var grouppingCategoriesViewModel = new GrouppingCategoriesViewModel
+            {
+                Execution = _searchData.GetExecution(executionId)
+            };
+            grouppingCategoriesViewModel.Search = _searchData.GetSearch((int)grouppingCategoriesViewModel.Execution.SearchId);
+            grouppingCategoriesViewModel.Criteria = _searchData.GetFullCriteriasBySearchId((int)grouppingCategoriesViewModel.Search.IdSearch);
+            grouppingCategoriesViewModel.GroupingMethod = grouping;
+
+            return View(grouppingCategoriesViewModel);
         }
     }
 }

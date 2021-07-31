@@ -1,0 +1,78 @@
+﻿@using ecomFront.Models.AnalisisViewModels
+@using ecomFront.Common
+@using Newtonsoft.Json;
+
+@{
+    ViewData["Title"] = "Agrupamiento por Categorias";
+ Layout = "_Layout";
+}
+@model GrouppingCategoriesViewModel
+
+<div class="page-header page-header-light">
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                <a asp-area="" asp-controller="Search" asp-action="Searches" class="breadcrumb-item"> Busqueda</a>
+                <a asp-area="" asp-controller="Analisis" asp-action="Home" asp-route-executionId="@Model.Execution.IdExecution" class="breadcrumb-item">@Model.Search.Description</a>
+                <span class="breadcrumb-item active">@GroupingType.GetName(Model.GroupingMethod)</span>
+            </div>
+            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+<div class="content">
+    <div class="row">
+        @foreach (var criterio in Model.Criteria)
+        {
+            <div class="col-sm-6 col-xl-3">
+                <!-- Donut with details -->
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h6 class="font-weight-semibold mb-0 mt-1">@criterio.Category.Nameml</h6>
+                        <div class="font-size-sm text-muted mb-3"># items</div>
+                        <div class="svg-center" id="groupingInfo_@criterio.IdCriteria"></div>
+                    </div>
+                </div>
+                <!-- /donut with details -->
+            </div>
+        }
+
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <script type="text/javascript">
+        var criterios =  @Html.Raw(JsonConvert.SerializeObject(Model.Criteria, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            $.each(criterios, function (key, value) {
+                _showGroupingInfo("#groupingInfo_" + value.IdCriteria, 120, value.IdCriteria);
+            });
+        });
+
+        var _showGroupingInfo = function (elementName, size, idCriteria) {
+            $.post('/Analisis/GetGroupingInfoFromCategories', { executionId: @Model.Execution.IdExecution, criteriaId: idCriteria, groupingType: "@Model.GroupingMethod" })
+                .done(function (data) {
+                    var info = []
+                    $.each(data, function (key, value) {
+                        var itemInfo = {
+                            status: value.clasification,
+                            value: value.qtty,
+                            color: colores[key]
+                        };
+                        info.push(itemInfo);
+                    })
+
+                    _animatedDonutWithLegend(elementName, size, info);
+                })
+                .fail(function (e) {
+                    $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
+                });
+        }
+    </script>
+}

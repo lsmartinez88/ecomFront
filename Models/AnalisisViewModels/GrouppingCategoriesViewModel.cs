@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace ecomFront.Models.AnalisisViewModels
 {
-    public class HomeAnalisisViewModel
+    public class GrouppingCategoriesViewModel
     {
-        public HomeAnalisisViewModel()
+        public GrouppingCategoriesViewModel()
         {
         }
         public Search Search{ get; set; }
         public Execution Execution { get; set; }
         public List<Criterion> Criteria{ get; set; }
+        public string GroupingMethod { get; set; }
     }
 }
