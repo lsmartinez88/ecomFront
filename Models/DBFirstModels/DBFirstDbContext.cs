@@ -9,6 +9,7 @@ namespace ecomFront.Models.DbFirstModels
     public partial class DBFirstDbContext : DbContext
     {
 
+
         public DBFirstDbContext(DbContextOptions<DBFirstDbContext> options)
             : base(options)
         {
@@ -451,12 +452,6 @@ namespace ecomFront.Models.DbFirstModels
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.Property(e => e.Version).HasColumnName("version");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Searches)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_2ef0djn72ytqoh6k0c2f10w49");
             });
 
             modelBuilder.Entity<State>(entity =>

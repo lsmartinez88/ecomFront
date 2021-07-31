@@ -8,7 +8,7 @@ namespace ecomFront.Data
 {
     public interface ISearchData
     {
-        List<Search> GetFullSearches(int UserId);
+        List<Search> GetFullSearches(string UserId);
         Search GetSearch(int? searchId);
         Execution GetExecution(int? executionId);
 

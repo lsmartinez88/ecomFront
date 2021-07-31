@@ -26,7 +26,7 @@ namespace ecomFront.Controllers
 
         public IActionResult Searches()
         {
-            var userid = 3; //reemplazar por el user asociado al identity
+            var userid = _userManager.GetUserId(HttpContext.User);
 
             var searchesVM = new SearchesViewModel
             {

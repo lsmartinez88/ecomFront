@@ -46,7 +46,7 @@ namespace ecomFront.Data
                     .ToList();
         }
 
-        public List<Search> GetFullSearches(int UserId)
+        public List<Search> GetFullSearches(string UserId)
         {
             return _contextDbFirst.Searches
                         .Include(s => s.Criteria)

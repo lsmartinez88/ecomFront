@@ -36,10 +36,7 @@ namespace ecomFront.Data
                         Quantity = x.Sum(i => i.Quantity)
                     }).ToList();
 
-            foreach (var item in preLista)
-            {
-                item.ItemGrouping = _contextModel.ItemGrouping.Find(item.ItemGroupingId);
-            }
+            preLista.ForEach(li => { li.ItemGrouping = _contextModel.ItemGrouping.Find(li.ItemGroupingId); });
 
             return preLista;
         }
