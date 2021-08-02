@@ -40,5 +40,21 @@ namespace ecomFront.Data
 
             return preLista;
         }
+
+        public List<ListingIndicador> GetIndicador(int CriteriaId, int ExecutionId)
+        {
+            return _contextModel.ListingIndicador.Where(li => li.CriteriaId.Equals(CriteriaId)).Where(li => li.ExecutionId.Equals(ExecutionId)).ToList();
+        }
+
+        public List<ListingIndicador> GetIndicadorByExecution(int ExecutionId)
+        {
+            return _contextModel.ListingIndicador.Where(x => x.ExecutionId.Equals(ExecutionId)).GroupBy(x => new { x.ExecutionId, x.TipoIndicador })
+                    .Select(x => new ListingIndicador
+                    {
+                        ExecutionId = x.Key.ExecutionId,
+                        TipoIndicador = x.Key.TipoIndicador,
+                        Valor = x.Sum(i => i.Valor)
+                    }).ToList();
+        }
     }
 }
