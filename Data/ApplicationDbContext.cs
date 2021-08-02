@@ -19,6 +19,7 @@ namespace ecomFront.Data
 
         public virtual DbSet<ListingGrouping> ListingGrouping { get; set; }
         public virtual DbSet<ItemGrouping> ItemGrouping { get; set; }
+        public virtual DbSet<ListingIndicador> ListingIndicador { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,6 +30,9 @@ namespace ecomFront.Data
 
             modelBuilder.Entity<ItemGrouping>()
             .HasAlternateKey(a => new { a.GroupingType, a.IdGrouping });
+
+            modelBuilder.Entity<ListingIndicador>()
+            .HasKey(a => new { a.CriteriaId, a.ExecutionId, a.TipoIndicador });
         }
     }
 }
