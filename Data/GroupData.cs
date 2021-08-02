@@ -22,7 +22,7 @@ namespace ecomFront.Data
 
         public List<ListingGrouping> GetGrouping(int CriteriaId, int ExecutionId, string GroupingType)
         {
-            return _contextModel.ListingGrouping.Where(x => x.CriteriaId.Equals(CriteriaId)).Where(x => x.ExecutionId.Equals(ExecutionId)).Where(x => x.GroupingType.Equals(GroupingType)).ToList();
+            return _contextModel.ListingGrouping.Include(li => li.ItemGrouping).Where(x => x.CriteriaId.Equals(CriteriaId)).Where(x => x.ExecutionId.Equals(ExecutionId)).Where(x => x.GroupingType.Equals(GroupingType)).ToList();
         }
 
         public List<ListingGrouping> GetGroupingByExecution(int ExecutionId, string GroupingType)
