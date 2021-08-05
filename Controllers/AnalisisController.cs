@@ -38,6 +38,7 @@ namespace ecomFront.Controllers
             };
             homeAnalisisListViewModel.Search = _searchData.GetSearch((int)homeAnalisisListViewModel.Execution.SearchId);
             homeAnalisisListViewModel.Criteria = _searchData.GetFullCriteriasBySearchId((int)homeAnalisisListViewModel.Search.IdSearch);
+            homeAnalisisListViewModel.Indicadores = _groupData.GetIndicadorByExecution((int)executionId);
             return View(homeAnalisisListViewModel);
         }
 

@@ -14,5 +14,6 @@ namespace ecomFront.Models.AnalisisViewModels
         public Search Search{ get; set; }
         public Execution Execution { get; set; }
         public List<Criterion> Criteria{ get; set; }
+        public List<ListingIndicador> Indicadores { get; set; }
     }
 }

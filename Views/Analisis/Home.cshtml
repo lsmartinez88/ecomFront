@@ -57,13 +57,13 @@
                         <div class="d-flex align-items-center">
                             <div class="d-inline-flex">
                                 @*
-            <a href="#" class="btn btn-light btn-icon btn-sm rounded-pill mr-2"><i class="icon-mic2 position-static"></i></a>
-            <a href="#" class="btn btn-light btn-icon btn-sm rounded-pill mr-2"><i class="icon-file-picture position-static"></i></a>
-            <a href="#" class="btn btn-light btn-icon btn-sm rounded-pill mr-2"><i class="icon-file-plus position-static"></i></a>
+                                <a href="#" class="btn btn-light btn-icon btn-sm rounded-pill mr-2"><i class="icon-mic2 position-static"></i></a>
+                                <a href="#" class="btn btn-light btn-icon btn-sm rounded-pill mr-2"><i class="icon-file-picture position-static"></i></a>
+                                <a href="#" class="btn btn-light btn-icon btn-sm rounded-pill mr-2"><i class="icon-file-plus position-static"></i></a>
                                 *@
                             </div>
                             <a asp-area="" asp-controller="Analisis" asp-action="GrouppingCategories" asp-route-executionId="@Model.Execution.IdExecution" asp-route-grouping="@GroupingType.PaymentMethod" type="button" class="btn btn-sm btn-indigo ml-auto ">Detalle Categorias</a>
-                        </div>                        
+                        </div>
                     </div>
                 }
             </div>
@@ -83,9 +83,9 @@
                         <div class="d-flex align-items-center">
                             <div class="d-inline-flex">
                                 @*
-                                    <a href="#" class="btn btn-light btn-icon btn-sm rounded-pill mr-2"><i class="icon-mic2 position-static"></i></a>
-                                    <a href="#" class="btn btn-light btn-icon btn-sm rounded-pill mr-2"><i class="icon-file-picture position-static"></i></a>
-                                    <a href="#" class="btn btn-light btn-icon btn-sm rounded-pill mr-2"><i class="icon-file-plus position-static"></i></a>
+                                <a href="#" class="btn btn-light btn-icon btn-sm rounded-pill mr-2"><i class="icon-mic2 position-static"></i></a>
+                                <a href="#" class="btn btn-light btn-icon btn-sm rounded-pill mr-2"><i class="icon-file-picture position-static"></i></a>
+                                <a href="#" class="btn btn-light btn-icon btn-sm rounded-pill mr-2"><i class="icon-file-plus position-static"></i></a>
                                 *@
                             </div>
                             <a asp-area="" asp-controller="Analisis" asp-action="GrouppingCategories" asp-route-executionId="@Model.Execution.IdExecution" asp-route-grouping="@GroupingType.ShippingMethod" type="button" class="btn btn-sm btn-indigo ml-auto ">Detalle Categorias</a>
@@ -94,6 +94,206 @@
                 }
             </div>
             <!-- /donut with details -->
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <!-- Progress arc - single color -->
+            <!--<div class="card card-body text-center">
+            <h6 class="font-weight-semibold mb-0 mt-1">Current RAM usage</h6>
+            <div class="font-size-sm text-muted mb-3">49% average</div>
+
+            <div class="svg-center" id="arc_single"></div>
+        </div>-->
+            <!-- /progress arc - single color -->
+
+            @{
+                var ventas = Model.Indicadores.FirstOrDefault(i => i.TipoIndicador == IndicatorType.Ventas).Valor;
+                var preguntas = Model.Indicadores.FirstOrDefault(i => i.TipoIndicador == IndicatorType.Preguntas).Valor;
+                var reviews = Model.Indicadores.FirstOrDefault(i => i.TipoIndicador == IndicatorType.Reviews).Valor;
+                var visitas = Model.Indicadores.FirstOrDefault(i => i.TipoIndicador == IndicatorType.Visitas).Valor;
+                var publicaciones = Model.Indicadores.FirstOrDefault(i => i.TipoIndicador == IndicatorType.Publicaciones).Valor;
+            }
+
+            @if (publicaciones > 0)
+            {
+                var ventasXpublicaciones = ventas / publicaciones;
+                var iconVentasXpublicaciones = "";
+                var colorVentasXPublicaciones = "";
+                if (ventasXpublicaciones > 10)
+                {
+                    iconVentasXpublicaciones = "mi-sentiment-very-satisfied";
+                    colorVentasXPublicaciones = "text-success";
+                }
+                else if (ventasXpublicaciones > 3)
+                {
+                    iconVentasXpublicaciones = "mi-sentiment-satisfied";
+                    colorVentasXPublicaciones = "text-primary";
+                }
+                else if (ventasXpublicaciones > 1)
+                {
+                    iconVentasXpublicaciones = "mi-sentiment-neutral";
+                    colorVentasXPublicaciones = "text-warning";
+                }
+                else
+                {
+                    iconVentasXpublicaciones = "mi-sentiment-dissatisfied";
+                    colorVentasXPublicaciones = "text-danger";
+                }
+                <div class="card card-body">
+                    <div class="media">
+                        <div class="mr-3 align-self-center">
+                            <i class="@iconVentasXpublicaciones mi-3x @colorVentasXPublicaciones "></i>
+                        </div>
+                        <div class="media-body text-right">
+                            <h3 class="font-weight-semibold mb-0">@String.Format("{0:#,##0.00}", ventasXpublicaciones)
+                                <i class="mi-info-outline icon-4x ml-1 text-primary cursor-pointer" data-popup="tooltip" title data-placement="right" data-html="true" data-original-title="Ventas: @ventas <br/> Publicaciones: @publicaciones"></i>
+                            </h3>
+                            <span class="text-uppercase font-size-sm text-muted">ventas x publicacion</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                var preguntasXpublicaciones = preguntas / publicaciones;
+                var iconpreguntasXpublicaciones = "";
+                var colorpreguntasXpublicaciones = "";
+                if (preguntasXpublicaciones < 10)
+                {
+                    iconpreguntasXpublicaciones = "mi-sentiment-satisfied";
+                    colorpreguntasXpublicaciones = "text-primary";
+                }
+                else if (preguntasXpublicaciones < 20)
+                {
+                    iconpreguntasXpublicaciones = "mi-sentiment-neutral";
+                    colorpreguntasXpublicaciones = "text-warning";
+                }
+                else
+                {
+                    iconpreguntasXpublicaciones = "mi-sentiment-dissatisfied";
+                    colorpreguntasXpublicaciones = "text-danger";
+                }
+                <div class="card card-body">
+                    <div class="media">
+                        <div class="mr-3 align-self-center">
+                            <i class="@iconpreguntasXpublicaciones mi-3x @colorpreguntasXpublicaciones "></i>
+                        </div>
+                        <div class="media-body text-right">
+                            <h3 class="font-weight-semibold mb-0">
+                                @String.Format("{0:#,##0.00}", preguntasXpublicaciones)
+                                <i class="mi-info-outline icon-4x ml-1 text-primary cursor-pointer" data-popup="tooltip" title data-placement="right" data-html="true" data-original-title="Preguntas: @preguntas <br/> Publicaciones: @publicaciones"></i>
+                            </h3>
+                            <span class="text-uppercase font-size-sm text-muted">preguntas x publicacion</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-body">
+                    <div class="media">
+                        <div class="mr-3 align-self-center">
+                            <i class="icon-eye2  icon-3x text-indigo "></i>
+                        </div>
+                        <div class="media-body text-right">
+                            <h3 class="font-weight-semibold mb-0">
+                                @String.Format("{0:#,##0.00}", visitas / publicaciones)
+                                <i class="mi-info-outline icon-4x ml-1 text-primary cursor-pointer" data-popup="tooltip" title data-placement="right" data-html="true" data-original-title="Visitas: @visitas  <br/> Publicaciones: @publicaciones"></i>
+                          </h3>
+                            <span class="text-uppercase font-size-sm text-muted">visitas x publicacion</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            @if (ventas > 0)
+            {
+                var visitasXventas = visitas / ventas;
+                var iconvisitasXventas = "";
+                var colorvisitasXventas = "";
+                if (visitasXventas < 500)
+                {
+                    iconvisitasXventas = "mi-sentiment-satisfied";
+                    colorvisitasXventas = "text-primary";
+                }
+                else if (visitasXventas < 1000)
+                {
+                    iconvisitasXventas = "mi-sentiment-neutral";
+                    colorvisitasXventas = "text-warning";
+                }
+                else
+                {
+                    iconvisitasXventas = "mi-sentiment-dissatisfied";
+                    colorvisitasXventas = "text-danger";
+                }
+                <div class="card card-body">
+                    <div class="media">
+                        <div class="mr-3 align-self-center">
+                            <i class="@iconvisitasXventas mi-3x @colorvisitasXventas"></i>
+                        </div>
+
+                        <div class="media-body text-right">
+                            <h3 class="font-weight-semibold mb-0">
+                                @String.Format("{0:#,##0.00}", visitasXventas)
+                                <i class="mi-info-outline icon-4x ml-1 text-primary cursor-pointer" data-popup="tooltip" title data-placement="top" data-html="true" data-original-title="Visitas: @visitas  <br/> Ventas: @ventas"></i>
+                            </h3>
+                            <span class="text-uppercase font-size-sm text-muted">visitas x ventas</span>
+                        </div>
+                    </div>
+                </div>
+
+                var preguntasXventas = preguntas / ventas;
+                var iconpreguntasXventas = "";
+                var colorpreguntasXventas = "";
+                if (preguntasXventas < 5)
+                {
+                    iconpreguntasXventas = "mi-sentiment-very-satisfied";
+                    colorpreguntasXventas = "text-success";
+                }
+                else if (preguntasXventas < 20)
+                {
+                    iconpreguntasXventas = "mi-sentiment-satisfied";
+                    colorpreguntasXventas = "text-primary";
+                }
+                else if (preguntasXventas < 50)
+                {
+                    iconpreguntasXventas = "mi-sentiment-neutral";
+                    colorpreguntasXventas = "text-warning";
+                }
+                else
+                {
+                    iconpreguntasXventas = "mi-sentiment-dissatisfied";
+                    colorpreguntasXventas = "text-danger";
+                }
+
+                <div class="card card-body">
+                    <div class="media">
+                        <div class="mr-3 align-self-center">
+                            <i class="@iconpreguntasXventas mi-3x @colorpreguntasXventas"></i>
+                        </div>
+
+                        <div class="media-body text-right">
+                            <h3 class="font-weight-semibold mb-0">
+                                @String.Format("{0:#,##0.00}", preguntasXventas)
+                            <i class="mi-info-outline icon-4x ml-1 text-primary cursor-pointer" data-popup="tooltip" title data-placement="top" data-html="true" data-original-title="Preguntas: @preguntas <br/> Ventas: @ventas"></i>
+                        </h3>
+                        <span class="text-uppercase font-size-sm text-muted">preguntas x ventas</span>
+                    </div>
+                </div>
+            </div>
+        }
+            @if (Model.Search.Criteria.Count() > 1)
+            {
+                <div class="card card-body cursor-pointer bg-indigo-100"  >
+                    <div class="media">
+                        <div class="media-body">
+                            <h4 class="media-title font-weight-semibold">CATEGORIAS</h4>
+                            <span class="text-muted">Ver indicadores por categoria</span>
+                        </div>
+
+                        <div class="ml-3 align-self-center">
+                            <i class="mi-keyboard-arrow-right mi-2x text-dark"></i>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>
@@ -105,6 +305,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             _showGroupingInfoPaymentMethod();
             _showGroupingInfoShippingMethod();
+            //_progressArcSingle("#arc_single", 78, '#29B6F6', 0, 100, 70);
         });
 
         var _showGroupingInfoPaymentMethod = function (element, size) {

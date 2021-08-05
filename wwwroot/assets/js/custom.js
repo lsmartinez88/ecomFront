@@ -404,3 +404,161 @@ var _animatedDonutWithLegend = function (element, size, data) {
             });
     }
 };
+
+
+// Progress arc - single color
+var _progressArcSingle = function (element, size, colorContainter, min, max, valor) {
+    if (typeof d3 == 'undefined') {
+        console.warn('Warning - d3.min.js is not loaded.');
+        return;
+    }
+
+    // Initialize chart only if element exsists in the DOM
+    if (element) {
+
+        // Main variables
+        var d3Container = d3.select(element),
+            radius = size,
+            thickness = 20,
+            color = colorContainter;
+
+
+        // Create chart
+        // ------------------------------
+
+        // Add svg element
+        var container = d3Container.append("svg");
+
+        // Add SVG group
+        var svg = container
+            .attr('width', radius * 2)
+            .attr('height', radius + 20)
+            .attr('class', 'gauge');
+
+
+        // Construct chart layout
+        // ------------------------------
+
+        // Pie
+        var arc = d3.svg.arc()
+            .innerRadius(radius - thickness)
+            .outerRadius(radius)
+            .startAngle(-Math.PI / 2);
+
+
+        // Append chart elements
+        // ------------------------------
+
+        //
+        // Group arc elements
+        //
+
+        // Group
+        var chart = svg.append('g')
+            .attr('transform', 'translate(' + radius + ',' + radius + ')');
+
+        // Background
+        var background = chart.append('path')
+            .datum({
+                endAngle: Math.PI / 2
+            })
+            .attr({
+                'd': arc,
+                'class': 'd3-state-empty'
+            });
+
+        // Foreground
+        var foreground = chart.append('path')
+            .datum({
+                endAngle: -Math.PI / 2
+            })
+            .style('fill', color)
+            .attr('d', arc);
+
+        // Counter value
+        var value = svg.append('g')
+            .attr('transform', 'translate(' + radius + ',' + (radius * 0.9) + ')')
+            .append('text')
+            .text(0 + '%')
+            .attr({
+                'class': 'd3-text',
+                'text-anchor': 'middle'
+            })
+            .style({
+                'font-size': 19,
+                'font-weight': 400
+            });
+
+
+        //
+        // Min and max text
+        //
+
+        // Group
+        var scale = svg.append('g')
+            .attr('transform', 'translate(' + radius + ',' + (radius + 15) + ')')
+            .attr('class', 'd3-text opacity-75')
+            .style({
+                'font-size': 12
+            });
+
+        // Max
+        scale.append('text')
+            .text(max)
+            .attr({
+                'text-anchor': 'middle',
+                'x': (radius - thickness / 2)
+            });
+
+        // Min
+        scale.append('text')
+            .text(min)
+            .attr({
+                'text-anchor': 'middle',
+                'x': -(radius - thickness / 2)
+            });
+
+
+        //
+        // Animation
+        //
+
+        update(valor);
+
+        // Update
+        function update(v) {
+            v = d3.format('.0f')(v);
+            foreground.transition()
+                .duration(750)
+                .call(arcTween, v);
+
+            value.transition()
+                .duration(750)
+                .call(textTween, v);
+        }
+
+        // Arc
+        function arcTween(transition, v) {
+            var newAngle = v / 100 * Math.PI - Math.PI / 2;
+            transition.attrTween('d', function (d) {
+                var interpolate = d3.interpolate(d.endAngle, newAngle);
+                return function (t) {
+                    d.endAngle = interpolate(t);
+                    return arc(d);
+                };
+            });
+        }
+
+        // Text
+        function textTween(transition, v) {
+            transition.tween('text', function () {
+                var interpolate = d3.interpolate(this.innerHTML, v),
+                    split = (v + '').split('.'),
+                    round = (split.length > 1) ? Math.pow(10, split[1].length) : 1;
+                return function (t) {
+                    this.innerHTML = d3.format('.0f')(Math.round(interpolate(t) * round) / round) + '<tspan>%</tspan>';
+                };
+            });
+        }
+    }
+};
