@@ -8,12 +8,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ecomFront.Services
 {
     public static class MLService
     {
+        public static Item GetItemByPermaLink(String permaLink)
+        {
+            var regex = new Regex(@"(MLA-[0-9])\w+");
+            var match = regex.Match(permaLink);
+
+            if(match.Success)
+            {
+                return GetItemById(match.Value.Replace("-",""));
+            }
+
+            return null;
+        }
+
         public static Item GetItemById(String itemId)
         {
             HttpClient client = new HttpClient();
@@ -26,7 +40,7 @@ namespace ecomFront.Services
                 response = client.SendAsync(request).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    String stringResponse= response.Content.ReadAsStringAsync().Result;
+                    String stringResponse = response.Content.ReadAsStringAsync().Result;//.Replace(@"\", "");
                     return JsonConvert.DeserializeObject<Item>(stringResponse);
                 }
                 else

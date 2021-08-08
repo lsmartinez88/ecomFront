@@ -1,0 +1,125 @@
+﻿@using ecomFront.Models.PricingViewModels
+@using ecomFront.Common
+
+@{
+    ViewData["Title"] = "Home Precios";
+    Layout = "_Layout";
+}
+@model HomePricingViewModel
+<!-- Page header -->
+<div class="page-header page-header-light">
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                <a asp-area="" asp-controller="Search" asp-action="Searches" class="breadcrumb-item"> Busqueda</a>
+                <a asp-area="" asp-controller="Analisis" asp-action="HomeAnalisis" asp-route-executionId="@Model.Execution.IdExecution" class="breadcrumb-item"> @Model.Search.Description</a>
+                <span class="breadcrumb-item active">Analisis de Precios</span>
+            </div>
+            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+        </div>
+        <div class="header-elements d-none">
+            <div class="breadcrumb justify-content-center">
+                <a href="#" class="breadcrumb-elements-item">
+                    <i class="icon-comment-discussion mr-2"></i>
+                    Necesito Ayuda
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+<div class="content">
+    <div class="row">
+        <div class="col-sm-12 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Precio Por Medio de Pago</h5>
+                    <div class="font-size-sm text-muted mb-3"># cantidad de publicaciones</div>
+                </div>
+
+                <div class="card-body">
+                    <div class="chart-container">
+                        <div class="chart has-fixed-height" id="scatter_punch_PaymentMethod" style="-webkit-tap-highlight-color: transparent; user-select: none; position: relative;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Precio Por Forma de envio</h5>
+                    <div class="font-size-sm text-muted mb-3"># cantidad de publicaciones</div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <div class="chart has-fixed-height" id="scatter_punch_ShippingMethod" style="-webkit-tap-highlight-color: transparent; user-select: none; position: relative;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/global_assets/js/plugins/visualization/echarts/echarts.min.js"></script>
+@section Scripts
+    {
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            var xList = ['menos 10', '20 - 30', '30 - 40', '40-50', '60 - 70', '80 - 90', 'mas 90'];
+            var yList = ['Cuotas\n s/Interes', 'Cuotas \nc/Interes \n(comision)', 'Cuotas \nc/Interes \n(s/comision)'];
+            var data = [
+                [0, 0, 70], [0, 1, 10], [0, 2, 6], [0, 3, 16], [0, 4, 16], [0, 5, 5], [0, 6, 36], [0, 7, 42], [0, 8, 28], [0, 9, 60],
+                [1, 0, 15], [1, 1, 10], [1, 2, 6], [1, 3, 16], [1, 4, 16], [1, 5, 5], [1, 6, 36], [1, 7, 42], [1, 8, 28], [1, 9, 35],
+                [2, 0, 15], [2, 1, 10], [2, 2, 6], [2, 3, 16], [2, 4, 16], [2, 5, 5], [2, 6, 36], [2, 7, 42], [2, 8, 28], [2, 9, 80],
+            ];
+            var xName = 'Nombre X';
+            var yName = 'Nombre Y';
+            var dataName = 'Datos';
+            var itemColor = colores[Math.floor(Math.random() * 5)];
+
+            _scatterPunchLightExample('scatter_punch_PaymentMethod', xList, xName, yList, yName, data, dataName, itemColor);
+
+            var xList2 = ['menos 10', '20 - 30', '30 - 40', '40-50', '60 - 70', '80 - 90', 'mas 90'];
+            var yList2 = ['Envio \n Gratis', 'Acordar \ncon el \nvendedor', 'Correo', 'Mercado \n Envios'];
+            var data2 = [
+                [0, 0, 45],[0, 1, 6],[0, 2, 17],[0, 3, 0],[0, 4, 23],[0, 5, 60],[0, 6, 54],[0, 7, 30],[0, 8, 17],[0, 9, 41],[1, 0, 3],[1, 1, 11],[1, 2, 53],[1, 3, 51],[1, 4, 17],[1, 5, 13],[1, 6, 5],[1, 7, 43],
+                [1, 8, 39],[1, 9, 48],[2, 0, 38],[2, 1, 39],[2, 2, 19],[2, 3, 27],[2, 4, 39],[2, 5, 16],[2, 6, 9],[2, 7, 3],[2, 8, 51],[2, 9, 46],[3, 0, 15],[3, 1, 59],[3, 2, 25],[3, 3, 27],[3, 4, 34],[3, 5, 26],[3, 6, 7],[3, 7, 6],[3, 8, 41],[3, 9, 48]
+            ];
+            var xName2 = 'Nombre X';
+            var yName2 = 'Nombre Y';
+            var dataName2 = 'Datos';
+            var itemColor2 = colores[Math.floor(Math.random() * 5)];
+
+            _scatterPunchLightExample('scatter_punch_ShippingMethod', xList2, xName2, yList2, yName2, data2, dataName2, itemColor2);
+        });
+
+        $('.sidebar-toggle').click();
+
+        var _showGroupingPriceInfoPaymentMethod = function (element, size) {
+            var itemColor = colores[Math.floor(Math.random() * 5)];
+            $.post('/Pricing/GetGroupingPriceInfoPaymentMethod', { executionId: @Model.Execution.IdExecution })
+                .done(function (data) {
+                    _scatterPunchLightExample('scatter_punch_PaymentMethod', data.xList, data.xName, data.yList, data.yName, data.data, data.dataName, itemColor);
+                })
+                .fail(function (e) {
+                    $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
+                });
+        }
+
+        var _showGroupingPriceInfoShippingMethod = function (element, size) {
+            var itemColor = colores[Math.floor(Math.random() * 5)];
+            $.post('/Pricing/GetGroupingPriceShippingMethod', { executionId: @Model.Execution.IdExecution })
+                .done(function (data) {
+                    _scatterPunchLightExample('scatter_punch_ShippingMethod', data.xList, data.xName, data.yList, data.yName, data.data, data.dataName, itemColor);
+                })
+                .fail(function (e) {
+                    $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
+                });
+        }
+    </script>
+}

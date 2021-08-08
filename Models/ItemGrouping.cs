@@ -13,6 +13,7 @@ namespace ecomFront.Models
         public string GroupingType { get; set; }
         public int IdGrouping { get; set; }
         public string Nameml { get; set; }
+        public  string  NamemlShort { get; set; }
 
         public virtual ICollection<ListingGrouping> ListingGroupings { get; set; }
     }

@@ -10,24 +10,6 @@
 @model SearchesViewModel
 <!-- Page header -->
 <div class="page-header page-header-light">
-    <div class="page-header-content header-elements-lg-inline">
-        <div class="page-title d-flex">
-            <h4><i class="icon-arrow-left52 mr-2"></i> Busquedas</h4>
-            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
-        </div>
-
-        <div class="header-elements d-none">
-            <div class="d-flex justify-content-center">
-                <a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
-                    <i class="icon-plus3 text-pink"></i>
-                    <span>Agregar</span>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="page-header page-header-light">
     <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
         <div class="d-flex">
             <div class="breadcrumb">
@@ -51,173 +33,221 @@
 <!-- /page header -->
 <!-- Content area -->
 <div class="content">
-    <div class="row">
-        @foreach (var search in Model.Searches)
-        {
-            <div class="col-lg-6">
-                <div class="card border-left-3 border-left-primary rounded-left-0">
-                    <div class="card-body">
-                        <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
-                            <div>
-                                <h6><span class="font-weight-semibold">#@search.IdSearch. @search.Description</span></h6>
-                                @if (search.SearchType == "CATEGORY")
-                                {
-                                    <p class="mb-3">Categorias: <span class="font-weight-semibold">@search.Criteria.Count()</span> | Ejecuciones: <span class="font-weight-semibold">@search.Executions.Count()</span> </p>
-                                    var listaDeCategoriasConImagen = search.Criteria.Where(c => !string.IsNullOrEmpty(c.Category.Pictureml)).OrderByDescending(c => c.Quantity).Take(10).Select(c => c.Category).ToList();
-                                    @foreach (var category in listaDeCategoriasConImagen)
-                                    {
-                                        <a href="@category.Linkml">
-                                            <img src="@category.Pictureml" class="rounded-circle" width="36" height="36" alt="" data-popup="tooltip" title="" data-original-title="@category.Nameml">
-                                        </a>
-                                    }
-                                    <a asp-area="" asp-controller="Search" asp-action="Criteria" asp-route-searchId="@search.IdSearch" asp- class="text-body">&nbsp;<i class="icon-elipsis"></i></a>
-                                }
-                                else
-                                {
-                                    <p class="mb-3">
-                                        Link: <a href="@search.ListingPermalink">
-                                            {titulo de la publicacion seleccionada}
-                                        </a>
-                                    </p>
-                                    //imagenes de la publicacion seleccionada
-                                    @*@foreach (var category in )
-                                    {
-                                        <a href="@category.Linkml">
-                                            <img src="@category.Pictureml" class="rounded-circle" width="36" height="36" alt="" data-popup="tooltip" title="" data-original-title="@category.Nameml">
-                                        </a>
-                                    }*@
-                                }
+    <div class="d-flex align-items-stretch align-items-lg-start flex-column flex-lg-row">
+        <div class="flex-1 order-2 order-lg-1">
+            <div class="row">
+                @foreach (var search in Model.Searches)
+                {
+                    <div class="col-lg-6">
+                        <div class="card border-left-3 border-left-primary rounded-left-0">
+                            <div class="card-body">
+                                <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
+                                    <div>
+                                        <h6><span class="font-weight-semibold">#@search.IdSearch. @search.Description</span></h6>
+                                        @if (search.SearchType == "CATEGORY")
+                                        {
+                                            <p class="mb-3">Categorias: <span class="font-weight-semibold">@search.Criteria.Count()</span> | Ejecuciones: <span class="font-weight-semibold">@search.Executions.Count()</span> </p>
+                                            var listaDeCategoriasConImagen = search.Criteria.Where(c => !string.IsNullOrEmpty(c.Category.Pictureml)).OrderByDescending(c => c.Quantity).Take(10).Select(c => c.Category).ToList();
+                                            @foreach (var category in listaDeCategoriasConImagen)
+                                            {
+                                                <a href="@category.Linkml">
+                                                    <img src="@category.Pictureml" class="rounded-circle" width="36" height="36" alt="" data-popup="tooltip" title="" data-original-title="@category.Nameml">
+                                                </a>
+                                            }
+                                            <a asp-area="" asp-controller="Search" asp-action="Criteria" asp-route-searchId="@search.IdSearch" asp- class="text-body">&nbsp;<i class="icon-elipsis"></i></a>
+                                        }
+                                        else
+                                        {
+                                           
+                                            var searchItem = Model.RelatedItems.FirstOrDefault(ri => ri.searchId == search.IdSearch);
+                                          
+                                            @if (searchItem != null)
+                                            {
+                                                <p class="mb-3">
+                                                    Link: <a href="@search.ListingPermalink">
+                                                        @searchItem.item.title
+                                                    </a>
+                                                </p>
+                                                //imagenes de la publicacion seleccionada
+                                                @foreach (var picture in searchItem.item.pictures.Take(5))
+                                                {
+                                                    <a href="@picture.url">
+                                                        <img src="@picture.secure_url" class="rounded-circle" width="40" height="40" >
+                                                    </a>
+                                                }
+                                            }
 
+                                        }
+
+                                    </div>
+
+                                    <ul class="list list-unstyled mb-0 mt-3 mt-sm-0 ml-auto text-sm-right">
+                                        <li><span class="text-muted">1900-01-01</span></li>
+                                        <li>
+                                            @if (search.SearchType == SearchType.Categoria)
+                                            {
+                                                <span class="badge badge-flat border-purple text-purple">CATEGORIA</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-flat border-secondary text-secondary">PUBLICACION</span>
+                                            }
+                                        </li>
+                                        <li>
+                                        <li><a href="#">@search.Criteria.Sum(c => c.Quantity) items</a></li>
+                                    </ul>
+                                </div>
                             </div>
 
-                            <ul class="list list-unstyled mb-0 mt-3 mt-sm-0 ml-auto text-sm-right">
-                                <li><span class="text-muted">1900-01-01</span></li>
-                                <li>
-                                    @if (search.SearchType == SearchType.Categoria){
-                                        <span class="badge badge-flat border-purple text-purple">CATEGORIA</span>
-                                    }
-                                    else{
-                                        <span class="badge badge-flat border-secondary text-secondary">PUBLICACION</span>
-                                    }
-                                </li>
-                                <li>
-                                <li><a href="#">@search.Criteria.Sum(c => c.Quantity) items</a></li>
-                            </ul>
+                            <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
+                                @if (search.Executions.Count() > 0)
+                                {
+                                    var fecha = search.Executions.OrderByDescending(e => e.DateFinished).FirstOrDefault().DateFinished;
+                                    var fechaFormateada = fecha != null ? fecha.Value.ToString("dd MMM yyyy") : "";
+                                    <span>Ultima Ejecucion: <span class="font-weight-semibold">@fechaFormateada</span> </span>
+                                }
+
+                                <ul class="list-inline mb-0 mt-2 mt-sm-0">
+                                    <li class="list-inline-item dropdown position-static">
+                                        <a href="#" class="text-body dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right" style="">
+                                            <a asp-area="" asp-controller="Search" asp-action="Criteria" asp-route-searchId="@search.IdSearch" class="dropdown-item"><i class="icon-search4"></i> Criterios</a>
+                                            <a asp-area="" asp-controller="Search" asp-action="Executions" asp-route-searchId="@search.IdSearch" class="dropdown-item"><i class="icon-gear"></i> Ejecuciones</a>
+                                            <a asp-area="" asp-controller="Search" asp-action="Payments" asp-route-searchId="@search.IdSearch" class="dropdown-item"><i class="icon-cash3"></i> Pagos</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a asp-area="" asp-controller="Search" asp-action="Clone" asp-route-searchId="@search.IdSearch" class="dropdown-item"><i class="icon-copy"></i> Clonar</a>
+                                            @if (search.Executions.Count() > 0)
+                                            {
+                                                <a href="#" class="dropdown-item disabled" title="No se puede editar porque ya se ejecuto un proceso"><i class="icon-pencil7"></i> Editar</a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-area="" asp-controller="Search" asp-action="Edit" asp-route-searchId="@search.IdSearch" class="dropdown-item disabled" title="No se puede editar porque ya se ejecuto un proceso"><i class="icon-pencil7"></i> Editar</a>
+                                            }
+                                            <a asp-area="" asp-controller="Search" asp-action="Delete" asp-route-searchId="@search.IdSearch" class="dropdown-item"><i class="icon-cross2"></i> Eliminar</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
+                }
+            </div>
+        </div>
+        <div class="sidebar sidebar-light bg-transparent sidebar-component sidebar-component-right border-0 shadow-none order-1 order-lg-2 sidebar-expand-lg">
+            <!-- Sidebar content -->
+            <div class="sidebar-content">
+                <div class="card">
+                    <div class="card-header bg-transparent">
+                        <span class="card-title font-weight-semibold">Acciones Rapidas</span>
+                    </div>
 
-                    <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
-                        @if (search.Executions.Count() > 0)
-                        {
-                            var fecha = search.Executions.OrderByDescending(e => e.DateFinished).FirstOrDefault().DateFinished;
-                            var fechaFormateada = fecha != null ? fecha.Value.ToString("dd MMM yyyy") : "";
-                            <span>Ultima Ejecucion: <span class="font-weight-semibold">@fechaFormateada</span> </span>
-                        }
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-teal btn-block btn-float font-size-xs">
+                                    <i class="icon-file-plus icon-2x"></i>
+                                    <span>Nueva Busqueda</span>
+                                </button>
 
-                        <ul class="list-inline mb-0 mt-2 mt-sm-0">
-                            <li class="list-inline-item dropdown position-static">
-                                <a href="#" class="text-body dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right" style="">
-                                    <a asp-area="" asp-controller="Search" asp-action="Criteria" asp-route-searchId="@search.IdSearch" class="dropdown-item"><i class="icon-search4"></i> Criterios</a>
-                                    <a asp-area="" asp-controller="Search" asp-action="Executions" asp-route-searchId="@search.IdSearch" class="dropdown-item"><i class="icon-gear"></i> Ejecuciones</a>
-                                    <a asp-area="" asp-controller="Search" asp-action="Payments" asp-route-searchId="@search.IdSearch" class="dropdown-item"><i class="icon-cash3"></i> Pagos</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a asp-area="" asp-controller="Search" asp-action="Clone" asp-route-searchId="@search.IdSearch" class="dropdown-item"><i class="icon-copy"></i> Clonar</a>
-                                    @if (search.Executions.Count() > 0)
-                                    {
-                                        <a href="#" class="dropdown-item disabled" title="No se puede editar porque ya se ejecuto un proceso"><i class="icon-pencil7"></i> Editar</a>
-                                    }
-                                    else
-                                    {
-                                        <a  asp-area="" asp-controller="Search" asp-action="Edit" asp-route-searchId="@search.IdSearch"  class="dropdown-item disabled" title="No se puede editar porque ya se ejecuto un proceso"><i class="icon-pencil7"></i> Editar</a>
-                                    }
-                                    <a asp-area="" asp-controller="Search" asp-action="Delete" asp-route-searchId="@search.IdSearch"  class="dropdown-item"><i class="icon-cross2"></i> Eliminar</a>
+                                <button type="button" class="btn btn-purple btn-block btn-float font-size-xs">
+                                    <i class="icon-cash3 icon-2x"></i>
+                                    <span>Pagos efectuados</span>
+                                </button>
+                            </div>
+
+                            <div class="col">
+                                <button type="button" class="btn btn-warning btn-block btn-float font-size-xs">
+                                    <i class="icon-stats-bars icon-2x"></i>
+                                    <span>Analisis Disponibles</span>
+                                </button>
+
+                                <button type="button" class="btn btn-primary btn-block btn-float font-size-xs">
+                                    <i class="icon-archive icon-2x"></i>
+                                    <span>Busquedas Eliminadas</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header bg-transparent">
+                        <span class="card-title font-weight-semibold">Ultimas Actualizaciones</span>
+                    </div>
+
+                    <div class="card-body">
+                        <ul class="media-list">
+                            <li class="media">
+                                <div class="mr-3">
+                                    <a href="#" class="btn bg-transparent border-success text-success rounded-pill border-2 btn-icon">
+                                        <i class="icon-checkmark3"></i>
+                                    </a>
+                                </div>
+
+                                <div class="media-body">
+                                    <a href="#">Richard Vango</a> paid invoice #0020
+                                    <div class="text-muted font-size-sm">4 minutes ago</div>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="mr-3">
+                                    <a href="#" class="btn bg-transparent border-secondary text-secondary rounded-pill border-2 btn-icon">
+                                        <i class="icon-infinite"></i>
+                                    </a>
+                                </div>
+
+                                <div class="media-body">
+                                    Status of invoice <a href="#">#0029</a> has been changed to "On hold"
+                                    <div class="text-muted font-size-sm">36 minutes ago</div>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="mr-3">
+                                    <a href="#" class="btn bg-transparent border-success text-success rounded-pill border-2 btn-icon">
+                                        <i class="icon-checkmark3"></i>
+                                    </a>
+                                </div>
+
+                                <div class="media-body">
+                                    <a href="#">Chris Arney</a> paid invoice #0031 with Paypal
+                                    <div class="text-muted font-size-sm">2 hours ago</div>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="mr-3">
+                                    <a href="#" class="btn bg-transparent border-danger text-danger rounded-pill border-2 btn-icon">
+                                        <i class="icon-cross2"></i>
+                                    </a>
+                                </div>
+
+                                <div class="media-body">
+                                    Invoice <a href="#">#0041</a> has been canceled
+                                    <div class="text-muted font-size-sm">Mar 18, 18:36</div>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="mr-3">
+                                    <a href="#" class="btn bg-transparent border-primary text-primary rounded-pill border-2 btn-icon">
+                                        <i class="icon-plus3"></i>
+                                    </a>
+                                </div>
+
+                                <div class="media-body">
+                                    New invoice #0029 has been sent to <a href="#">Beatrix Diaz</a>
+                                    <div class="text-muted font-size-sm">Dec 12, 05:46</div>
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-        }
+        </div>
     </div>
-
-
-    @* <div class="card">
-        <div class="card-header header-elements-lg-inline">
-            <h5 class="card-title">Data Governance course</h5>
-
-            <div class="header-elements">
-                <ul class="list-inline list-inline-dotted mb-0 mt-2 mt-lg-0">
-                    <li class="list-inline-item">Rating: <span class="font-weight-semibold">4.85</span></li>
-                    <li class="list-inline-item">
-                        <i class="icon-star-full2 font-size-base text-warning"></i>
-                        <i class="icon-star-full2 font-size-base text-warning"></i>
-                        <i class="icon-star-full2 font-size-base text-warning"></i>
-                        <i class="icon-star-full2 font-size-base text-warning"></i>
-                        <i class="icon-star-full2 font-size-base text-warning"></i>
-                        <span class="text-muted ml-1">(439)</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Lessons</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Duration</th>
-                        <th>Status</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="#">Introduction</a></td>
-                        <td>One morning, when Gregor Samsa woke from troubled dreams, he found himself</td>
-                        <td>10 hours</td>
-                        <td><span class="badge badge-secondary">Closed</span></td>
-                        <td>Oct 21st, 2016</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td><a href="#">Design tools</a></td>
-                        <td>He lay on his armour-like back, and if he lifted his head a little he could</td>
-                        <td>20 hours</td>
-                        <td><span class="badge badge-primary">Registration</span></td>
-                        <td>Oct 22nd, 2016</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td><a href="#">Workspace</a></td>
-                        <td>The bedding was hardly able to cover it and seemed ready to slide off moment</td>
-                        <td>35 hours</td>
-                        <td><span class="badge badge-danger">On time</span></td>
-                        <td>Oct 23rd, 2016</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td><a href="#">Creating effects</a></td>
-                        <td>A collection of textile samples lay spread out on the table - Samsa salesman</td>
-                        <td>25 hours</td>
-                        <td><span class="badge badge-danger">On time</span></td>
-                        <td>Oct 24th, 2016</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td><a href="#">Digital design</a></td>
-                        <td>Drops of rain could be heard hitting the pane, which made him feel quite sad</td>
-                        <td>50 hours</td>
-                        <td><span class="badge badge-danger">On time</span></td>
-                        <td>Oct 25th, 2016</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        </div>
-    *@
 </div>
 
 <!-- /content area -->

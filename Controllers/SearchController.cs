@@ -1,10 +1,12 @@
 ﻿using ecomFront.Data;
 using ecomFront.Models;
 using ecomFront.Models.SearchViewModels;
+using ecomFront.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace ecomFront.Controllers
 {
@@ -32,6 +34,14 @@ namespace ecomFront.Controllers
             {
                 Searches = _searchData.GetFullSearches(userid)
             };
+
+            foreach(var search in searchesVM.Searches.Where(s => !string.IsNullOrEmpty(s.ListingPermalink)))
+            {
+                var searchItem = new SearchRelatedItem();
+                searchItem.item = MLService.GetItemByPermaLink(search.ListingPermalink);
+                searchItem.searchId = search.IdSearch;
+                searchesVM.RelatedItems.Add(searchItem);
+            }
 
             return View(searchesVM);
         }

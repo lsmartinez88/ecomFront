@@ -8,12 +8,21 @@
 @model HomeAnalisisViewModel
 <!-- Page header -->
 <div class="page-header page-header-light">
-    <div class="page-header-content header-elements-lg-inline">
+    <div class="page-header-content header-elements-lg-inline header ">
+        <div class="page-title d-flex"></div>
         <div class="header-elements d-none">
-            <div class="d-flex justify-content-center">
-                <a asp-area="" asp-controller="Pricing" asp-action="Home" asp-route-executionId="" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
-                    <i class="icon-coin-dollar icon-3x text-pink"></i>
+            <div class="d-flex  order-2 justify-content-center">
+                <a asp-area="" asp-controller="Pricing" asp-action="HomePricing" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
+                    <i class="icon-coin-dollar icon-2x text-teal"></i>
                     <span>Precios</span>
+                </a>
+                <a asp-area="" asp-controller="Sales" asp-action="HomeSales" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
+                    <i class="mi-shopping-cart  mi-2x text-teal"></i>
+                    <span>Ventas</span>
+                </a>
+                <a asp-area="" asp-controller="Trend" asp-action="HomeTrend" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
+                    <i class="mi-trending-up  mi-2x text-teal"></i>
+                    <span>Tendencias</span>
                 </a>
             </div>
         </div>

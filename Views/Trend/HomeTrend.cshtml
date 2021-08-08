@@ -1,0 +1,64 @@
+﻿@using ecomFront.Models.TrendViewModels
+@using ecomFront.Common
+
+@{
+    ViewData["Title"] = "Home Tendencias";
+    Layout = "_Layout";
+}
+@model HomeTrendViewModel
+<!-- Page header -->
+<div class="page-header page-header-light">
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                <a asp-area="" asp-controller="Search" asp-action="Searches" class="breadcrumb-item"> Busqueda</a>
+                <a asp-area="" asp-controller="Analisis" asp-action="HomeAnalisis" asp-route-executionId="@Model.Execution.IdExecution" class="breadcrumb-item"> @Model.Search.Description</a>
+                <span class="breadcrumb-item active">Tendencias / Oportunidades</span>
+            </div>
+            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+        </div>
+        <div class="header-elements d-none">
+            <div class="breadcrumb justify-content-center">
+                <a href="#" class="breadcrumb-elements-item">
+                    <i class="icon-comment-discussion mr-2"></i>
+                    Necesito Ayuda
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+<div class="content">
+   
+</div>
+
+
+@section Scripts
+    {
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+
+        };
+
+        var _showGroupingInfoShippingMethod = function (element, size) {
+            $.post('/Analisis/GetGroupingInfoShippingMethod', { executionId: @Model.Execution.IdExecution })
+                .done(function (data) {
+                    var info = []
+                    $.each(data, function (key, value) {
+                        var itemInfo = {
+                            status: value.clasification,
+                            value: value.qtty,
+                            color: colores[key]
+                        };
+                        info.push(itemInfo);
+                    })
+
+                    _donutWithDetails("#groupingInfoShipping", 146, info);
+                })
+                .fail(function (e) {
+                    $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
+                });
+        }
+    </script>
+}

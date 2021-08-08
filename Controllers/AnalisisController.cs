@@ -30,7 +30,7 @@ namespace ecomFront.Controllers
             _groupData = groupData;
         }
 
-        public IActionResult Home(int? executionId)
+        public IActionResult HomeAnalisis(int? executionId)
         {
             var homeAnalisisListViewModel = new HomeAnalisisViewModel
             {

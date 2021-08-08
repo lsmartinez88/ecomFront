@@ -212,9 +212,3 @@ var EchartsScatterPunchDark = function() {
 }();
 
 
-// Initialize module
-// ------------------------------
-
-document.addEventListener('DOMContentLoaded', function() {
-    EchartsScatterPunchDark.init();
-});
