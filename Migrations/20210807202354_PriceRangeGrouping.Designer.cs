@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ecomFront.Data;
 
 namespace ecomFront.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210807202354_PriceRangeGrouping")]
+    partial class PriceRangeGrouping
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,9 +243,6 @@ namespace ecomFront.Migrations
                     b.Property<string>("Nameml")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("NamemlShort")
-                        .HasColumnType("longtext");
-
                     b.Property<long>("Version")
                         .HasColumnType("bigint");
 
@@ -308,11 +307,11 @@ namespace ecomFront.Migrations
                     b.Property<int>("ExecutionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RangoDesde")
-                        .HasColumnType("int");
+                    b.Property<string>("RangoDesde")
+                        .HasColumnType("varchar(255)");
 
-                    b.Property<int>("RangoHasta")
-                        .HasColumnType("int");
+                    b.Property<string>("RangoHasta")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("GroupingType")
                         .HasColumnType("varchar(255)");

@@ -20,7 +20,7 @@ namespace ecomFront.Data
         public virtual DbSet<ListingGrouping> ListingGrouping { get; set; }
         public virtual DbSet<ItemGrouping> ItemGrouping { get; set; }
         public virtual DbSet<ListingIndicador> ListingIndicador { get; set; }
-
+        public virtual DbSet<PriceRangeGrouping> PriceRangeGrouping { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -33,6 +33,9 @@ namespace ecomFront.Data
 
             modelBuilder.Entity<ListingIndicador>()
             .HasKey(a => new { a.CriteriaId, a.ExecutionId, a.TipoIndicador });
+
+            modelBuilder.Entity<PriceRangeGrouping>()
+            .HasKey(a => new { a.CriteriaId, a.ExecutionId, a.RangoDesde, a.RangoHasta, a.GroupingType, a.ItemGroupingId});
         }
     }
 }
