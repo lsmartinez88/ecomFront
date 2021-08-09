@@ -566,7 +566,7 @@ var _progressArcSingle = function (element, size, colorContainter, min, max, val
 
 
     // Scatter punch chart
-    var _scatterPunchLightExample = function (DivName, xList,xName, yList, yName, data, dataName, itemColor) {
+    var _scatterPlotGroupingPrice = function (DivName, xList,xName, yList, yName, data, dataName,minValue, maxValue, data2) {
         if (typeof echarts == 'undefined') {
             console.warn('Warning - echarts.min.js is not loaded.');
             return;
@@ -584,8 +584,7 @@ var _progressArcSingle = function (element, size, colorContainter, min, max, val
 
             // Initialize chart
             var scatter_punch = echarts.init(scatter_punch_element);
-
-
+            
             //
             // Chart config
             //
@@ -608,8 +607,18 @@ var _progressArcSingle = function (element, size, colorContainter, min, max, val
                 return [item[1], item[0], item[2]];
             });
 
+            data2 = data2.map(function (item) {
+                return [item[1], item[0], item[2]];
+            });
+
             // Options
             scatter_punch.setOption({
+
+                // Add legend
+                legend: {
+                    data: ['Medio-De-Pago', 'Forma-Envio'],
+                    align:'right'
+                },
 
                 // Global text styles
                 textStyle: {
@@ -624,9 +633,10 @@ var _progressArcSingle = function (element, size, colorContainter, min, max, val
                 grid: {
                     left: 0,
                     right: 10,
-                    top: 0,
+                    top: 25,
                     bottom: 0,
-                    containLabel: true
+                    containLabel: true,
+                    show: minValue
                 },
 
                 // Add tooltip
@@ -650,9 +660,19 @@ var _progressArcSingle = function (element, size, colorContainter, min, max, val
                     }
                 },
 
+
+                // Axis pointer
+                axisPointer: [{
+                    label: {
+                        backgroundColor: "#999",
+                        shadowBlur: 0
+                    }
+                }],
+                
                 // Horizontal axis
                 xAxis: [{
                     type: 'category',
+                    boundaryGap:true,
                     data: xList,
                     axisLabel: {
                         color: '#333'
@@ -662,11 +682,16 @@ var _progressArcSingle = function (element, size, colorContainter, min, max, val
                             color: '#999'
                         }
                     },
+                    axisLabel: {
+                        interval: 0,
+                        rotate: 45
+                    },
                     splitLine: {
                         show: true,
+                        interval:0,
                         lineStyle: {
                             color: '#eee',
-                            type: 'dashed'
+                            type: 'solid'
                         }
                     }
                 }],
@@ -675,14 +700,10 @@ var _progressArcSingle = function (element, size, colorContainter, min, max, val
                 yAxis: [{
                     type: 'category',
                     data: yList,
-                    nameTextStyle: {
-                        width: 30,
-                    },
                     axisLabel: {
                         color: '#333'
                     },
                     axisLine: {
-                        show: false,
                         lineStyle: {
                             color: '#999'
                         }
@@ -701,18 +722,21 @@ var _progressArcSingle = function (element, size, colorContainter, min, max, val
                     }
                 }],
 
+
                 // Add series
                 series: [{
-                    name: 'Forma De Envio',
+                    name: 'Medio-De-Pago',
                     type: 'scatter',
                     symbolSize: function (val) {
-                        return val[2] * 2;
+                        if (val[2] == 0)
+                            return 0;
+                        else 
+                            return (((60)/(maxValue)) * val[2] ) + 3;
                     },
                     data: data,
                     itemStyle: {
-                        //borderColor: '#EE6666',
-                        color: itemColor,
-                        opacity: 0.8,
+                        color: colores[Math.floor(Math.random() * 5)],
+                        opacity: 0.7,
                         shadowBlur: 6,
                         shadowOffsetX: 0,
                         shadowOffsetY: 0,
@@ -721,7 +745,29 @@ var _progressArcSingle = function (element, size, colorContainter, min, max, val
                     animationDelay: function (idx) {
                         return idx * 10;
                     }
-                }]
+                },
+                    {
+                        name: 'Forma-Envio',
+                        type: 'scatter',
+                        symbolSize: function (val) {
+                            if (val[2] == 0)
+                                return 0;
+                            else
+                                return (((val[2]) / (maxValue)) * 50) + 3;
+                        },
+                        data: data2,
+                        itemStyle: {
+                            color: colores[Math.floor(Math.random() * 6)],
+                            opacity: 0.7,
+                            shadowBlur: 6,
+                            shadowOffsetX: 0,
+                            shadowOffsetY: 0,
+                            shadowColor: 'rgba(0,0,0,0.3)'
+                        },
+                        animationDelay: function (idx) {
+                            return idx * 10;
+                        }
+                    }]
             });
         }
 
@@ -751,4 +797,6 @@ var _progressArcSingle = function (element, size, colorContainter, min, max, val
                 triggerChartResize();
             }, 200);
         });
+
+        
     };

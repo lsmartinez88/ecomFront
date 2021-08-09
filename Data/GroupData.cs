@@ -56,5 +56,30 @@ namespace ecomFront.Data
                         Valor = x.Sum(i => i.Valor)
                     }).ToList();
         }
+
+        public List<PriceRangeGrouping> GetPriceRangeGroupingByExecution(int ExecutionId, string GroupingType)
+        {
+            List<PriceRangeGrouping> preLista = _contextModel.PriceRangeGrouping.Where(x => x.ExecutionId.Equals(ExecutionId)).Where(x => x.GroupingType.Equals(GroupingType)).GroupBy(x => new { x.ExecutionId, x.GroupingType, x.ItemGroupingId,x.RangoDesde,x.RangoHasta })
+                   .Select(x => new PriceRangeGrouping
+                   {
+                       ExecutionId = x.Key.ExecutionId,
+                       GroupingType = x.Key.GroupingType,
+                       ItemGroupingId = x.Key.ItemGroupingId,
+                       RangoDesde = x.Key.RangoDesde,
+                       RangoHasta = x.Key.RangoHasta,
+                       CantidadPublicaciones= x.Sum(i => i.CantidadPublicaciones),
+                       CantidadVentas = x.Sum(i => i.CantidadVentas)
+                   }).OrderBy(pi => pi.RangoDesde).ThenBy(pi => pi.ItemGroupingId).ToList();
+
+            preLista.ForEach(li => { li.ItemGrouping = _contextModel.ItemGrouping.Find(li.ItemGroupingId); });
+
+            return preLista;
+        }
+
+        public List<PriceRangeGrouping> GetPriceRangeGrouping(int CriteriaId, int ExecutionId, string GroupingType)
+        {
+            return _contextModel.PriceRangeGrouping.Include(li => li.ItemGrouping).Where(x => x.CriteriaId.Equals(CriteriaId)).Where(x => x.ExecutionId.Equals(ExecutionId)).Where(x => x.GroupingType.Equals(GroupingType)).OrderBy(pi => pi.RangoDesde).ThenBy(pi => pi.ItemGroupingId).ToList();
+        }
+
     }
 }

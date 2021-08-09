@@ -15,5 +15,8 @@ namespace ecomFront.Data
         List<ListingIndicador> GetIndicador(int CriteriaId, int ExecutionId);
         List<ListingIndicador> GetIndicadorByExecution(int ExecutionId);
 
+        List<PriceRangeGrouping> GetPriceRangeGrouping(int CriteriaId, int ExecutionId, String GroupingType);
+        List<PriceRangeGrouping> GetPriceRangeGroupingByExecution(int ExecutionId, String GroupingType);
+
     }
 }

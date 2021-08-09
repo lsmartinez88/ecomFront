@@ -67,6 +67,7 @@ var EchartsScatterPunchLight = function() {
                     fontSize: 13
                 },
 
+
                 // Chart animation duration
                 animationDuration: 750,
 
@@ -114,6 +115,7 @@ var EchartsScatterPunchLight = function() {
                     },
                     splitLine: {
                         show: true,
+                        interval:1,
                         lineStyle: {
                             color: '#eee',
                             type: 'dashed'
