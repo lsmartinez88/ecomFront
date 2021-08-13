@@ -81,5 +81,9 @@ namespace ecomFront.Data
             return _contextModel.PriceRangeGrouping.Include(li => li.ItemGrouping).Where(x => x.CriteriaId.Equals(CriteriaId)).Where(x => x.ExecutionId.Equals(ExecutionId)).Where(x => x.GroupingType.Equals(GroupingType)).OrderBy(pi => pi.RangoDesde).ThenBy(pi => pi.ItemGroupingId).ToList();
         }
 
+        public List<AveragePricePerDay> GetAveragePriceByExecution(int ExecutionId)
+        {
+            return _contextModel.AveragePricePerDay.Where(x => x.ExecutionId.Equals(ExecutionId)).OrderBy(pi => pi.Fecha).ToList();
+        }
     }
 }

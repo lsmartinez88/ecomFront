@@ -32,7 +32,7 @@
 <div class="content">
     <div class="row">
         <div class="col-sm-12 col-lg-12">
-            <div class="card " >
+            <div class="card ">
                 <div class="card-header">
                     <h5 class="card-title ">Agrupaciones x rango de precio</h5>
                     <div class="font-size-sm text-muted"># cantidad de publicaciones</div>
@@ -47,9 +47,27 @@
             </div>
         </div>
     </div>
-</div>
+
+    <div class="row">
+        <div class="col-sm-12 col-lg-12">
+            <div class="card ">
+                <div class="card-header">
+                    <h5 class="card-title ">Historial del precio de venta</h5>
+                    <div class="font-size-sm text-muted">$ medio de publicacion diario</div>
+                </div>
+                <div id="div_price_purchase_day" class="card-body">
+                    <div class="chart-container">
+                        <div class="chart has-fixed-height" id="line_zoom"  _echarts_instance_="ec_1628826304003" style="-webkit-tap-highlight-color: transparent; user-select: none; position: relative;">
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <script src="~/global_assets/js/plugins/visualization/echarts/echarts.min.js"></script>
+<script src="~/assets/js/PricingCharts.js"></script>
 @section Scripts
     {
     <script type="text/javascript">
@@ -81,12 +99,14 @@
 
             //_scatterPunchLightExample('scatter_punch_ShippingMethod', xList2, xName2, yList2, yName2, data2, dataName2, itemColor2);
 
-            _showGroupingPriceInfo();
-            $('#sidebar-toggle').click();
             $('#div_scatter_punch_Grouping').addClass('loader');
-            
-        });
+            $('#div_price_purchase_day').addClass('loader');
 
+            _showGroupingPriceInfo();
+            _showPurchasePricePerDayInfo()
+            $('#sidebar-toggle').click();
+
+        });
 
 
         var _showGroupingPriceInfo = function (element, size) {
@@ -94,6 +114,17 @@
                 .done(function (data) {
                     $('#div_scatter_punch_Grouping').removeClass('loader');
                     _scatterPlotGroupingPrice('scatter_punch_Grouping', data.xList, data.xName, data.yList, data.yName, JSON.parse(data.data), data.dataName, data.minValue, data.maxValue, JSON.parse(data.data2));
+                })
+                .fail(function (e) {
+                    $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
+                });
+        }
+
+         var _showPurchasePricePerDayInfo = function (element, size) {
+            $.post('/Pricing/GetPricePerDayInfo', { executionId: @Model.Execution.IdExecution })
+                .done(function (data) {
+                    $('#div_price_purchase_day').removeClass('loader');
+                    _purchasePricePerDayInfo('line_zoom', data.dates, data.prices);
                 })
                 .fail(function (e) {
                     $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
