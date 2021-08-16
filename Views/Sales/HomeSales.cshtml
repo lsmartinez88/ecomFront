@@ -1,0 +1,85 @@
+﻿@using ecomFront.Models.SalesViewModels
+@using ecomFront.Common
+
+@{
+    ViewData["Title"] = "Home Precios";
+    Layout = "_Layout";
+}
+@model HomeSalesViewModel
+<!-- Page header -->
+<div class="page-header page-header-light">
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                <a asp-area="" asp-controller="Search" asp-action="Searches" class="breadcrumb-item"> Busqueda</a>
+                <a asp-area="" asp-controller="Analisis" asp-action="HomeAnalisis" asp-route-executionId="@Model.Execution.IdExecution" class="breadcrumb-item"> @Model.Search.Description</a>
+                <span class="breadcrumb-item active">Analisis de Ventas</span>
+            </div>
+            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+        </div>
+        <div class="header-elements d-none">
+            <div class="breadcrumb justify-content-center">
+                <a href="#" class="breadcrumb-elements-item">
+                    <i class="icon-comment-discussion mr-2"></i>
+                    Necesito Ayuda
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+<div class="content">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title ">Cantidad de Ventas Historicas</h5>
+            <div class="font-size-sm text-muted"># ventas</div>
+        </div>
+
+        <div class="card-body" id="calendarSoldQtty">
+            <div class="chart-container">
+                <div class="chart" id="calendar_single" style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/js/OrdersCharts.js"></script>
+@section Scripts
+    {
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+
+            $('#calendarSoldQtty').addClass('loader');
+            $('#sidebar-toggle').click();
+
+            _showSoldQttyCalendarChart()
+        });
+
+
+        var _showSoldQttyCalendarChart = function (element, size) {
+
+            $.post('/Sales/GetSalesQttyByDay', { executionId: @Model.Execution.IdExecution })
+                .done(function (salesData) {
+                    var data = [];
+                    salesData.items.forEach(function (valor, indice, array) {
+                        data.push([
+                            echarts.format.formatTime('yyyy-MM-dd', valor.date),
+                            valor.quantity
+                        ]);
+                    });
+                    $('#calendarSoldQtty').removeClass('loader');
+                    _calendarPurchaseOrdersQtty('calendar_single',
+                        data, salesData.minValue,
+                        salesData.maxValue,
+                        echarts.format.formatTime('yyyy-MM-dd', salesData.items[0].date),
+                        echarts.format.formatTime('yyyy-MM-dd', salesData.items[salesData.items.length - 1].date));
+                })
+                .fail(function (e) {
+                    $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
+                });
+        }
+
+    </script>
+}

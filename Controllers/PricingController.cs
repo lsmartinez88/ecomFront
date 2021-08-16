@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace ecomFront.Controllers
@@ -92,6 +93,23 @@ namespace ecomFront.Controllers
             scatterPunchInformation.maxValue = Math.Max(priceInfo.Max(pi => pi.CantidadPublicaciones), shippingInfo.Max(pi => pi.CantidadPublicaciones));
 
             return Json(scatterPunchInformation);
+        }
+
+        
+
+        [HttpPost]
+        public JsonResult GetPricePerDayInfo(int executionId)
+        {
+            List<AveragePricePerDay> priceItems = _groupData.GetAveragePriceByExecution(executionId);
+            var pricingChatInformartion = new PricingChatInformartion();
+
+            priceItems.ForEach(pi =>
+           {
+               pricingChatInformartion.Prices.Add(pi.PrecioMedio);
+               pricingChatInformartion.Dates.Add(pi.Fecha.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture));
+           });
+
+            return Json(pricingChatInformartion);
         }
     }
 }

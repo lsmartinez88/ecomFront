@@ -13,7 +13,10 @@ namespace ecomFront.Models
         public int ExecutionId { get; set; }
         public DateTime Fecha { get; set; }
         public double PrecioMedio { get; set; }
+<<<<<<< HEAD
         public int CantidadVentas { get; set; }
 
+=======
+>>>>>>> 8ae1ab303453b1b92497606e9c6c0c5484f86e3d
     }
 }

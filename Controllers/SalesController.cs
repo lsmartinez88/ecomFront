@@ -41,5 +41,24 @@ namespace ecomFront.Controllers
             return View(homeSalesViewModel);
         }
 
+
+        [HttpPost]
+        public JsonResult GetSalesQttyByDay(int executionId)
+        {
+            List<AveragePricePerDay> salesItems = _groupData.GetAveragePriceByExecution(executionId);
+            var salesQttyByDayViewModel = new SalesQttyByDayViewModel();
+
+            salesItems.ForEach(pi =>
+            {
+                salesQttyByDayViewModel.items.Add(new SalesQttyByDayInformation { Date = pi.Fecha, Quantity = pi.PrecioMedio });
+            });
+
+            salesQttyByDayViewModel.maxValue = salesQttyByDayViewModel.items.Max(si => si.Quantity);
+            salesQttyByDayViewModel.minValue = salesQttyByDayViewModel.items.Min(si => si.Quantity);
+
+            return Json(salesQttyByDayViewModel);
+        }
+
+        
     }
 }

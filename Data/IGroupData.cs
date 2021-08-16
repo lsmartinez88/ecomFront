@@ -18,5 +18,7 @@ namespace ecomFront.Data
         List<PriceRangeGrouping> GetPriceRangeGrouping(int CriteriaId, int ExecutionId, String GroupingType);
         List<PriceRangeGrouping> GetPriceRangeGroupingByExecution(int ExecutionId, String GroupingType);
 
+        List<AveragePricePerDay> GetAveragePriceByExecution(int ExecutionId);
+
     }
 }
