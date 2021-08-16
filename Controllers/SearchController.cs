@@ -71,5 +71,17 @@ namespace ecomFront.Controllers
             };
             return View(executionsListViewModel);
         }
+
+
+
+        public async System.Threading.Tasks.Task<IActionResult> HomeAddSearch()
+        {
+            var newSearchVM = new NewSearchViewModel
+            {
+                user = await _userManager.GetUserAsync(HttpContext.User)
+            };
+            return View(newSearchVM);
+        }
+        
     }
 }
