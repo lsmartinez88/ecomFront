@@ -13,6 +13,6 @@ namespace ecomFront.Models.PricingViewModels
             Dates = new List<string>();
         }
         public List<double> Prices { get; set; }
-        public List<string> Dates{ get; set; }
+        public List<string> Dates { get; set; }
     }
 }

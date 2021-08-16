@@ -2,7 +2,7 @@
 @using ecomFront.Common
 
 @{
-    ViewData["Title"] = "Home Ventas";
+    ViewData["Title"] = "Home Precios";
     Layout = "_Layout";
 }
 @model HomeSalesViewModel
@@ -30,35 +30,55 @@
 </div>
 <!-- /page header -->
 <div class="content">
-   
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Single calendar</h5>
+        </div>
+
+        <div class="card-body" name="calendarSoldQtty">
+            <div class="chart-container">
+                <div class="chart" id="calendar_single" style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" >
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-
+<script src="~/assets/js/OrdersCharts.js"></script>
 @section Scripts
     {
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
 
-        };
+            $('#calendarSoldQtty').addClass('loader');
+            $('#sidebar-toggle').click();
 
-        var _showGroupingInfoShippingMethod = function (element, size) {
-            $.post('/Analisis/GetGroupingInfoShippingMethod', { executionId: @Model.Execution.IdExecution })
-                .done(function (data) {
-                    var info = []
-                    $.each(data, function (key, value) {
-                        var itemInfo = {
-                            status: value.clasification,
-                            value: value.qtty,
-                            color: colores[key]
-                        };
-                        info.push(itemInfo);
-                    })
+            _showSoldQttyCalendarChart()
+        });
 
-                    _donutWithDetails("#groupingInfoShipping", 146, info);
+
+        var _showSoldQttyCalendarChart = function (element, size) {
+
+            $.post('/Sales/GetSalesQttyByDay', { executionId: @Model.Execution.IdExecution })
+                .done(function (salesData) {
+                    $('#calendarSoldQtty').removeClass('loader');
+                    var data = [];
+                    salesData.items.forEach(function (valor, indice, array) {
+                        data.push([
+                            echarts.format.formatTime('yyyy-MM-dd', valor.date),
+                            valor.quantity
+                        ]);
+                    });
+                    _calendarPurchaseOrdersQtty('calendar_single',
+                        data, salesData.minValue,
+                        salesData.maxValue,
+                        echarts.format.formatTime('yyyy-MM-dd', salesData.items[0].date),
+                        echarts.format.formatTime('yyyy-MM-dd', salesData.items[salesData.items.length -1].date));
                 })
                 .fail(function (e) {
                     $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
                 });
         }
+
     </script>
 }

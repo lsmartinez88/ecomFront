@@ -13,6 +13,5 @@ namespace ecomFront.Models
         public int ExecutionId { get; set; }
         public DateTime Fecha { get; set; }
         public double PrecioMedio { get; set; }
-
     }
 }
