@@ -32,10 +32,11 @@
 <div class="content">
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Single calendar</h5>
+            <h5 class="card-title ">Cantidad de Ventas Historicas</h5>
+            <div class="font-size-sm text-muted"># ventas</div>
         </div>
 
-        <div class="card-body" name="calendarSoldQtty">
+        <div class="card-body" id="calendarSoldQtty">
             <div class="chart-container">
                 <div class="chart" id="calendar_single" style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" >
                 </div>
@@ -61,7 +62,6 @@
 
             $.post('/Sales/GetSalesQttyByDay', { executionId: @Model.Execution.IdExecution })
                 .done(function (salesData) {
-                    $('#calendarSoldQtty').removeClass('loader');
                     var data = [];
                     salesData.items.forEach(function (valor, indice, array) {
                         data.push([
@@ -69,11 +69,12 @@
                             valor.quantity
                         ]);
                     });
+                    $('#calendarSoldQtty').removeClass('loader');
                     _calendarPurchaseOrdersQtty('calendar_single',
                         data, salesData.minValue,
                         salesData.maxValue,
                         echarts.format.formatTime('yyyy-MM-dd', salesData.items[0].date),
-                        echarts.format.formatTime('yyyy-MM-dd', salesData.items[salesData.items.length -1].date));
+                        echarts.format.formatTime('yyyy-MM-dd', salesData.items[salesData.items.length - 1].date));
                 })
                 .fail(function (e) {
                     $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });

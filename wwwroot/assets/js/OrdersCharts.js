@@ -52,7 +52,7 @@ var _calendarPurchaseOrdersQtty = function (divName, salesData, minValue, maxVal
                 }
             },
 
-            // Add legend
+                        // Add legend
             legend: {
                 orient: 'vertical',
                 top: 'center',
@@ -67,11 +67,11 @@ var _calendarPurchaseOrdersQtty = function (divName, salesData, minValue, maxVal
                 min: minValue,
                 max: maxValue,
                 calculable: true, 
-                //type: 'piecewise',
                 orient: 'horizontal',
                 left: 'center',
+                text: ['Bajo', 'Alto'],
                 textGap: 20,
-                itemHeight: 280,
+                itemHeight: 500,
                 bottom: 0,
                 textStyle: {
                     fontSize: 12
@@ -81,10 +81,10 @@ var _calendarPurchaseOrdersQtty = function (divName, salesData, minValue, maxVal
             // Calendar
             calendar: {
                 top: 20,
-                left: 30,
+                left: 70,
                 right: 5,
-                bottom: 40,
-                cellSize: ['auto', 25],
+                bottom:70,
+                cellSize: ['auto', 22],
                 range: [minDate, maxDate],
                 itemStyle: {
                     normal: {
@@ -95,17 +95,38 @@ var _calendarPurchaseOrdersQtty = function (divName, salesData, minValue, maxVal
                 splitLine: {
                     lineStyle: {
                         color: '#333',
-                        width: 2
+                        width: 1
                     }
                 },
-                yearLabel: { show: true }
+                yearLabel: {
+                    margin: 50,
+                    fontWeight: 500
+                },
+                dayLabel: {
+                    firstDay: 1,
+                    nameMap: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa']
+                },
+                monthLabel: {
+                    nameMap: [
+                        'Ene', 'Feb', 'Mar',
+                        'Abr', 'May', 'Jun',
+                        'Jul', 'Ago', 'Sep',
+                        'Oct', 'Nov', 'Dic'
+                    ],
+                }
             },
 
             // Add series
             series: [{
                 type: 'heatmap',
                 coordinateSystem: 'calendar',
-                data: salesData
+                data: salesData,
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowColor: 'rgba(0, 0, 0, 0.7)'
+                    }
+                }
             }]
         });
     }
