@@ -45,12 +45,12 @@ namespace ecomFront.Controllers
         [HttpPost]
         public JsonResult GetSalesQttyByDay(int executionId)
         {
-            List<AveragePricePerDay> salesItems = _groupData.GetAveragePriceByExecution(executionId);
+            List<AveragePricePerDay> salesItems = _groupData.GetSalesQttyByExecution(executionId);
             var salesQttyByDayViewModel = new SalesQttyByDayViewModel();
 
-            salesItems.ForEach(pi =>
+            salesItems.ForEach(pi =>    
             {
-                salesQttyByDayViewModel.items.Add(new SalesQttyByDayInformation { Date = pi.Fecha, Quantity = pi.PrecioMedio });
+                salesQttyByDayViewModel.items.Add(new SalesQttyByDayInformation { Date = pi.Fecha, Quantity = pi.CantidadVentas });
             });
 
             salesQttyByDayViewModel.maxValue = salesQttyByDayViewModel.items.Max(si => si.Quantity);

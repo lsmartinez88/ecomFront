@@ -83,6 +83,11 @@ namespace ecomFront.Data
 
         public List<AveragePricePerDay> GetAveragePriceByExecution(int ExecutionId)
         {
+            return _contextModel.AveragePricePerDay.Where(x => x.ExecutionId.Equals(ExecutionId) && x.PrecioMedio > 0).OrderBy(pi => pi.Fecha).ToList();
+        }
+
+        public List<AveragePricePerDay> GetSalesQttyByExecution(int ExecutionId)
+        {
             return _contextModel.AveragePricePerDay.Where(x => x.ExecutionId.Equals(ExecutionId)).OrderBy(pi => pi.Fecha).ToList();
         }
     }

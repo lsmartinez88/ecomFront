@@ -11,14 +11,13 @@ namespace ecomFront.Data
     {
         List<ListingGrouping> GetGrouping(int CriteriaId, int ExecutionId, String GroupingType);
         List<ListingGrouping> GetGroupingByExecution(int ExecutionId, String GroupingType);
-
         List<ListingIndicador> GetIndicador(int CriteriaId, int ExecutionId);
         List<ListingIndicador> GetIndicadorByExecution(int ExecutionId);
-
         List<PriceRangeGrouping> GetPriceRangeGrouping(int CriteriaId, int ExecutionId, String GroupingType);
         List<PriceRangeGrouping> GetPriceRangeGroupingByExecution(int ExecutionId, String GroupingType);
-
         List<AveragePricePerDay> GetAveragePriceByExecution(int ExecutionId);
+        List<AveragePricePerDay> GetSalesQttyByExecution(int ExecutionId);
+        
 
     }
 }
