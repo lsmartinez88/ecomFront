@@ -252,6 +252,14 @@
                         <!-- Main -->
                         <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs mt-1">Principal</div> <i class="icon-menu" title="Main"></i></li>
                         <li class="nav-item">
+                            <a asp-area="" asp-controller="Search" asp-action="HomeAddSearch" class="nav-link @(ViewData["MenuOption"]?.ToString() == "NewSearch" ? "active" : "")">
+                                <i class="icon-new"></i>
+                                <span>
+                                    Nueva Busqueda
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a asp-area="" asp-controller="Search" asp-action="Searches" class="nav-link @(ViewData["MenuOption"]?.ToString() == "Searches" ? "active" : "")">
                                 <i class="icon-search4"></i>
                                 <span>
