@@ -14,9 +14,9 @@ namespace ecomFront.Models.MLModels
         public int seller_id { get; set; }
         public string category_id { get; set; }
         public object official_store_id { get; set; }
-        public int price { get; set; }
-        public int base_price { get; set; }
-        public object original_price { get; set; }
+        public double? price { get; set; }
+        public double? base_price { get; set; }
+        public double? original_price { get; set; }
         public string currency_id { get; set; }
         public int initial_quantity { get; set; }
         public int available_quantity { get; set; }

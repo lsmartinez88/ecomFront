@@ -1,12 +1,18 @@
-﻿using ecomFront.Data;
+﻿using ecomFront.Common;
+using ecomFront.Data;
 using ecomFront.Models;
+using ecomFront.Models.DbFirstModels;
 using ecomFront.Models.SearchViewModels;
 using ecomFront.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System;
 using System.Linq;
+using System.Net;
+using System.Net.Mime;
 
 namespace ecomFront.Controllers
 {
@@ -72,8 +78,6 @@ namespace ecomFront.Controllers
             return View(executionsListViewModel);
         }
 
-
-
         public async System.Threading.Tasks.Task<IActionResult> HomeAddSearch()
         {
             var newSearchVM = new NewSearchViewModel
@@ -82,6 +86,144 @@ namespace ecomFront.Controllers
             };
             return View(newSearchVM);
         }
-        
+
+        public async System.Threading.Tasks.Task<IActionResult> SearchByCategory()
+        {
+            var searchByCategory = new SearchByCategoryViewModel
+            {
+                user = await _userManager.GetUserAsync(HttpContext.User)
+            };
+            return View(searchByCategory);
+        }
+
+        public async System.Threading.Tasks.Task<IActionResult> SearchByLink()
+        {
+            var searchByLink = new SearchByLinkViewModel
+            {
+                user = await _userManager.GetUserAsync(HttpContext.User)
+            };
+            return View(searchByLink);
+        }
+
+        public async System.Threading.Tasks.Task<IActionResult> SearchByTitle()
+        {
+            var searchByTitle = new SearchByTitleViewModel
+            {
+                user = await _userManager.GetUserAsync(HttpContext.User)
+            };
+            return View(searchByTitle);
+        }
+
+
+        [HttpPost]
+        public JsonResult BuscarPorLink(string link)
+        {
+            try
+            {
+                Models.MLModels.Item item = MLService.GetItemByPermaLink(link);
+                if (item == null)
+                {
+                    throw new Exception("No se encontro el link buscado. Intenta Nuevamente!");
+                }
+
+                var itemLinkViewModel = new ItemSearchResultInformation
+                {
+                    id = item.id,
+                    title = item.title,
+                    subtitle = (string)item.subtitle,
+                    category_id = item.category_id,
+                    category = MLService.GetCategoryById(item.category_id),
+                    price = item.price,
+                    sold_quantity = item.sold_quantity,
+                    date_created = item.date_created.ToString(format: "dd MMM yyyy"),
+                    condition = item.condition,
+                    permalink = item.permalink,
+                    thumbnail = item.thumbnail,
+                    pictures = item.pictures.ToList(),
+                    descriptions = item.descriptions.ToList(),
+                    attributes = item.attributes.ToList()
+                };
+
+                return Json(itemLinkViewModel);
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.NoContent;
+                return Json(new { responseText = ex.Message });
+            }
+        }
+
+
+        [HttpPost]
+        public JsonResult SaveNewSearch([FromBody] NewSearchModel model)
+        {
+            Search newSearch;
+            Criterion newCriteria;
+            try
+            {
+                var search = new Search
+                {
+                    Description = model.Nombre,
+                    // TODO: Agregar name en Search
+                    //search.Name = model.Nombre;
+                    //search.Description = model.Descripcion;
+                    ListingPermalink = model.itemEncontrado.permalink,
+                    SearchType = SearchType.Publicacion,
+                    Version = 0,
+                    UserId = _userManager.GetUserId(HttpContext.User)
+                };
+
+                newSearch = _searchData.SaveSearch(search);
+            }
+            catch(Exception ex)
+            {
+                return Json(new { result = "ERROR", errorMessage = "Error Guardando el Search: " + ex.Message });
+            }
+
+            try
+            {
+                var criteria = new Criterion
+                {
+                    CategoryId = model.itemEncontrado.category_id,
+                    ItemCondition = model.itemEncontrado.condition,
+                    Quantity = (long)model.CantidadPublicaciones,
+                    SearchId = newSearch.IdSearch,
+                    SearchCriteria = "",
+                    Version = 0
+                };
+
+                newCriteria = _searchData.SaveCriteria(criteria);
+            }          
+            catch(Exception ex)
+            {
+                return Json(new { result = "ERROR", errorMessage = "Error Guardando el Criterio: " + ex.Message });
+            }
+
+            try
+            {
+                foreach(var attribute in model.atributosSeleccionados)
+                {
+                    if(!string.IsNullOrEmpty(attribute.name) && !string.IsNullOrEmpty(attribute.value_id) && !string.IsNullOrEmpty(attribute.id) && !string.IsNullOrEmpty(attribute.value_name))
+                    {
+                        var criteria_attribute = new CriteriaAttribute
+                        {
+                            CriteriaId = (long)newCriteria.IdCriteria,
+                            IdAttributeml = attribute.id,
+                            IdAttributeValueml = attribute.value_id,
+                            NameAttributeml = attribute.name,
+                            NameAttributeValueml = attribute.value_name,
+                            Version = 0
+                        };
+                        _searchData.SaveCriteriaAttribute(criteria_attribute);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = "ERROR", errorMessage = "Error Guardando el Criterio: " + ex.Message });
+            }
+
+            return Json(new { result = "OK", successMessage = "El id " + newSearch.IdSearch + " fue creado correctamente!!" });
+        }
     }
 }

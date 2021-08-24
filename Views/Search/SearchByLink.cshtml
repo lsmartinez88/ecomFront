@@ -1,0 +1,593 @@
+﻿@using ecomFront.Models.SearchViewModels
+@using ecomFront.Common
+
+@{
+    ViewData["Title"] = "Nueva Busqueda Por Link";
+    ViewData["MenuOption"] = "NewSearch";
+    Layout = "_Layout";
+}
+
+@model SearchByLinkViewModel
+    <!-- Page header -->
+
+<div class="page-header page-header-light sticky-top">
+    <div class="page-header-content header-elements-lg-inline">
+        <div class="page-title d-flex breadcrumb pt-0">
+            <h4>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                <span class="breadcrumb-item active">Nueva Búsqueda</span>
+            </h4>
+        </div>
+        <div class="header-elements d-none">
+            <div class="d-flex justify-content-center border-left">
+                <a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
+                    <h2 class="p-0 m-0 font-weight-normal" id="CantAtributos">0</h2>
+                    <span class="font-weight-normal">ATRIBUTOS</span>
+                </a>
+            </div>
+            <div class="d-flex justify-content-center border-left">
+                <a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
+                    <h2 class="p-0 m-0 font-weight-normal" id="CantPublicaciones">0</h2>
+                    <span class="font-weight-normal">PUBLICACIONES</span>
+                </a>
+            </div>
+            <div class="d-flex justify-content-center border-left @*bg-success-100*@">
+                <a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body" id="SaveButton">
+                    <i class="mi-save mi-2x text-success p-0"></i>
+                    <span class="font-weight-bold text-success">GUARDAR</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+
+
+<div class="content">
+
+    <!--search field -->
+    <div class="card">
+        <div class="card-header bg-transparent header-elements-sm-inline">
+            <span class="card-title font-weight-semibold font-size-lg">1. Ingresá el link a la publicacion de referencia</span>
+            <div class="header-elements">
+                <div class="d-flex align-items-center">
+                    <span class="m-0"><i class="icon-spinner2 spinner icon-2x"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <form id="formLink">
+                <div class="d-sm-flex">
+                    <div class="form-group-feedback form-group-feedback-left flex-grow-1 mb-3 mb-sm-0">
+                        <input id="inputLink" type="text" class="form-control form-control-lg" placeholder="Ingresá el link de la publicación">
+                        <div class="form-control-feedback form-control-feedback-lg">
+                            <i class="icon-search4 text-muted"></i>
+                        </div>
+                    </div>
+
+                    <div class="ml-sm-3">
+                        <select class="custom-select custom-select-lg wmin-sm-200 mb-3 mb-sm-0">
+                            <option value="1">Mercado Libre</option>
+                        </select>
+                    </div>
+
+                    <div class="ml-sm-3">
+                        <button id="btnSubmitSearch" type="submit" class="btn btn-primary btn-lg w-100 w-sm-auto">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="infoBusqueda" class="col-lg-4 col-sm-12">
+            <div class="card ">
+                <div class="card-header bg-transparent">
+                    <div class="card-title font-weight-bold font-size-lg ">2. Información de la búsqueda</div>
+                    <div class="card-title font-weight-light ">Completá la información de la búsqueda.</div>
+                </div>
+                <div class="card-body">
+                    <form action="#" id="formBusqueda">
+                        <div class="form-group row">
+                            <label class="col-lg-4 col-form-label" for="searchName">Nombre:</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" placeholder="Ingresá el nombre" id="searchName" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-4 col-form-label">Descripción:</label>
+                            <div class="col-lg-8">
+                                <textarea rows="5" cols="5" class="form-control" placeholder="Ingresá la descripcion de la búsqueda" id="searchDescription"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="InfoPublicacion" class="col-lg-4 col-sm-12">
+            <div class="card ">
+                <div class="card-header bg-transparent">
+                    <span class="card-title font-weight-semibold font-size-lg">3. Información de la publicación</span> <span class="float-right"><a id="id-href"></a></span>
+                    <div class="card-title font-weight-light ">Verificá que la información sea correcta.</div>
+                </div>
+
+                <table class="table table-borderless table-xs my-2">
+                    <tbody>
+                        <tr>
+                            <td colspan="2" class="text-center font-weight-semibold text-uppercase text-indigo" id="description"></td>
+                        </tr>
+                        <tr>
+                            <td>Condición:</td>
+                            <td class="text-right">
+                                <span id="conditionNew" class="badge badge-success">NUEVO</span>
+                                <span id="conditionUsed" class="badge badge-primary">USADO</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Categoria:</td>
+                            <td class="text-right" id="categoryName">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Precio:</td>
+                            <td class="text-right  font-weight-semibold" id="precio"></td>
+                        </tr>
+                        <tr>
+                            <td>Vendidas:</td>
+                            <td class="text-right text-muted" id="sold_quantity"></td>
+                        </tr>
+                        <tr>
+                            <td>Creada:</td>
+                            <td class="text-right" id="date_created"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" id="pictures">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="atributos" class="col-lg-4 col-sm-12">
+            <div class="card ">
+                <div class="card-header bg-transparent">
+                    <div class="card-title font-weight-bold font-size-lg ">4. Seleccioná los atributos</div>
+                    <div class="card-title font-weight-light ">Podés elegir que atributos tenemos que tener en cuenta para realizar la busqueda de publicaciones. Esto es útil para refinar los items.</div>
+                </div>
+                <div class="card-body">
+                    <div id="atributesValues">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--<div class="sidebar sidebar-light sidebar-component sidebar-component-right sidebar-sections sidebar-expand-lg">-->
+    <!-- Sidebar content -->
+    <!--<div class="sidebar-content">
+        <div class="card">-->
+    <!-- Header -->
+    <!--<div class="sidebar-section-body border-bottom">
+        <a href="#" class="btn btn-success btn-block disabled">Guardar</a>
+    </div>-->
+    <!-- /header -->
+    <!-- Details -->
+    <!--<div class="sidebar-section mb-2 border-bottom">
+
+        <div class="card-header bg-transparent">
+            <span class="card-title font-weight-semibold">Resumen de Busqueda (#1234)</span>
+        </div>
+        <table class="table table-borderless table-xs">
+            <tbody>
+                <tr>
+                    <td>Nombre:</td>
+                    <td class="font-weight-semibold text-right">Ejemplo de Busqueda</td>
+                </tr>
+                <tr>
+                    <td>Creada:</td>
+                    <td class="font-weight-semibold text-right">Nov 1st, 2016</td>
+                </tr>
+                <tr>
+                    <td>Estado:</td>
+                    <td class="text-right">
+                        <span class="badge badge-primary-100">Borrador</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td># items:</td>
+                    <td class="font-weight-semibold text-right">
+                        <span class="badge badge-indigo">2345</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>-->
+    <!-- /details -->
+    <!-- Attendees -->
+    <!--<div class="sidebar-section">
+        <div class="card-header bg-transparent">
+            <span class="card-title font-weight-semibold">Atributos </span>
+            <span class="badge badge-info badge-pill float-right">15</span>
+        </div>
+
+        <div class="sidebar-section-body">
+            <ul class="media-list">
+                <li class="media">
+                    <div class="media-body">
+                        <div class="font-weight-semibold">Rebecca Jameson</div>
+                        <span class="font-size-sm text-muted">Web developer</span>
+                    </div>
+
+                    <div class="ml-3 align-self-center ">
+                        <a href="#" class="list-icons-item text-danger "><i class="icon-trash"></i></a>
+                    </div>
+
+                <li class="media">
+                    <div class="media-body">
+                        <div class="font-weight-semibold">Walter Sommers</div>
+                        <span class="font-size-sm text-muted">Lead developer</span>
+                    </div>
+
+                    <div class="ml-3 align-self-center ">
+                        <a href="#" class="list-icons-item text-danger "><i class="icon-trash"></i></a>
+                    </div>
+                </li>
+
+                <li class="media">
+
+                    <div class="media-body">
+                        <div class="font-weight-semibold">Otto Gerwald</div>
+                        <span class="font-size-sm text-muted">Front end developer</span>
+                    </div>
+
+                    <div class="ml-3 align-self-center ">
+                        <a href="#" class="list-icons-item text-danger "><i class="icon-trash"></i></a>
+                    </div>
+                </li>
+
+                <li class="media">
+                    <div class="media-body">
+                        <div class="font-weight-semibold">Vince Satmann</div>
+                        <span class="font-size-sm text-muted">UX expert</span>
+                    </div>
+
+                    <div class="ml-3 align-self-center ">
+                        <a href="#" class="list-icons-item text-danger "><i class="icon-trash"></i></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>-->
+    <!-- /attendees -->
+    <!--</div>
+    </div>-->
+    <!-- /sidebar content -->
+    <!--</div>-->
+</div>
+
+<div id="modal_ConfirmacionBusqueda" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Confirmá la selección de criterios</h5>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="alert alert-info alert-dismissible alert-styled-left border-top-0 border-bottom-0 border-right-0">
+                    <span class="font-weight-semibold">Atención! </span> Estos son los criterios de búsqueda que seleccionaste para realizar tu análisis.
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                </div>
+                <div class="container-fluid w-100">
+                    <table class="text-center w-100">
+                        <tbody>
+                            <tr>
+                                <td class="text-right w-50 pr-1"> Nombre</td>
+                                <td class="text-left w-50 pl-1 font-weight-semibold" id="confirmName"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-right w-50 pr-1"> Descripción</td>
+                                <td class="text-left w-50 pl-1 font-weight-semibold" id="confirmDescription"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-right w-50 pr-1"> Categoria</td>
+                                <td class="text-left w-50 pl-1 font-weight-semibold" id="confirmCategoria"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-right w-50 pr-1"> Condición</td>
+                                <td class="text-left w-50 pl-1 font-weight-semibold">
+                                    <span id="confirmConditionNew" class="badge badge-success">NUEVO</span>
+                                    <span id="confirmConditionUsed" class="badge badge-primary">USADO</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-right w-50 pr-1"> Publicación</td>
+                                <td class="text-left w-50 pl-1 font-weight-semibold">
+                                    <a id="hrefConfirmacionPublicacion" class="font-weight-semibold"></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-right w-50 pr-1"> Publicaciones para Analizar</td>
+                                <td class="text-left w-50 pl-1 font-weight-semibold" id="confirmCantPublicaciones"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-right w-50 pr-1"> Atributos Seleccionados</td>
+                                <td class="text-left w-50 pl-1 font-weight-semibold" id="confirmCantidadAtributos"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="w-100 alert-info text-center mt-2 p-1"><h5 class="m-0">Detalle de Atributos</h5></div>
+                <div class="container-fluid w-100"><table id="confirmDetalleAtributos" class="text-center w-100"><tbody></tbody></table></div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link " data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="ConfirmChanges">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <script type="text/javascript">
+        var atributosSeleccionados = [];
+        var itemEncontrado;
+        var NewSearchModel = {};
+
+        document.addEventListener('DOMContentLoaded', function () {
+            $('#sidebar-toggle').click();
+            $('#InfoPublicacion').hide();
+            $('#atributos').hide();
+            $('#CantAtributos').text(0);
+            $('#CantPublicaciones').text(0);
+            $('.spinner').hide();
+            $("#SaveButton").addClass('disabled');
+        });
+
+        $('#formLink').submit(function (e) {
+            e.preventDefault();
+            $('.spinner').show();
+            $("#conditionNew").hide();
+            $("#conditionUsed").hide();
+            $('#InfoPublicacion').hide();
+            $('#CantAtributos').text(0);
+            $('#CantPublicaciones').text(0);
+            atributosSeleccionados = [];
+            $('#atributos').hide();
+            itemEncontrado = null;
+
+            //$('#panelDeResultados').addClass('loader');
+
+            $.post("/Search/BuscarPorLink", { link: $('#inputLink').val() })
+                .done(function (data) {
+                    if (data != null) {
+                        itemEncontrado = data;
+                        $.jGrowl('El item ' + data.id + ' fue encontrado', { theme: 'bg-success text-white', header: 'Excelente!', position: 'bottom-right', life: 2000 });
+                        $("#id-href").text(data.id);
+                        $("#id-href").attr("href", data.permalink);
+                        if (data.condition == 'used') {
+                            $("#conditionUsed").show();
+                        } else if (data.condition == 'new') {
+                            $("#conditionNew").show();
+                        }
+                        $("#description").text(data.title);
+                        $("#precio").text('$ ' + data.price);
+                        $("#description").attr("title", data.title);
+                        var categoryPath = '';
+                        for (var i = 0; i < data.category.path_From_Root.length - 1; i++) {
+                            categoryPath = categoryPath + data.category.path_From_Root[i].name + '<br>';
+                        }
+                        $("#categoryName").html(data.category.name + '<span class="mi-info-outline text-primary ml-1" id="spanInfoCategory"  data-html="true" data-popup="tooltip" title="" data-original-title="' + categoryPath + '"></span>');
+                        $("#spanInfoCategory").tooltip();
+                        $("#sold_quantity").text(data.sold_quantity + ' unidades');
+                        $("#date_created").text(data.date_created);
+                        $("#pictures").empty();
+                        var cant = 6;
+                        data.pictures.forEach(function (value, index, array) {
+                            if (cant > 0) {
+                                var href = $('<a />',
+                                    {
+                                        id: 'href_' + value.id,
+                                        href: value.url
+                                    })
+                                    .appendTo($('#pictures'));
+
+                                var img = $('<img />',
+                                    {
+                                        id: 'img_' + value.id,
+                                        src: value.url,
+                                        class: 'ml-2',
+                                        width: 55,
+                                        height: 55
+                                    })
+                                    .appendTo(href);
+                                cant--;
+                            }
+                        });
+
+                        $('#atributesValues').empty();
+                        data.attributes.forEach(function (value, index, array) {
+                            if (value.value_name != null && value.name != null) {
+                                var label = $('<label />',
+                                    {
+                                        id: 'label_' + value.id,
+                                        class: "custom-control custom-control-success custom-checkbox mb-2 "
+                                    })
+                                    .appendTo($('#atributesValues'));
+
+                                var input = $('<input />',
+                                    {
+                                        id: 'input_' + value.id,
+                                        class: "custom-control-input inputAtributo",
+                                        type: "checkbox",
+                                        'data-value-id': value.value_id,
+                                        'data-id': value.id
+                                    })
+                                    .appendTo(label);
+
+                                var spanName = $('<span />',
+                                    {
+                                        id: 'spanName_' + value.id,
+                                        class: "custom-control-label font-weight-semibold",
+                                        text: value.name + ':'
+                                    })
+                                    .appendTo(label);
+
+                                var spanValue = $('<span />',
+                                    {
+                                        id: 'spanValue_' + value.id,
+                                        class: "font-weight-normal ml-2",
+                                        text: value.value_name
+                                    })
+                                    .appendTo(spanName);
+                            }
+                        });
+
+                        $('#atributos').show();
+                        $('#InfoPublicacion').show();
+
+                        ActualizarAtributos();
+                    }
+                })
+                .fail(function (e) {
+                    $.jGrowl(e.responseText, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 });
+                })
+                .always(function (e) {
+                    $('.spinner').hide();
+                    validarSaveButton();
+                });
+        });
+
+        $('#SaveButton').click(function (e) {
+            NewSearchModel.Nombre = $('#searchName').val();
+            NewSearchModel.Descripcion = $('#searchDescription').val();
+            NewSearchModel.itemEncontrado = itemEncontrado;
+            NewSearchModel.atributosSeleccionados = atributosSeleccionados;
+            NewSearchModel.CantidadPublicaciones = parseInt($('#CantPublicaciones').text());
+
+            modalImprimir(NewSearchModel);
+        });
+
+        $('#ConfirmChanges').click(function (e) {
+             $.ajax({
+                type: "POST",
+                 data: JSON.stringify(NewSearchModel),
+                url: "/Search/SaveNewSearch",
+                contentType: "application/json"
+            }).done(function (res) {
+                if (res.result == "OK") {
+                    $.jGrowl(res.successMessage, { theme: 'bg-success text-white', header: 'Excelente!', position: 'bottom-right', life: 2000 });
+                    delay(2000);
+
+                    var url = '@Url.Action("Search", "Searches")';
+                     window.location.href = url
+
+                    //$.ajax({
+                    //    cache: false,
+                    //    type: "GET",
+                    //    url: "/Search/Searches",
+                    //    dataType: "html"
+                    //});
+
+                } else {
+                    $.jGrowl(res.errorMessage, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 });
+                }
+            });
+        });
+
+
+
+
+        function modalImprimir(NewSearchModel) {
+            $("#confirmConditionNew").hide();
+            $("#confirmConditionUsed").hide();
+
+            $('#confirmName').text(NewSearchModel.Nombre);
+            $('#confirmDescription').text(NewSearchModel.Descripcion);
+            $('#confirmCategoria').text(NewSearchModel.itemEncontrado.category.name);
+            if (NewSearchModel.itemEncontrado.condition == 'used') {
+                $("#confirmConditionUsed").show();
+            } else if (NewSearchModel.itemEncontrado.condition   == 'new') {
+                $("#confirmConditionNew").show();
+            }
+            $("#hrefConfirmacionPublicacion").text(NewSearchModel.itemEncontrado.id);
+            $("#hrefConfirmacionPublicacion").attr("href", NewSearchModel.itemEncontrado.permalink);
+            $('#confirmCantPublicaciones').text();
+            $('#confirmCantidadAtributos').text($('#CantAtributos').text());
+            $.each(NewSearchModel.atributosSeleccionados, function (key, value) {
+                $('#confirmDetalleAtributos  > tbody').append('<tr><td class="text-right w-50 pr-1"> ' + value.name + '</td><td class="text-left w-50 pl-1 font-weight-semibold">'
+                    + value.value_name + '</td>' +
+                    '</tr>');
+            });
+
+            $('#modal_ConfirmacionBusqueda').modal('toggle');
+        }
+
+        $(document).on('click', '.inputAtributo', function () {
+            var item = itemEncontrado.attributes.find(x => x.id == $(this).attr('data-id'));
+            if (this.checked) {
+                atributosSeleccionados.push(item);
+            } else {
+                for (var i = 0; i < atributosSeleccionados.length; i++) {
+                    if (atributosSeleccionados[i].id === item.id) {
+                        atributosSeleccionados.splice(i, 1);
+                        i--;
+                    }
+                }
+            }
+            ActualizarAtributos();
+
+            //alert(JSON.stringify(item));
+        });
+
+        $(document).ready(function () {
+            $("#searchName").on("change paste keyup", function () {
+                validarSaveButton();
+            });
+        });
+
+        function validarSaveButton() {
+            var text = $("#searchName").val();
+            if (text.length > 0 && itemEncontrado != null) {
+                $("#SaveButton").removeClass('disabled');
+            }
+            else {
+                $("#SaveButton").addClass('disabled');
+            }
+        }
+
+        function ActualizarAtributos() {
+            var category = itemEncontrado.category_id;
+            var atributos = '';
+            atributosSeleccionados.forEach(function (value, index, array) {
+                if (value.id != null && value.value_id != null) {
+                    atributos = atributos + '&' + value.id + '=' + value.value_id
+                }
+            });
+
+            var url = 'https://api.mercadolibre.com/sites/MLA/search?category=' + category + atributos;
+            $.getJSON(url, function (json_data) {
+                $('#CantAtributos').text(atributosSeleccionados.length);
+                $('#CantPublicaciones').text(json_data.paging.total);
+            })
+                .fail(function () { $.jGrowl('Error en la llamada: ' + url, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 }); });
+        }
+
+
+        $("#inputLink").keyup(function () {
+            $("#btnSubmitSearch").prop("disabled", !this.value);
+        });
+
+
+    </script>
+}

@@ -65,5 +65,27 @@ namespace ecomFront.Data
             return _contextDbFirst.Searches
                 .FirstOrDefault(s => s.IdSearch == searchId);
         }
+
+        public Search SaveSearch(Search search)
+        {
+            _contextDbFirst.Searches.Add(search);
+            _contextDbFirst.SaveChanges();
+            return search;
+        }
+
+        public Criterion SaveCriteria(Criterion criteria)
+        {
+            _contextDbFirst.Criteria.Add(criteria);
+            _contextDbFirst.SaveChanges();
+            return criteria;
+        }
+
+        public CriteriaAttribute SaveCriteriaAttribute(CriteriaAttribute criteriaAttribute)
+        {
+            _contextDbFirst.CriteriaAttributes.Add(criteriaAttribute);
+            _contextDbFirst.SaveChanges();
+            return criteriaAttribute;
+        }
+
     }
 }

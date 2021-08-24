@@ -46,7 +46,7 @@
                     <i class="icon-price-tags2 icon-2x text-success border-success border-3 rounded-pill p-3 mb-3 mt-1"></i>
                     <h5 class="card-title font-weight-bold">Busqueda por Categoria</h5>
                     <p class="mb-3">Podés seleccionar las categorias y atributos de las búsquedas que querés incluir en el análisis</p>
-                    <a href="#" class="btn btn-success">Buscar por categoria</a>
+                    <a asp-area="" asp-controller="Search" asp-action="SearchByCategory" class="btn btn-success">Buscar por categoria</a>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@
                     <i class="icon-link2 icon-2x text-warning border-warning border-3 rounded-pill p-3 mb-3 mt-1"></i>
                     <h5 class="card-title font-weight-bold">Busqueda por Link</h5>
                     <p class="mb-3">Si tenés un link a una publicacion, nosotros te ayudamos a configurar el resto</p>
-                    <a href="#" class="btn btn-warning">Buscar por link</a>
+                    <a asp-area="" asp-controller="Search" asp-action="SearchByLink" class="btn btn-warning">Buscar por link</a>
                 </div>
             </div>
         </div>
@@ -68,9 +68,23 @@
                     <i class="icon-pen icon-2x text-primary border-primary border-3 rounded-pill p-3 mb-3 mt-1"></i>
                     <h5 class="card-title font-weight-bold">Busqueda por Titulo</h5>
                     <p class="mb-3">Ingresás un título o parametro de búsqueda y nosotros te ayudamos a configurar el resto</p>
-                    <a href="#" class="btn btn-primary">Browse por titulo</a>
+                    <a asp-area="" asp-controller="Search" asp-action="SearchByTitle" class="btn btn-primary">Buscar por titulo</a>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="card card-body">
+        <div class="media align-items-center align-items-lg-start flex-column flex-lg-row">
+            <a href="#" class="text-teal mr-lg-3 align-self-lg-center mb-3 mb-lg-0">
+                <i class="icon-question7 text-success border-success border-3 rounded-pill p-2"></i>
+            </a>
+
+            <div class="media-body text-center text-lg-left">
+                <h6 class="media-title font-weight-semibold">No encontrás lo que estas buscando?</h6>
+                Por favor, presioná el botón y comunicate con alguno de nuestros representantes. Te estamos esperando para ayudarte!! 
+            </div>
+
+            <a href="#" class="btn btn-indigo align-self-lg-center ml-lg-3 mt-3 mt-lg-0"><i class="icon-mail5 mr-2"></i> Contactar</a>
         </div>
     </div>
 </div>

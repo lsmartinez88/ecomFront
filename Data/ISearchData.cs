@@ -16,5 +16,12 @@ namespace ecomFront.Data
         Category GetCategoryById(string idCategory);
 
         List<Execution> GetFullExecutionsBySearchId(int? SearchId);
+
+        Search SaveSearch(Search search);
+        Criterion SaveCriteria(Criterion search);
+
+        CriteriaAttribute SaveCriteriaAttribute(CriteriaAttribute criteriaAttribute);
+
+
     }
 }

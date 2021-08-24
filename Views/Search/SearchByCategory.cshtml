@@ -1,0 +1,36 @@
+﻿@using ecomFront.Models.SearchViewModels
+@using ecomFront.Common
+
+@{
+    ViewData["Title"] = "Nueva Busqueda Por Categoria";
+    ViewData["MenuOption"] = "NewSearch";
+    Layout = "_Layout";
+}
+
+@model SearchByCategoryViewModel
+<!-- Page header -->
+<div class="page-header page-header-light">
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                <span class="breadcrumb-item active">Busqueda Por Categoria</span>
+            </div>
+
+            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+        </div>
+
+        <div class="header-elements d-none">
+            <div class="breadcrumb justify-content-center">
+                <a href="#" class="breadcrumb-elements-item">
+                    <i class="icon-comment-discussion mr-2"></i>
+                    Necesito Ayuda
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+
+<div class="content">
+</div>
