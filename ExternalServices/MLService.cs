@@ -23,6 +23,14 @@ namespace ecomFront.Services
             if(match.Success)
             {
                 return GetItemById(match.Value.Replace("-",""));
+            } else
+            {
+                regex = new Regex(@"(searchVariation=MLA[0-9])\w+");
+                match = regex.Match(permaLink);
+                if (match.Success)
+                {
+                    return GetItemByCatalog(match.Value.Replace("searchVariation=", ""));
+                }
             }
 
             return null;
@@ -60,6 +68,49 @@ namespace ecomFront.Services
                 catch (Exception e)
                 {
                     throw  new Exception("Failed to get item " + itemId + " from mercadolibre api. Message: " + e.Message);
+                }
+            }
+        }
+
+        public static Item GetItemByCatalog(String itemId)
+        {
+            HttpClient client = new HttpClient();
+            String url = "https://api.mercadolibre.com/products/" + itemId;
+
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
+            HttpResponseMessage response = null;
+            try
+            {
+                response = client.SendAsync(request).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    String stringResponse = response.Content.ReadAsStringAsync().Result;//.Replace(@"\", "");
+                   Catalog catalog = JsonConvert.DeserializeObject<Catalog>(stringResponse);
+                   if(catalog != null && catalog.buy_box_winner != null)
+                   {
+                        return GetItemById(catalog.buy_box_winner.item_id);
+                   } else
+                    {
+                        throw new Exception("Failed to get item " + itemId + " from mercadolibre api.");
+                    }
+                }
+                else
+                    throw new Exception("Failed to get item " + itemId + " from mercadolibre api.");
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Failed to get item " + itemId + " from mercadolibre api. Message: " + e.Message);
+            }
+            finally
+            {
+                try
+                {
+                    if (client != null)
+                        client.Dispose();
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Failed to get item " + itemId + " from mercadolibre api. Message: " + e.Message);
                 }
             }
         }

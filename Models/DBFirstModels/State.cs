@@ -18,6 +18,7 @@ namespace ecomFront.Models.DbFirstModels
         public double? Latitud { get; set; }
         public double? Longitud { get; set; }
         public string Name { get; set; }
+        public string IdGob { get; set; }
 
         public virtual Country Country { get; set; }
         public virtual ICollection<City> Cities { get; set; }

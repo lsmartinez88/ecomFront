@@ -164,9 +164,7 @@ namespace ecomFront.Controllers
                 var search = new Search
                 {
                     Description = model.Nombre,
-                    // TODO: Agregar name en Search
-                    //search.Name = model.Nombre;
-                    //search.Description = model.Descripcion;
+                    Name = model.Nombre,
                     ListingPermalink = model.itemEncontrado.permalink,
                     SearchType = SearchType.Publicacion,
                     Version = 0,

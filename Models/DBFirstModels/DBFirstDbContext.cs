@@ -9,7 +9,6 @@ namespace ecomFront.Models.DbFirstModels
     public partial class DBFirstDbContext : DbContext
     {
 
-
         public DBFirstDbContext(DbContextOptions<DBFirstDbContext> options)
             : base(options)
         {
@@ -204,31 +203,25 @@ namespace ecomFront.Models.DbFirstModels
 
                 entity.Property(e => e.IdCity).HasColumnName("id_city");
 
-                entity.Property(e => e.Latitud)
-                    .IsRequired()
+                entity.Property(e => e.IdCityGob)
                     .HasMaxLength(255)
-                    .HasColumnName("latitud");
+                    .HasColumnName("id_city_gob");
 
-                entity.Property(e => e.Longitud)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("longitud");
+                entity.Property(e => e.Latitud).HasColumnName("latitud");
+
+                entity.Property(e => e.Longitud).HasColumnName("longitud");
 
                 entity.Property(e => e.Name)
-                    .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("name");
 
-                entity.Property(e => e.StateId)
-                    .IsRequired()
-                    .HasColumnName("state_id");
+                entity.Property(e => e.StateId).HasColumnName("state_id");
 
                 entity.Property(e => e.Version).HasColumnName("version");
 
                 entity.HasOne(d => d.State)
                     .WithMany(p => p.Cities)
                     .HasForeignKey(d => d.StateId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ogqc1b0omhdvgo6vojoj95hv7");
             });
 
@@ -444,6 +437,11 @@ namespace ecomFront.Models.DbFirstModels
                     .HasMaxLength(255)
                     .HasColumnName("listing_permalink");
 
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("name");
+
                 entity.Property(e => e.SearchType)
                     .IsRequired()
                     .HasMaxLength(255)
@@ -466,6 +464,10 @@ namespace ecomFront.Models.DbFirstModels
                 entity.Property(e => e.IdState).HasColumnName("id_state");
 
                 entity.Property(e => e.CountryId).HasColumnName("country_id");
+
+                entity.Property(e => e.IdGob)
+                    .HasMaxLength(255)
+                    .HasColumnName("id_gob");
 
                 entity.Property(e => e.Latitud).HasColumnName("latitud");
 

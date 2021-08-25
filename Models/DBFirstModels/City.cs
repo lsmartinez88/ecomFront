@@ -9,8 +9,9 @@ namespace ecomFront.Models.DbFirstModels
     {
         public string IdCity { get; set; }
         public long Version { get; set; }
-        public string Latitud { get; set; }
-        public string Longitud { get; set; }
+        public string IdCityGob { get; set; }
+        public double? Latitud { get; set; }
+        public double? Longitud { get; set; }
         public string Name { get; set; }
         public string StateId { get; set; }
 

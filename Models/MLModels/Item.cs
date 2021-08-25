@@ -58,7 +58,7 @@ namespace ecomFront.Models.MLModels
         public bool automatic_relist { get; set; }
         public DateTime date_created { get; set; }
         public DateTime last_updated { get; set; }
-        public float health { get; set; }
+        public string health { get; set; }
         public bool catalog_listing { get; set; }
         public string[] channels { get; set; }
     }
