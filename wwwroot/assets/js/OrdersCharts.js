@@ -46,6 +46,12 @@ var _calendarPurchaseOrdersQtty = function (divName, salesData, minValue, maxVal
                 trigger: 'item',
                 backgroundColor: 'rgba(0,0,0,0.75)',
                 padding: [10, 15],
+                //formatter: "Fecha: " + '{c}'.split(",")[0] + " <br> Cantidad : " + '{c}'.split(",")[1],
+                formatter: function(params, ticket, callback) {
+                    debugger;
+                    console.log(params.name);
+                    return "Fecha: " + echarts.format.formatTime('dd-MM-yyyy', params.data[0]) + "<br> " + params.marker + params.data[1];
+                },
                 textStyle: {
                     fontSize: 13,
                     fontFamily: 'Roboto, sans-serif'
