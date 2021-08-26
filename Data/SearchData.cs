@@ -1,4 +1,6 @@
-﻿using ecomFront.Models.DbFirstModels;
+﻿using ecomFront.Models;
+using ecomFront.Models.DbFirstModels;
+using ecomFront.Models.SearchViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -85,6 +87,21 @@ namespace ecomFront.Data
             _contextDbFirst.CriteriaAttributes.Add(criteriaAttribute);
             _contextDbFirst.SaveChanges();
             return criteriaAttribute;
+        }
+
+        public List<SalesQuantityMap> GetSalesMap(int ExecutionId, SalesType tipo)
+        {
+           return _contextModel.SalesPerCity.Where(a => a.ExecutionId == ExecutionId).Where(a => (tipo == SalesType.Compra ?  a.CantidadCompras != 0 : a.CantidadVentas != 0)).GroupBy(x => new { x.ExecutionId, x.City, x.State, x.Latitud, x.Longitud })
+                .Select(x => new SalesQuantityMap
+                {
+                    ExecutionId = x.Key.ExecutionId,
+                    City = x.Key.City.Replace("_",""),
+                    Latitud = x.Key.Latitud,
+                    Longitud = x.Key.Longitud,
+                    Tipo = tipo,
+                    Cantidad = x.Sum(i => (tipo == SalesType.Compra ? i.CantidadCompras : i.CantidadVentas))
+
+                }).ToList();
         }
 
     }

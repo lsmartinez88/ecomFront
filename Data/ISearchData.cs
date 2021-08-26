@@ -1,4 +1,5 @@
 ﻿using ecomFront.Models.DbFirstModels;
+using ecomFront.Models.SearchViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace ecomFront.Data
 
         CriteriaAttribute SaveCriteriaAttribute(CriteriaAttribute criteriaAttribute);
 
+        List<SalesQuantityMap> GetSalesMap(int ExecutionId, SalesType tipo);
 
     }
 }
