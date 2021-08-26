@@ -48,8 +48,6 @@ var _calendarPurchaseOrdersQtty = function (divName, salesData, minValue, maxVal
                 padding: [10, 15],
                 //formatter: "Fecha: " + '{c}'.split(",")[0] + " <br> Cantidad : " + '{c}'.split(",")[1],
                 formatter: function(params, ticket, callback) {
-                    debugger;
-                    console.log(params.name);
                     return "Fecha: " + echarts.format.formatTime('dd-MM-yyyy', params.data[0]) + "<br> " + params.marker + params.data[1];
                 },
                 textStyle: {
@@ -127,6 +125,18 @@ var _calendarPurchaseOrdersQtty = function (divName, salesData, minValue, maxVal
                 type: 'heatmap',
                 coordinateSystem: 'calendar',
                 data: salesData,
+                label: {
+                    normal: {
+                        show: true,
+                        formatter: function (params, ticket, callback) {
+                            return  echarts.format.formatTime('dd', params.data[0]) ;
+                        },
+                        textStyle: {
+                            fontSize: 10,
+                            fontFamily: 'Roboto, sans-serif'
+                        }
+                    }
+                },
                 emphasis: {
                     itemStyle: {
                         shadowBlur: 10,

@@ -24,8 +24,7 @@ namespace ecomFront.Data
         CriteriaAttribute SaveCriteriaAttribute(CriteriaAttribute criteriaAttribute);
 
         List<SalesQuantityMap> GetSalesMap(int ExecutionId, SalesType tipo);
-
         List<SalesQuantityMap> GetSalesMapCriteria(int ExecutionId, int CriteriaId, SalesType tipo);
-
+        
     }
 }

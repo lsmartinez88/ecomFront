@@ -38,25 +38,292 @@
 
         <div class="card-body" id="calendarSoldQtty">
             <div class="chart-container">
-                <div class="chart" id="calendar_single" style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" >
+                <div class="chart" id="calendar_single" style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;">
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title ">Mapa de Vendedores - Compradores</h5>
+        </div>
+
+        <div class="card-body">
+            <div class="custom-control custom-switch custom-switch-square custom-control-vendedor mb-2">
+                <input type="checkbox" class="custom-control-input" id="sc_s_vendedores" checked="">
+                <label class="custom-control-label" for="sc_s_vendedores">Vendedores</label>
+            </div>
+            <div class="custom-control custom-switch custom-switch-square custom-control-comprador mb-2">
+                <input type="checkbox" class="custom-control-input" id="sc_s_compradores" checked="">
+                <label class="custom-control-label" for="sc_s_compradores">Compradores</label>
+            </div>
+            <div class="map-container" id="mapaVentas" style="position: relative; overflow: hidden;">
+                @*<div style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; background-color: rgb(229, 227, 223);">*@
             </div>
         </div>
     </div>
 </div>
 
+<style type="text/css">
+    .custom-control-vendedor .custom-control-input:checked ~ .custom-control-label::before, .custom-control-success .custom-control-input:disabled:checked ~ .custom-control-label::before {
+        background-color: #f35c86;
+        border-color: #f35c86;
+    }
+
+    .custom-control-comprador .custom-control-input:checked ~ .custom-control-label::before, .custom-control-success .custom-control-input:disabled:checked ~ .custom-control-label::before {
+        background-color: #009688;
+        border-color: #009688;
+    }
+</style>
+
 <script src="~/assets/js/OrdersCharts.js"></script>
+<script src="https://unpkg.com/@@googlemaps/markerclustererplus/dist/index.min.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAs_m9pdnAILwNEQznTqLbogShI7jpnQyQ&callback=initMap"></script>
 @section Scripts
     {
     <script type="text/javascript">
+            var map;
         document.addEventListener('DOMContentLoaded', function () {
 
             $('#calendarSoldQtty').addClass('loader');
             $('#sidebar-toggle').click();
 
-            _showSoldQttyCalendarChart()
+            _showSoldQttyCalendarChart();
+            //_fillSalesByCity();
+
         });
 
+
+        @*var _fillSalesByCity = function (element, size) {
+            $.post('/Sales/GetBuyersSalesByLocations', { executionId: @Model.Execution.IdExecution })
+                .done(function (result) {
+                    if (result.result == "OK") {
+                        var data = [];
+                        result.data.forEach(function (valor, indice, array) {
+                            var myLatLng = {
+                                lat: parseFloat(valor.latitud),
+                                lng: parseFloat(valor.longitud)
+                            };
+                            var marker = new google.maps.Marker({
+                                position: myLatLng,
+                                title: valor.city,
+                            });
+                            marker.setMap(map);
+                        });
+                    } else {
+                        $.jGrowl(result.errorMessage, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 });
+                    }
+                })
+                .fail(function (e) {
+                    $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
+                });
+        }*@
+
+
+        function initMap() {
+            var ubicacion = { lat: -34.6, lng: -58.45 };
+            map = new google.maps.Map(document.getElementById('mapaVentas'), {
+                center: ubicacion,
+                zoom: 12,
+                mapTypeControl: false,
+                fullscreenControl: true,
+                streetViewControl: false,
+                tilt: 45,
+                styles: [{
+                    featureType: 'poi',
+                    elementType: 'all',
+                    stylers: [{ visibility: 'off' }],
+
+                }]
+            });
+
+
+            infowindow = new google.maps.InfoWindow();
+            var bounds = new google.maps.LatLngBounds();
+
+            @foreach(var itemComprador in Model.SalesPerCityComprador)
+            {
+                if(itemComprador.Cantidad > 10)
+                {
+                    <text>
+                        var feature = map.data.add({
+                        geometry: new google.maps.Data.Point({
+                            lat: @itemComprador.Latitud,
+                            lng: @itemComprador.Longitud
+                        }),
+                        properties:
+                        {
+                            ciudad: "@itemComprador.City",
+                            quantity: @itemComprador.Cantidad,
+                            tipo: 'COMPRADOR'
+                        }
+                        });
+                        bounds.extend(feature.getGeometry().get());
+                    </text>
+                }
+
+            }
+
+
+             @foreach(var itemComprador in Model.SalesPerCityVendedor)
+             {
+                 if (itemComprador.Cantidad > 10)
+                 {
+                      <text>
+                        var feature = map.data.add({
+                        geometry: new google.maps.Data.Point({
+                            lat: @itemComprador.Latitud + 0.006,
+                            lng: @itemComprador.Longitud + 0.006
+                        }),
+                        properties:
+                        {
+                            ciudad: "@itemComprador.City",
+                            quantity: @itemComprador.Cantidad,
+                            tipo: 'VENDEDOR'
+                        }
+                        });
+                        bounds.extend(feature.getGeometry().get());
+                    </text>
+                 }
+
+            }
+
+            //map.setCenter(bounds.getCenter());
+            //map.fitBounds(bounds);
+
+            map.data.setStyle(function (feature) {
+                var color = '';
+                var path = google.maps.SymbolPath.CIRCLE;
+
+                if (feature.getProperty('tipo') == 'COMPRADOR') {
+                    //path = "M -1 -1 c 1.15 0.01 1.58 -0.19 1.56 1 v 0.03 c -0.01 1.21 -0.43 0.92 -1.57 0.97 L -1.01 0.63 L -0.67 0.63 L -0.66 -0.64 L -0.99 -0.64 ZM -0.81 -0.99 c 0.83 -0.02 1.36 -0.22 1.37 0.98 v 0.03 c -0.03 1.21 -0.51 0.95 -1.37 0.97 L -0.81 0.62 L -0.47 0.62 L -0.47 -0.59 L -0.81 -0.59 Z";
+                    path = "M 0 -0.7 a 0.7 0.7 90 0 0 0 1.4 a 0.7 0.7 90 0 0 0 -1.4";
+                    color = '#009688';
+                }
+                //M-1 -1 h 2 v 2 h -2  Z
+                if (feature.getProperty('tipo') == 'VENDEDOR') {
+                    //path = "M -0.37 -0.02 c 0.04 -1.09 0.62 -1 1.36 -0.97 v 0.63 c -0.94 -0.38 -0.91 1.2 0 0.7 L 0.99 0.99 C 0.29 1.04 -0.42 1.11 -0.37 -0.01 Z ";\
+                    path = "M 0 -0.7 a 0.7 0.7 90 0 0 0 1.4 a 0.7 0.7 90 0 0 0 -1.4";
+                    color = '#f35c86';
+                }
+
+                return {
+                    label:
+                    {
+                        text: feature.getProperty('quantity'),
+                        fontSize: '11px'
+                    },
+                    title: feature.getProperty('ciudad'),
+                    icon: {
+                        path: path,
+                        scale: 15,
+                        fillColor: color,
+                        fillOpacity: 0.8,
+                        strokeWeight: 0.9,
+                        strokeColor: '#fcfcfc'
+                    }
+                };
+            });
+
+
+            map.data.addListener('mouseover',
+                function (event) {
+                    if (event.feature.getProperty('tipo') === 'VENDEDOR') {
+                        var content = '<div>Las ventas en la ciudad ' +
+                            event.feature.getProperty('ciudad') + ' son ' + event.feature.getProperty('quantity') + '</div>';
+
+                    } else{
+                        var content = '<div>Las compras en la ciudad ' +
+                            event.feature.getProperty('ciudad') + ' son ' + event.feature.getProperty('quantity') + '</div>';
+                    }
+                infowindow.setOptions({ content: content, position: event.latLng, pixelOffset: new google.maps.Size(0, -10) });
+                infowindow.open(map);
+            });
+
+            map.data.addListener('mouseout',
+                function (event) {
+                    infowindow.close();
+                });
+
+
+            var markers = map.markers;
+
+            new MarkerClusterer(map, markers, {
+                imagePath:
+                    "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
+            });
+
+            //map.data.addListener('click',
+            //    function (event) {
+            //        if (tecnicoSeleccionado > 0) {
+            //            var cantidadEquiposNoPactados = $("#cantidadEquiposNoPactados" + tecnicoSeleccionado).data("cantidadequiposnopactados");
+            //            var cantidadEquiposPactados = $("#cantidadEquiposPactados" + tecnicoSeleccionado).data("cantidadequipospactados");
+            //            if (event.feature.getProperty("tecnicoId") == 0) {
+            //                event.feature.setProperty("tecnicoId", tecnicoSeleccionado);
+            //                event.feature.setProperty("fillColor", getColor(tecnicoSeleccionado));
+            //                if (event.feature.getProperty("noPactado")) {
+            //                    cantidadEquiposNoPactados += event.feature.getProperty("cantidadDeEquipos");
+            //                } else {
+            //                    cantidadEquiposPactados += event.feature.getProperty("cantidadDeEquipos");
+            //                }
+            //                AgregarCliente(tecnicoSeleccionado);
+            //                ActualizarFila(tecnicoSeleccionado, cantidadEquiposPactados, cantidadEquiposNoPactados);
+            //                ActualizarDetalle(tecnicoSeleccionado, event.feature,'AGREGAR');
+
+            //            } else if (tecnicoSeleccionado == event.feature.getProperty("tecnicoId")) {
+            //                event.feature.setProperty("tecnicoId", 0);
+            //                event.feature.setProperty("fillColor", getColor(0));
+            //                if (event.feature.getProperty("noPactado")) {
+            //                    cantidadEquiposNoPactados -= event.feature.getProperty("cantidadDeEquipos");
+            //                } else {
+            //                    cantidadEquiposPactados -= event.feature.getProperty("cantidadDeEquipos");
+            //                }
+            //                QuitarCliente(tecnicoSeleccionado);
+            //                ActualizarFila(tecnicoSeleccionado, cantidadEquiposPactados, cantidadEquiposNoPactados);
+            //                ActualizarDetalle(tecnicoSeleccionado, event.feature, 'QUITAR');
+            //            } else {
+            //                var IdTecnicoAnterior = event.feature.getProperty("tecnicoId");
+            //                event.feature.setProperty("tecnicoId", tecnicoSeleccionado);
+            //                event.feature.setProperty("fillColor", getColor(tecnicoSeleccionado));
+            //                var cantidadEquiposNoPactadosTecnicoAnterior = $("#cantidadEquiposNoPactados" + IdTecnicoAnterior).data("cantidadequiposnopactados");
+            //                var cantidadEquiposPactadosTecnicoAnterior = $("#cantidadEquiposPactados" + IdTecnicoAnterior).data("cantidadequipospactados");
+
+            //                if (event.feature.getProperty("noPactado")) {
+            //                    cantidadEquiposNoPactados += event.feature.getProperty("cantidadDeEquipos");
+            //                    cantidadEquiposNoPactadosTecnicoAnterior -= event.feature.getProperty("cantidadDeEquipos");
+            //                } else {
+            //                    cantidadEquiposPactados += event.feature.getProperty("cantidadDeEquipos");
+            //                    cantidadEquiposPactadosTecnicoAnterior -= event.feature.getProperty("cantidadDeEquipos");
+            //                }
+
+            //                AgregarCliente(tecnicoSeleccionado);
+            //                QuitarCliente(IdTecnicoAnterior);
+
+            //                ActualizarFila(IdTecnicoAnterior, cantidadEquiposPactadosTecnicoAnterior, cantidadEquiposNoPactadosTecnicoAnterior);
+            //                ActualizarDetalle(IdTecnicoAnterior, event.feature, 'QUITAR');
+
+            //                ActualizarFila(tecnicoSeleccionado, cantidadEquiposPactados, cantidadEquiposNoPactados);
+            //                ActualizarDetalle(tecnicoSeleccionado, event.feature, 'AGREGAR');
+            //            }
+            //        }
+            //});
+        };
+
+            $("#sc_s_vendedores").change(function () {
+                filtrarPorTipo("VENDEDOR", this.checked);
+            });
+
+            $("#sc_s_compradores").change(function () {
+                filtrarPorTipo("COMPRADOR", this.checked);
+            });
+
+            function filtrarPorTipo(tipoCliente, visibility) {
+                map.data.forEach(function (feature) {
+                    if (feature.getProperty('tipo') == tipoCliente) {
+                        map.data.overrideStyle(feature, { visible: visibility });
+                    }
+                });
+            }
 
         var _showSoldQttyCalendarChart = function (element, size) {
 

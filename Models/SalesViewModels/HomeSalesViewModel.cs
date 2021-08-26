@@ -1,4 +1,5 @@
 ﻿using ecomFront.Models.DbFirstModels;
+using ecomFront.Models.SearchViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace ecomFront.Models.SalesViewModels
         public Search Search{ get; set; }
         public Execution Execution { get; set; }
         public List<Criterion> Criteria{ get; set; }
+        public List<SalesQuantityMap> SalesPerCityComprador { get; set; }
+        public List<SalesQuantityMap> SalesPerCityVendedor { get; set; }
     }
 }

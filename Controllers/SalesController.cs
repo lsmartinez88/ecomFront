@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,6 +39,9 @@ namespace ecomFront.Controllers
             };
             homeSalesViewModel.Search = _searchData.GetSearch((int)homeSalesViewModel.Execution.SearchId);
             homeSalesViewModel.Criteria = _searchData.GetFullCriteriasBySearchId((int)homeSalesViewModel.Search.IdSearch);
+            homeSalesViewModel.SalesPerCityComprador = _searchData.GetSalesMap((int)homeSalesViewModel.Execution.IdExecution,Models.SearchViewModels.SalesType.Compra);
+            homeSalesViewModel.SalesPerCityVendedor = _searchData.GetSalesMap((int)homeSalesViewModel.Execution.IdExecution, Models.SearchViewModels.SalesType.Venta);
+
             return View(homeSalesViewModel);
         }
 
@@ -48,7 +52,7 @@ namespace ecomFront.Controllers
             List<AveragePricePerDay> salesItems = _groupData.GetSalesQttyByExecution(executionId);
             var salesQttyByDayViewModel = new SalesQttyByDayViewModel();
 
-            salesItems.ForEach(pi =>    
+            salesItems.ForEach(pi =>
             {
                 salesQttyByDayViewModel.items.Add(new SalesQttyByDayInformation { Date = pi.Fecha, Quantity = pi.CantidadVentas });
             });
@@ -58,7 +62,5 @@ namespace ecomFront.Controllers
 
             return Json(salesQttyByDayViewModel);
         }
-
-        
     }
 }
