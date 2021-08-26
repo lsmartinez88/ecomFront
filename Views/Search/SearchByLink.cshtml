@@ -324,13 +324,13 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="w-100 alert-info text-center mt-2 p-1"><h5 class="m-0">Detalle de Atributos</h5></div>
+                <div class="w-100 alert-info text-center mt-2 p-1" id="divDetalleAtributos"><h5 class="m-0">Detalle de Atributos</h5></div>
                 <div class="container-fluid w-100"><table id="confirmDetalleAtributos" class="text-center w-100"><tbody></tbody></table></div>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-link " data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" id="ConfirmChanges">Save changes</button>
+                <button type="button" class="btn btn-link " data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success" id="ConfirmChanges">Guardar Búsqueda</button>
             </div>
         </div>
     </div>
@@ -522,13 +522,22 @@
             }
             $("#hrefConfirmacionPublicacion").text(NewSearchModel.itemEncontrado.id);
             $("#hrefConfirmacionPublicacion").attr("href", NewSearchModel.itemEncontrado.permalink);
-            $('#confirmCantPublicaciones').text();
-            $('#confirmCantidadAtributos').text($('#CantAtributos').text());
-            $.each(NewSearchModel.atributosSeleccionados, function (key, value) {
-                $('#confirmDetalleAtributos  > tbody').append('<tr><td class="text-right w-50 pr-1"> ' + value.name + '</td><td class="text-left w-50 pl-1 font-weight-semibold">'
-                    + value.value_name + '</td>' +
-                    '</tr>');
-            });
+            $('#confirmCantPublicaciones').text(NewSearchModel.CantidadPublicaciones);
+            if ($("#CantAtributos").text() !== "0") {
+                $('#confirmCantidadAtributos').text($('#CantAtributos').text());
+            } else {
+                $('#confirmCantidadAtributos').text("-");
+            }
+            if (NewSearchModel.atributosSeleccionados.length > 0) {
+                $("#divDetalleAtributos").show();
+                $.each(NewSearchModel.atributosSeleccionados, function (key, value) {
+                    $('#confirmDetalleAtributos  > tbody').append('<tr><td class="text-right w-50 pr-1"> ' + value.name + '</td><td class="text-left w-50 pl-1 font-weight-semibold">'
+                        + value.value_name + '</td>' +
+                        '</tr>');
+                });
+            } else {
+                $("#divDetalleAtributos").hide();
+            }
 
             $('#modal_ConfirmacionBusqueda').modal('toggle');
         }
