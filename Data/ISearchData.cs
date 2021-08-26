@@ -25,5 +25,7 @@ namespace ecomFront.Data
 
         List<SalesQuantityMap> GetSalesMap(int ExecutionId, SalesType tipo);
 
+        List<SalesQuantityMap> GetSalesMapCriteria(int ExecutionId, int CriteriaId, SalesType tipo);
+
     }
 }

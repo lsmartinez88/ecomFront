@@ -104,5 +104,21 @@ namespace ecomFront.Data
                 }).ToList();
         }
 
+        public List<SalesQuantityMap> GetSalesMapCriteria(int ExecutionId, int CriteriaId, SalesType tipo)
+        {
+            return _contextModel.SalesPerCity.Where(a => a.ExecutionId == ExecutionId).Where(a => (tipo == SalesType.Compra ? a.CantidadCompras != 0 : a.CantidadVentas != 0))
+                 .Select(x => new SalesQuantityMap
+                 {
+                     ExecutionId = x.ExecutionId,
+                     CriteriaId = x.CriteriaId,
+                     City = x.City.Replace("_", ""),
+                     Latitud = x.Latitud,
+                     Longitud = x.Longitud,
+                     Tipo = tipo,
+                     Cantidad = (tipo == SalesType.Compra ? x.CantidadCompras : x.CantidadVentas)
+
+                 }).ToList();
+        }
+
     }
 }

@@ -8,6 +8,7 @@ namespace ecomFront.Models.SearchViewModels
     public class SalesQuantityMap
     {
         public int ExecutionId { get; set; }
+        public int CriteriaId { get; set; }
         public String City { get; set; }
         public String Latitud { get; set; }
         public String Longitud { get; set; }
