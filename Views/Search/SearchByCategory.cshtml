@@ -9,22 +9,32 @@
 
 @model SearchByCategoryViewModel
 <!-- Page header -->
-<div class="page-header page-header-light">
-    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
-        <div class="d-flex">
-            <div class="breadcrumb">
+<div class="page-header page-header-light sticky-top">
+    <div class="page-header-content header-elements-lg-inline">
+        <div class="page-title d-flex breadcrumb pt-0">
+            <h4>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-                <span class="breadcrumb-item active">Busqueda Por Categoria</span>
-            </div>
-
-            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+                <span class="breadcrumb-item active">Nueva búsqueda por categoria</span>
+            </h4>
         </div>
 
         <div class="header-elements d-none">
-            <div class="breadcrumb justify-content-center">
-                <a href="#" class="breadcrumb-elements-item">
-                    <i class="icon-comment-discussion mr-2"></i>
-                    Necesito Ayuda
+            <div class="d-flex justify-content-center border-left ">
+                <a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
+                    <h2 class="p-0 m-0 font-weight-normal" id="CantAtributos">0</h2>
+                    <span class="font-weight-normal">ATRIBUTOS</span>
+                </a>
+            </div>
+            <div class="d-flex justify-content-center border-left ">
+                <a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
+                    <h2 class="p-0 m-0 font-weight-normal" id="CantPublicaciones">0</h2>
+                    <span class="font-weight-normal">PUBLICACIONES</span>
+                </a>
+            </div>
+            <div class="d-flex justify-content-center border-left @*bg-success-100*@">
+                <a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body" id="SaveButton">
+                    <i class="mi-save mi-2x text-success p-0"></i>
+                    <span class="font-weight-bold text-success">GUARDAR</span>
                 </a>
             </div>
         </div>
@@ -33,4 +43,539 @@
 <!-- /page header -->
 
 <div class="content">
+    <div class="row">
+        <div id="infoBusqueda" class="col-lg-8 col-sm-12">
+            <div class="card">
+                <div class="card-header  bg-info-100 header-elements-inline">
+                    <div class="card-title font-weight-semibold"> 1. Selección de Categoria <div class="card-title font-weight-light ">Navegá hasta la categoria de interés.</div></div>
+                </div>
+                <div class="card-header bg-transparent" id="CategoryPath">
+
+                </div>
+                <div class="card-body">
+                    <ul class="media-list media-list-linked overflow-auto border-top" style="max-height:500px" id="MainList">
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="infoResumen" class="col-lg-4 col-sm-12">
+            <div class="card">
+                <div class="sidebar-section">
+                    <div class="card-header bg-info-100">
+                        <span class="card-title font-weight-semibold">1. Información de la búsqueda</span>
+                    </div>
+                    <div class="sidebar-section-body">
+                        <form action="#" id="formBusqueda">
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label" for="searchName">Nombre:</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control form-control-sm" placeholder="Ingresá el nombre" id="searchName" required="required">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label">Descripción:</label>
+                                <div class="col-lg-8">
+                                    <textarea rows="1" class="form-control form-control-sm" placeholder="Ingresá la descripcion de la búsqueda" id="searchDescription"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-header bg-success-100">
+                        <span class="card-title font-weight-semibold">Resumen De Categorias </span>
+                        <span class="badge badge-info badge-pill float-right">15</span>
+                    </div>
+                    <div class="sidebar-section-body">
+                        <ul class="media-list">
+                            <li class="media">
+                                <div class="media-body">
+                                    <div class="font-weight-semibold">Hogar, Muebles y Jardin > Bazar > Elementos de Bazar</div>
+                                    <span class="font-size-sm text-muted">Atributo - Valor</span>
+                                    <span class="font-size-sm text-muted">Atributo - Valor</span>
+                                    <span class="font-size-sm text-muted">Atributo - Valor</span>
+                                    <span class="font-size-sm text-muted">Atributo - Valor</span>
+                                </div>
+
+
+                                <div class="ml-3 align-self-center ">
+                                    <a href="#" class="list-icons-item text-danger "><i class="icon-trash"></i></a>
+                                </div>
+
+                            <li class="media">
+                                <div class="media-body">
+                                    <div class="font-weight-semibold">Walter Sommers</div>
+                                    <span class="font-size-sm text-muted">Lead developer</span>
+                                </div>
+
+                                <div class="ml-3 align-self-center ">
+                                    <a href="#" class="list-icons-item text-danger "><i class="icon-trash"></i></a>
+                                </div>
+                            </li>
+
+                            <li class="media">
+
+                                <div class="media-body">
+                                    <div class="font-weight-semibold">Otto Gerwald</div>
+                                    <span class="font-size-sm text-muted">Front end developer</span>
+                                </div>
+
+                                <div class="ml-3 align-self-center ">
+                                    <a href="#" class="list-icons-item text-danger "><i class="icon-trash"></i></a>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="media-body">
+                                    <div class="font-weight-semibold">Vince Satmann</div>
+                                    <span class="font-size-sm text-muted">UX expert</span>
+                                </div>
+
+                                <div class="ml-3 align-self-center ">
+                                    <a href="#" class="list-icons-item text-danger "><i class="icon-trash"></i></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<div id="modal_AgregarAtributos" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title">Agrega los atributos opcionales</h5>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="alert alert-info alert-dismissible alert-styled-left border-top-0 border-bottom-0 border-right-0">
+                    Puede refinar su búsqueda agregando los atributos y los valores correspondientes!
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                </div>
+                <div class="container-fluid w-100">
+                    <div id="atributesValues">
+                        <div class="form-group row">
+                            <label class="col-lg-4 col-form-label">Gender:</label>
+                            <div class="col-lg-8">
+                                <div class="form-check-horizontal">
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" name="gender" checked="">
+                                        <span class="custom-control-label">Male</span>
+                                    </label>
+
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" name="gender">
+                                        <span class="custom-control-label">Female</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success" id="ConfirmChanges">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <script type="text/javascript">
+        var path_from_root = '';
+
+        document.addEventListener('DOMContentLoaded', function () {
+            $('#sidebar-toggle').click();
+            $("#SaveButton").addClass('disabled');
+            fillMainList();
+        });
+
+        function fillMainList() {
+            var url = 'https://api.mercadolibre.com/sites/MLA/categories';
+            $.getJSON(url, function (json_data, textStatus, jqXHR) {
+                $('#MainList').empty();
+                $('#CategoryPath').empty();
+                var cList = $('#MainList');
+                if (jqXHR.status == 200) {
+                    $.each(json_data, function (key, value) {
+                        var li = $('<li/>',
+                            {
+                                class: 'border-bottom',
+                                id: 'li_' + value.id
+                            })
+                            .appendTo(cList);
+
+                        var divMain = $('<div />',
+                            {
+                                class: 'media'
+                            })
+                            .appendTo(li);
+
+                        var divTitulo = $('<div/>',
+                            {
+                                class: 'media-body'
+                            })
+                            .appendTo(divMain);
+
+                        var h4 = $('<h4/>',
+                            {
+                                class: 'font-weight-light mb-0',
+                                text: value.name
+                            })
+                            .appendTo(divTitulo);
+
+
+                        var badge = $('<i/>',
+                            {
+                                class: 'mi-info-outline ml-1 text-secondary-100 cursor-pointer ',
+                                text: value.total_items_in_this_category,
+                                title: '',
+                                'data-popup': 'tooltip',
+                                'data-placement': 'right',
+                                'data-original-title': 'Esta categoria no es seleccionable, por favor detalle mas su busqueda'
+                            })
+                            .appendTo(h4)
+                            .tooltip();
+
+                        var spanIcon = $('<span />',
+                            {
+                                class: "text-muted"
+                            })
+                            .appendTo(divMain);
+
+                        var btnVerMas = $('<button />',
+                            {
+                                type: 'button',
+                                class: 'btn btn-outline-secondary btn-sm btnVerMas',
+                                text: 'Ver Mas',
+                                'data-id': value.id
+                            })
+                            .appendTo(spanIcon);
+
+                    });
+                }
+                else {
+                    $.jGrowl('Error en la llamada: ' + url, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 });
+                }
+
+            })
+                .fail(function () { $.jGrowl('Error en la llamada: ' + url, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 }); });
+        }
+
+
+
+        $(document).on('click', '.btnVerMas', function () {
+            var categoryId = $(this).attr('data-id');
+            var cList = $('#MainList');
+            var hasChildren = false;
+            var url = 'https://api.mercadolibre.com/categories/' + categoryId;
+            $.getJSON(url, function (json_data, textStatus, jqXHR) {
+                if (jqXHR.status == 200) {
+                    if (json_data.children_categories.length > 0) {
+                        cList.empty();
+                        if (jqXHR.status == 200) {
+                            buildPath(json_data);
+                            $.each(json_data.children_categories, function (key, value) {
+                                $.getJSON('https://api.mercadolibre.com/categories/' + value.id, function (dataCategory, textStatus, jqXHR) {
+                                    if (dataCategory.children_categories.length > 0) {
+                                        hasChildren = true;
+                                    }
+                                    else {
+                                        hasChildren = false;
+                                    }
+                                })
+                                    .always(function () {
+                                        var li = $('<li/>',
+                                            {
+                                                class: 'border-bottom',
+                                                id: 'li_' + value.id
+                                            })
+                                            .appendTo(cList);
+
+                                        var divMain = $('<div />',
+                                            {
+                                                class: 'media'
+                                            })
+                                            .appendTo(li);
+
+                                        var divTitulo = $('<div/>',
+                                            {
+                                                class: 'media-body'
+                                            })
+                                            .appendTo(divMain);
+
+                                        var h4 = $('<h4/>',
+                                            {
+                                                class: 'font-weight-light mb-0',
+                                                text: value.name
+                                            })
+                                            .appendTo(divTitulo);
+
+                                        var badge = $('<span/>',
+                                            {
+                                                class: 'badge badge-light badge-pill align-self-center ml-3',
+                                                text: value.total_items_in_this_category,
+                                                title: '',
+                                                'data-popup': 'tooltip',
+                                                'data-placement': 'right',
+                                                'data-original-title': 'Cantidad de items en categoria'
+                                            })
+                                            .appendTo(h4)
+                                            .tooltip();
+
+                                        var spanIcon = $('<span />',
+                                            {
+                                                class: "text-muted"
+                                            })
+                                            .appendTo(divMain);
+
+                                        if (hasChildren) {
+                                            var btnVerMas = $('<button />',
+                                                {
+                                                    type: 'button',
+                                                    class: 'btn btn-outline-secondary btn-sm btnVerMas',
+                                                    text: 'Ver Mas',
+                                                    'data-id': value.id
+                                                })
+                                                .appendTo(spanIcon);
+                                        }
+
+                                        var btnAgregar = $('<button />',
+                                            {
+                                                type: 'button',
+                                                class: 'btn btn-outline-success btn-sm ml-2 btnAgregar',
+                                                text: 'Agregar',
+                                                'data-id': value.id
+                                            })
+                                            .appendTo(spanIcon);
+                                    });
+                            });
+                        }
+                    }
+                }
+                else {
+                    $.jGrowl('Error en la llamada: ' + url, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 });
+                }
+            })
+                .fail(function () { $.jGrowl('Error en la llamada: ' + url, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 }); });
+        });
+
+        function buildPath(json_data) {
+            var CategoryPath = $('#CategoryPath');
+            CategoryPath.empty();
+            var href = $('<a />',
+                {
+                    href: 'javascript:;',
+                    text: 'Inicio',
+                    onclick: 'fillMainList();'
+                })
+                .appendTo(CategoryPath);
+
+            var i = $('<a />', { class: 'fas fa-chevron-right mr-1 ml-1 text-black-50' }).appendTo(CategoryPath);
+
+            $.each(json_data.path_from_root, function (key, value) {
+                if (value.id == json_data.id) {
+                    var hrefThis = $('<span />',
+                        {
+                            text: value.name
+                        })
+                        .appendTo(CategoryPath);
+                }
+                else {
+                    var href = $('<a />',
+                        {
+                            href: 'javascript:;',
+                            class: 'btnVerMas',
+                            'data-id': value.id,
+                            text: value.name
+                        })
+                        .appendTo(CategoryPath);
+                    var i = $('<a />', { class: 'fas fa-chevron-right mr-1 ml-1 text-black-50' }).appendTo(CategoryPath);
+                }
+            });
+        }
+
+
+        $(document).on('click', '.btnAgregar', function () {
+            $('#atributesValues').empty();
+            var categoryId = $(this).attr('data-id');
+            var url = 'https://api.mercadolibre.com/categories/' + categoryId + '/attributes';
+            $.getJSON(url, function (json_data, textStatus, jqXHR) {
+                if (jqXHR.status == 200) {
+                    json_data.forEach(function (value, index, array) {
+                        if (value.id != null && value.name != null) {
+
+                            var divFormGroup = $('<div />',
+                                {
+                                    class: "form-group row border-top mb-1",
+                                    'data-id': value.id
+                                })
+                                .appendTo($('#atributesValues'));
+
+                            var labelCheckBox = $('<label />', { class: "col-lg-1 custom-control custom-control-success custom-checkbox col-form-label"}).appendTo(divFormGroup);
+
+                            var inputAtributo = $('<input />',
+                                {
+                                    id: 'input_' + value.id,
+                                    class: "custom-control-input inputAtributo",
+                                    type: "checkbox",
+                                    'data-value-id': value.value_id,
+                                    'data-id': value.id
+                                })
+                                .appendTo(labelCheckBox);
+
+                            var spanAtributo = $('<span />', { class: "custom-control-label p-0" }).appendTo(labelCheckBox);
+
+                            var labelNombreAtributo = $('<label />',
+                                {
+                                    class: "col-lg-6 col-form-label",
+                                    text: value.name
+                                })
+                                .appendTo(divFormGroup);
+
+                            var divFormValue = $('<div />',
+                                {
+                                    class: "col-lg-5",
+                                    'data-id': value.id
+                                })
+                                .appendTo(divFormGroup);
+
+                            var divFormValue2 = $('<div />',
+                                {
+                                    class: "form-check-horizontal",
+                                    id : 'div_' + value.id
+                                })
+                                .appendTo(divFormValue);
+
+
+                            if (value.value_type == 'boolean') {
+                                BuildBooleanInput(divFormValue2, value);
+                            } else if (value.value_type == 'list') {
+                                BuildListInput(divFormValue2, value);
+                            } else if (value.value_type == 'number') {
+                                $('<input />',
+                                    {
+                                        name: 'input_' + value.id,
+                                        id: 'input_' + value.id,
+                                        type: 'number',
+                                        class: "form-control form-control-sm"
+                                    })
+                                    .appendTo(divFormValue2);
+                            } else if (value.value_type == 'number_unit') {
+                                BuildNumberUnitInput(divFormValue2, value);
+                            } else if (value.value_type == 'string') {
+                                    $('<input />',
+                                    {
+                                        name: 'input_' + value.id,
+                                        id: 'input_' + value.id,
+                                        type: 'text',
+                                        class: "form-control form-control-sm"
+                                    })
+                                        .appendTo(divFormValue2);
+                            }
+
+                        }
+                    });
+                }else {
+                    $.jGrowl('Error en la llamada: ' + url, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 });
+                }
+            })
+            .fail(function () { $.jGrowl('Error en la llamada: ' + url, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 }); });
+            $('#modal_AgregarAtributos').modal('toggle');
+        });
+
+        function BuildBooleanInput(divFormGroup, value) {
+            value.values.forEach(function (data, index, array) {
+                var labelNombreAtributo = $('<label />',
+                    {
+                        class: "custom-control custom-radio custom-control-inline"
+                    })
+                    .appendTo(divFormGroup);
+
+                var inputNombreAtributo = $('<input />',
+                    {
+                        name: 'input_' + value.id,
+                        id: 'input_' + data.id,
+                        class: "custom-control-input",
+                        type: "radio",
+                        checked: ""
+                    })
+                    .appendTo(labelNombreAtributo);
+
+                var spanName = $('<span />',
+                    {
+                        class: "custom-control-label",
+                        text: data.name
+                    })
+                    .appendTo(labelNombreAtributo);
+            });
+        }
+
+        function BuildListInput(divFormGroup, value) {
+            var selectNombreAtributo = $('<select />',
+                {
+                    name: 'input_' + value.id,
+                    id: 'input_' + value.id,
+                    class: "form-control form-control-sm"
+                })
+                .appendTo(divFormGroup);
+
+            value.values.forEach(function (data, index, array) {
+                
+                var option = $('<option />',
+                    {
+                        name: 'input_' + data.id,
+                        id: 'input_' + data.id,
+                        value: data.id,
+                        class: "custom-control-input",
+                        text: data.name
+                    })
+                    .appendTo(selectNombreAtributo);
+            });
+        }
+
+        function BuildNumberUnitInput(divFormGroup, value) {
+
+            var row = $('<div />', { class: "row" }).appendTo(divFormGroup);
+
+            var divTexto = $('<div />', { class: "col-lg-6" }).appendTo(row);
+
+            $('<input />',
+                {
+                    name: 'input_' + value.id,
+                    id: 'input_' + value.id,
+                    type: 'number',
+                    class: "form-control form-control-sm"
+                })
+                .appendTo(divTexto);
+
+
+            var divUnit = $('<div />', { class: "col-lg-6" }).appendTo(row);
+
+            var selectNombreAtributo = $('<select />',
+                {
+                    name: 'input_' + value.id,
+                    id: 'input_' + value.id,
+                    class: "form-control form-control-sm"
+                })
+                .appendTo(divUnit);
+
+            value.allowed_units.forEach(function (data, index, array) {
+                 $('<option />',
+                    {
+                        name: 'input_' + data.id,
+                        id: 'input_' + data.id,
+                        value: data.id,
+                        class: "custom-control-input",
+                        text: data.name
+                    })
+                    .appendTo(selectNombreAtributo);
+            });
+        }
+
+    </script>
+}
