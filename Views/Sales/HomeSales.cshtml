@@ -77,12 +77,49 @@
 </style>
 
 <script src="~/assets/js/OrdersCharts.js"></script>
-<script src="https://unpkg.com/@@googlemaps/markerclustererplus/dist/index.min.js"></script>
+<!--<script src="https://unpkg.com/@@googlemaps/markerclustererplus/dist/index.min.js"></script>-->
+<script src="~/assets/js/chart-marker-clusterer.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAs_m9pdnAILwNEQznTqLbogShI7jpnQyQ&callback=initMap"></script>
 @section Scripts
     {
     <script type="text/javascript">
-            var map;
+        var map;
+        var markersComprador = [];
+        var markersVendedor = [];
+        var markersGlobal = [];
+        var marker;
+        var markerClusterVendedor;
+        var markerClusterComprador;
+        var markerCluster;
+        google.charts.load('current', { 'packages': ['corechart'] });
+
+        MarkerClusterer.CALCULATOR = function (markers, numStyles) {
+            var index = 0;
+            var title = "";
+
+            var valueToSum = 0;
+
+            for (var m = 0; m < markers.length; m++) {
+                //This is the custom property called MyValue
+                valueToSum += Number(markers[m].cantidad);
+            }
+
+            var dv = 5;
+
+            while (dv !== 0) {
+                dv = parseInt(dv / 10, 10);  //you could define your own rules
+                index++;
+            }
+
+            index = Math.min(index, numStyles);
+            return {
+                text: valueToSum,
+                index: index,
+                title: title
+            };
+        };
+
         document.addEventListener('DOMContentLoaded', function () {
 
             $('#calendarSoldQtty').addClass('loader');
@@ -139,30 +176,57 @@
 
 
             infowindow = new google.maps.InfoWindow();
-            var bounds = new google.maps.LatLngBounds();
+            var color = '';
+            var path = google.maps.SymbolPath.CIRCLE;
+            path = "M 0 -0.7 a 0.7 0.7 90 0 0 0 1.4 a 0.7 0.7 90 0 0 0 -1.4";
+            color = '#009688';
 
             @foreach(var itemComprador in Model.SalesPerCityComprador)
             {
                 if(itemComprador.Cantidad > 10)
                 {
                     <text>
-                        var feature = map.data.add({
-                        geometry: new google.maps.Data.Point({
-                            lat: @itemComprador.Latitud,
-                            lng: @itemComprador.Longitud
-                        }),
-                        properties:
-                        {
-                            ciudad: "@itemComprador.City",
-                            quantity: @itemComprador.Cantidad,
-                            tipo: 'COMPRADOR'
-                        }
+                         marker = new google.maps.Marker({
+                            position: {
+                                lat: @itemComprador.Latitud,
+                                lng: @itemComprador.Longitud
+                            },
+                            label: {
+                                text: "@itemComprador.Cantidad",
+                                fontSize: '11px'
+                            },
+                            title: "Comprador",
+                            icon: {
+                                path: path,
+                                scale: 15,
+                                fillColor: color,
+                                fillOpacity: 0.8,
+                                strokeWeight: 0.9,
+                                strokeColor: '#fcfcfc'
+                            },
+                            map: map,
+                             tipo: "COMPRADOR",
+                             ciudad: "@itemComprador.City",
+                            cantidad: @itemComprador.Cantidad
                         });
-                        bounds.extend(feature.getGeometry().get());
+
+                    marker.addListener('mouseover', function () {
+                                infoTooltip(this);
+                        });
+
+                        marker.addListener('mouseout', function () {
+                            infowindow.close();
+                        });
+
+                    markersComprador.push(marker);
+
                     </text>
                 }
 
             }
+
+            path = "M 0 -0.7 a 0.7 0.7 90 0 0 0 1.4 a 0.7 0.7 90 0 0 0 -1.4";
+            color = '#f35c86';
 
 
              @foreach(var itemComprador in Model.SalesPerCityVendedor)
@@ -170,28 +234,62 @@
                  if (itemComprador.Cantidad > 10)
                  {
                       <text>
-                        var feature = map.data.add({
-                        geometry: new google.maps.Data.Point({
-                            lat: @itemComprador.Latitud + 0.006,
-                            lng: @itemComprador.Longitud + 0.006
-                        }),
-                        properties:
-                        {
-                            ciudad: "@itemComprador.City",
-                            quantity: @itemComprador.Cantidad,
-                            tipo: 'VENDEDOR'
-                        }
+
+                      marker = new google.maps.Marker({
+                            position: {
+                              lat: @itemComprador.Latitud + 0.006,
+                              lng: @itemComprador.Longitud + 0.006
+                            },
+                            label: {
+                                text: "@itemComprador.Cantidad",
+                                fontSize: '11px'
+                            },
+                            title: "Vendedor",
+                            icon: {
+                                path: path,
+                                scale: 15,
+                                fillColor: color,
+                                fillOpacity: 0.8,
+                                strokeWeight: 0.9,
+                                strokeColor: '#fcfcfc'
+                            },
+                            map: map,
+                            tipo: "VENDEDOR",
+                             ciudad: "@itemComprador.City",
+                            cantidad: @itemComprador.Cantidad
                         });
-                        bounds.extend(feature.getGeometry().get());
+
+                        marker.addListener('mouseover', function () {
+                            infoTooltip(this);
+                        });
+
+                        marker.addListener('mouseout', function () {
+                            infowindow.close();
+                        });
+
+                        markersVendedor.push(marker);
                     </text>
                  }
 
             }
 
+            function infoTooltip(marker) {
+                if (marker.tipo === "COMPRADOR") {
+                    var content = '<div>Las compras en la ciudad ' +
+                        marker.ciudad + ' son ' + marker.cantidad + '</div>';
+                    infowindow.setOptions({ content: content, position: marker.position, pixelOffset: new google.maps.Size(0, -10) });
+                    infowindow.open(map);
+                } else {
+                    var content = '<div>Las ventas en la ciudad ' +
+                        marker.ciudad + ' son ' + marker.cantidad + '</div>';
+                    infowindow.setOptions({ content: content, position: marker.position, pixelOffset: new google.maps.Size(0, -10) });
+                    infowindow.open(map);
+                }
+            }
             //map.setCenter(bounds.getCenter());
             //map.fitBounds(bounds);
 
-            map.data.setStyle(function (feature) {
+           /* map.data.setStyle(function (feature) {
                 var color = '';
                 var path = google.maps.SymbolPath.CIRCLE;
 
@@ -223,10 +321,10 @@
                         strokeColor: '#fcfcfc'
                     }
                 };
-            });
+            });*/
 
 
-            map.data.addListener('mouseover',
+            /*map.data.addListener('mouseover',
                 function (event) {
                     if (event.feature.getProperty('tipo') === 'VENDEDOR') {
                         var content = '<div>Las ventas en la ciudad ' +
@@ -243,15 +341,28 @@
             map.data.addListener('mouseout',
                 function (event) {
                     infowindow.close();
-                });
+                });*/
 
+            markersGlobal = markersComprador;
+            markersGlobal = markersGlobal.concat(markersVendedor);
 
-            var markers = map.markers;
+            var opt = {
+                "styles": [
+                    { textColor: "black", textSize: 10, height: 90, width: 90 },
+                    { textColor: "black", textSize: 10, height: 100, width: 100 },
+                    { textColor: "black", textSize: 10, height: 110, width: 110 },
+                    { textColor: "black", textSize: 10, height: 120, width: 120 },
+                    { textColor: "black", textSize: 10, height: 130, width: 130 }
+                ], "ignoreHidden" : true
+            };
 
-            new MarkerClusterer(map, markers, {
-                imagePath:
-                    "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
-            });
+            markerCluster = new MarkerClusterer(map, markersGlobal, opt);
+
+           /* markerClusterComprador = new MarkerClusterer(map, markersComprador, {
+                imagePath: '../../../../global_assets/images/comprador/m', ignoreHidden:true });
+
+            markerClusterVendedor = new MarkerClusterer(map, markersVendedor, { imagePath: '../../../../global_assets/images/vendedor/m', ignoreHidden: true});
+            */
 
             //map.data.addListener('click',
             //    function (event) {
@@ -317,13 +428,29 @@
                 filtrarPorTipo("COMPRADOR", this.checked);
             });
 
-            function filtrarPorTipo(tipoCliente, visibility) {
-                map.data.forEach(function (feature) {
-                    if (feature.getProperty('tipo') == tipoCliente) {
-                        map.data.overrideStyle(feature, { visible: visibility });
+        function filtrarPorTipo(tipoCliente, visibility) {
+            if (tipoCliente === "COMPRADOR") {
+                for (var i = 0; i < markersComprador.length; i++) {
+                    if (visibility) {
+                        markersComprador[i].setVisible(true);
                     }
-                });
+                    else {
+                        markersComprador[i].setVisible(false);
+                    }
+                }
+                markerCluster.repaint();
+            } else {
+                for (var i = 0; i < markersVendedor.length; i++) {
+                    if (visibility) {
+                        markersVendedor[i].setVisible(true);
+                    }
+                    else {
+                        markersVendedor[i].setVisible(false);
+                    }
+                }
+                markerCluster.repaint();
             }
+         }
 
         var _showSoldQttyCalendarChart = function (element, size) {
 
