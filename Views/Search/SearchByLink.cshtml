@@ -482,7 +482,7 @@
              $.ajax({
                 type: "POST",
                  data: JSON.stringify(NewSearchModel),
-                url: "/Search/SaveNewSearch",
+                 url: "/Search/SaveNewSearchByLink",
                 contentType: "application/json"
             }).done(function (res) {
                 if (res.result == "OK") {
@@ -504,9 +504,6 @@
                 }
             });
         });
-
-
-
 
         function modalImprimir(NewSearchModel) {
             $("#confirmConditionNew").hide();

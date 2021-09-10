@@ -21,8 +21,8 @@
         <div class="header-elements d-none">
             <div class="d-flex justify-content-center border-left ">
                 <a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
-                    <h2 class="p-0 m-0 font-weight-normal" id="CantAtributos">0</h2>
-                    <span class="font-weight-normal">ATRIBUTOS</span>
+                    <h2 class="p-0 m-0 font-weight-normal" id="CantCategorias">0</h2>
+                    <span class="font-weight-normal">CATEGORIAS</span>
                 </a>
             </div>
             <div class="d-flex justify-content-center border-left ">
@@ -82,57 +82,10 @@
                     </div>
                     <div class="card-header bg-success-100">
                         <span class="card-title font-weight-semibold">Resumen De Categorias </span>
-                        <span class="badge badge-info badge-pill float-right">15</span>
+                        @*<span class="badge badge-info badge-pill float-right">15</span>*@
                     </div>
                     <div class="sidebar-section-body">
-                        <ul class="media-list">
-                            <li class="media">
-                                <div class="media-body">
-                                    <div class="font-weight-semibold">Hogar, Muebles y Jardin > Bazar > Elementos de Bazar</div>
-                                    <span class="font-size-sm text-muted">Atributo - Valor</span>
-                                    <span class="font-size-sm text-muted">Atributo - Valor</span>
-                                    <span class="font-size-sm text-muted">Atributo - Valor</span>
-                                    <span class="font-size-sm text-muted">Atributo - Valor</span>
-                                </div>
-
-
-                                <div class="ml-3 align-self-center ">
-                                    <a href="#" class="list-icons-item text-danger "><i class="icon-trash"></i></a>
-                                </div>
-
-                            <li class="media">
-                                <div class="media-body">
-                                    <div class="font-weight-semibold">Walter Sommers</div>
-                                    <span class="font-size-sm text-muted">Lead developer</span>
-                                </div>
-
-                                <div class="ml-3 align-self-center ">
-                                    <a href="#" class="list-icons-item text-danger "><i class="icon-trash"></i></a>
-                                </div>
-                            </li>
-
-                            <li class="media">
-
-                                <div class="media-body">
-                                    <div class="font-weight-semibold">Otto Gerwald</div>
-                                    <span class="font-size-sm text-muted">Front end developer</span>
-                                </div>
-
-                                <div class="ml-3 align-self-center ">
-                                    <a href="#" class="list-icons-item text-danger "><i class="icon-trash"></i></a>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="media-body">
-                                    <div class="font-weight-semibold">Vince Satmann</div>
-                                    <span class="font-size-sm text-muted">UX expert</span>
-                                </div>
-
-                                <div class="ml-3 align-self-center ">
-                                    <a href="#" class="list-icons-item text-danger "><i class="icon-trash"></i></a>
-                                </div>
-                            </li>
+                        <ul class="media-list" id="resumenCategoria">
                         </ul>
                     </div>
                 </div>
@@ -173,6 +126,7 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" id="hiddenCategory" />
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link" data-dismiss="modal">Cerrar</button>
@@ -183,10 +137,92 @@
 </div>
 
 
+
+<div id="modal_ConfirmacionBusqueda" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Confirmá la selección de criterios</h5>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="alert alert-info alert-dismissible alert-styled-left border-top-0 border-bottom-0 border-right-0">
+                    <span class="font-weight-semibold">Atención! </span> Estos son los criterios de búsqueda que seleccionaste para realizar tu análisis.
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                </div>
+                <div class="w-100 alert-success text-center mt-2 p-1"><h5 class="m-0">Información de la Búsqueda</h5></div>
+                <div class="container-fluid w-100">
+                    <table class="text-center w-100">
+                        <tbody>
+                            <tr>
+                                <td class="text-right w-50 pr-1"> Nombre</td>
+                                <td class="text-left w-50 pl-1 font-weight-semibold" id="confirmName"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-right w-50 pr-1"> Descripción</td>
+                                <td class="text-left w-50 pl-1 font-weight-semibold" id="confirmDescription"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-right w-50 pr-1"> Condición</td>
+                                <td class="text-left w-50 pl-1 font-weight-semibold">
+                                    <span id="confirmConditionNew" class="badge badge-success">NUEVO</span>
+                                    <span id="confirmConditionUsed" class="badge badge-primary">USADO</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-right w-50 pr-1"> Publicaciones para Analizar</td>
+                                <td class="text-left w-50 pl-1 font-weight-semibold" id="confirmCantPublicaciones"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-right w-50 pr-1"> Categorias Seleccionadas</td>
+                                <td class="text-left w-50 pl-1 font-weight-semibold" id="confirmCantidadCategorias"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="divDetalleCategoria">
+
+                </div>
+
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link " data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success" id="ConfirmGeneral">Guardar Búsqueda</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts
     {
     <script type="text/javascript">
         var path_from_root = '';
+        var attributes = [];
+        var categorySelectedList = [];
+        var selectedCategory = '';
+        var selectedCategoryName = '';
+        var cantPublicaciones = 0;
+        var NewSearchModel = {};
+        var excludedAttributes = ['state',
+            'accepts_mercadopago',
+            'installments',
+            'power_seller',
+            'has_video',
+            'has_pictures',
+            'ITEM_CONDITION',
+            'category',
+            'official_store',
+            'discount',
+            'state',
+            'shipping',
+            'since',
+            'all_payment_methods_discount',
+            'price_campaign_id',
+            'shipping_cost',
+            'until'];
 
         document.addEventListener('DOMContentLoaded', function () {
             $('#sidebar-toggle').click();
@@ -349,7 +385,8 @@
                                                 type: 'button',
                                                 class: 'btn btn-outline-success btn-sm ml-2 btnAgregar',
                                                 text: 'Agregar',
-                                                'data-id': value.id
+                                                'data-id': value.id,
+                                                'data-category-name': value.name
                                             })
                                             .appendTo(spanIcon);
                                     });
@@ -402,13 +439,16 @@
 
         $(document).on('click', '.btnAgregar', function () {
             $('#atributesValues').empty();
-            var categoryId = $(this).attr('data-id');
-            var url = 'https://api.mercadolibre.com/categories/' + categoryId + '/attributes';
+            attributes = [];
+            selectedCategory = $(this).attr('data-id');
+            selectedCategoryName = $(this).attr('data-category-name');
+
+            var url = 'https://api.mercadolibre.com/sites/MLA/search?category=' + selectedCategory;
             $.getJSON(url, function (json_data, textStatus, jqXHR) {
                 if (jqXHR.status == 200) {
-                    json_data.forEach(function (value, index, array) {
+                    json_data.available_filters.filter(item => !excludedAttributes.includes(item.id)).forEach(function (value, index, array) {
+                        attributes.push(value);
                         if (value.id != null && value.name != null) {
-
                             var divFormGroup = $('<div />',
                                 {
                                     class: "form-group row border-top mb-1",
@@ -416,14 +456,16 @@
                                 })
                                 .appendTo($('#atributesValues'));
 
-                            var labelCheckBox = $('<label />', { class: "col-lg-1 custom-control custom-control-success custom-checkbox col-form-label"}).appendTo(divFormGroup);
+                            var labelCheckBox = $('<label />', { class: "col-lg-1 custom-control custom-control-success custom-checkbox col-form-label" }).appendTo(divFormGroup);
 
                             var inputAtributo = $('<input />',
                                 {
                                     id: 'input_' + value.id,
+                                    name: 'attributesValue',
                                     class: "custom-control-input inputAtributo",
                                     type: "checkbox",
-                                    'data-value-id': value.value_id,
+                                    'data-name': value.name,
+                                    'data-value-type': value.type,
                                     'data-id': value.id
                                 })
                                 .appendTo(labelCheckBox);
@@ -439,143 +481,279 @@
 
                             var divFormValue = $('<div />',
                                 {
-                                    class: "col-lg-5",
-                                    'data-id': value.id
+                                    class: "col-lg-5"
                                 })
                                 .appendTo(divFormGroup);
 
                             var divFormValue2 = $('<div />',
                                 {
                                     class: "form-check-horizontal",
-                                    id : 'div_' + value.id
+                                    id: 'div_' + value.id
                                 })
                                 .appendTo(divFormValue);
 
+                            var selectNombreAtributo = $('<select />',
+                                {
+                                    name: 'select_' + value.id,
+                                    id: 'select_' + value.id,
+                                    class: "form-control form-control-sm",
+                                    "data-id": value.id,
+                                    "data-name": value.name
+                                })
+                                .appendTo(divFormValue2);
 
-                            if (value.value_type == 'boolean') {
-                                BuildBooleanInput(divFormValue2, value);
-                            } else if (value.value_type == 'list') {
-                                BuildListInput(divFormValue2, value);
-                            } else if (value.value_type == 'number') {
-                                $('<input />',
-                                    {
-                                        name: 'input_' + value.id,
-                                        id: 'input_' + value.id,
-                                        type: 'number',
-                                        class: "form-control form-control-sm"
-                                    })
-                                    .appendTo(divFormValue2);
-                            } else if (value.value_type == 'number_unit') {
-                                BuildNumberUnitInput(divFormValue2, value);
-                            } else if (value.value_type == 'string') {
-                                    $('<input />',
-                                    {
-                                        name: 'input_' + value.id,
-                                        id: 'input_' + value.id,
-                                        type: 'text',
-                                        class: "form-control form-control-sm"
-                                    })
-                                        .appendTo(divFormValue2);
-                            }
+                            value.values.forEach(function (data, index, array) {
 
+                                var option = $('<option />',
+                                    {
+                                        name: 'option_' + data.id,
+                                        id: 'option_' + data.id,
+                                        value: data.id,
+                                        "data-qtty": data.results,
+                                        "data-name": data.name,
+                                        class: "custom-control-input",
+                                        text: data.name + ' (' + data.results + ')'
+                                    })
+                                    .appendTo(selectNombreAtributo);
+                            });
+
+                            selectNombreAtributo.attr('disabled', 'disabled');
                         }
                     });
-                }else {
+                } else {
                     $.jGrowl('Error en la llamada: ' + url, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 });
                 }
             })
-            .fail(function () { $.jGrowl('Error en la llamada: ' + url, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 }); });
+                .fail(function () { $.jGrowl('Error en la llamada: ' + url, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 }); });
             $('#modal_AgregarAtributos').modal('toggle');
         });
 
-        function BuildBooleanInput(divFormGroup, value) {
-            value.values.forEach(function (data, index, array) {
-                var labelNombreAtributo = $('<label />',
-                    {
-                        class: "custom-control custom-radio custom-control-inline"
-                    })
-                    .appendTo(divFormGroup);
+        $(document).on('click', '.inputAtributo', function () {
+            var id = $(this).attr('data-id');
+            if (this.checked) {
+                $('#select_' + id).removeAttr('disabled');
+            } else {
+                $('#select_' + id).attr('disabled', 'disabled');
+            }
+        });
 
-                var inputNombreAtributo = $('<input />',
-                    {
-                        name: 'input_' + value.id,
-                        id: 'input_' + data.id,
-                        class: "custom-control-input",
-                        type: "radio",
-                        checked: ""
-                    })
-                    .appendTo(labelNombreAtributo);
 
-                var spanName = $('<span />',
-                    {
-                        class: "custom-control-label",
-                        text: data.name
-                    })
-                    .appendTo(labelNombreAtributo);
+        $(document).on('click', '#ConfirmChanges', function () {
+            var selected = [];
+            $("input[name='attributesValue']:checked").each(function () {
+                var attributeValue = {};
+                var value_id = $(this).attr('data-id');
+                attributeValue.value_id = value_id;
+                attributeValue.value = $("#select_" + value_id + " option:selected").val();
+                attributeValue.value_name = $("#select_" + value_id + " option:selected").attr('data-name');
+                attributeValue.quantity = $("#select_" + value_id + " option:selected").attr('data-qtty');
+                attributeValue.name = $(this).attr('data-name');
+
+                selected.push(attributeValue);
             });
+            categorySelectedList.push({ categoryId: selectedCategory, categoryName: selectedCategoryName, attributes: selected });
+            UpdateCategoryList();
+            $.jGrowl('La categoria fue agregada con exito!', { theme: 'bg-success text-white', header: 'Excelente!', position: 'bottom-right', life: 2000 });
+
+            $('#modal_AgregarAtributos').modal('toggle');
+
+        });
+
+
+        function UpdateCategoryList() {
+            $('#resumenCategoria').empty();
+            cantPublicaciones = 0;
+
+            $('#CantCategorias').text(categorySelectedList.length);
+            $('#CantPublicaciones').text(0);
+
+            categorySelectedList.forEach(function (data, index, array) {
+                var attributesList = '';
+
+                var li = $('<li />', { class: "media", }).appendTo($('#resumenCategoria'));
+                var mediaBody = $('<div />', { class: "media-body", }).appendTo(li);
+                var divMediaBody = $('<div />',
+                    {
+                        class: "font-weight-semibold",
+                        text: data.categoryName
+                    }).appendTo(mediaBody);
+
+                $('<span />',
+                    {
+                        class: "badge badge-light badge-pill align-self-center ml-1",
+                        id: 'spanCategory_' + data.categoryId,
+                        text: 0
+                    }).appendTo(divMediaBody);
+
+
+                data.attributes.forEach(function (data, index, array) {
+                    attributesList += '&' + data.value_id + '=' + data.value;
+                    $('<span />',
+                        {
+                            class: "font-size-sm text-muted",
+                            text: data.name + ': ' + data.value_name
+                        }).appendTo(mediaBody);
+                    $('<a />',
+                        {
+                            class: "mi mi-remove mr-1 ml-1 "
+                        }).appendTo(mediaBody);
+                });
+
+                var divRemove = $('<div />',
+                    {
+                        class: "ml-3 align-self-center "
+                    }).appendTo(li);
+
+                var aRemove = $('<a />',
+                    {
+                        class: "list-icons-item text-danger removeCategory cursor-pointer",
+                        id: 'remove_' + data.categoryId,
+                        "data-category-id": data.categoryId
+                    }).appendTo(divRemove);
+
+                var aRemove = $('<i />', { class: "icon-trash", }).appendTo(aRemove);
+
+                var url = 'https://api.mercadolibre.com/sites/MLA/search?category=' + data.categoryId + attributesList;
+                alert(url);
+                $.getJSON(url, function (json_data) {
+                    cantPublicaciones = cantPublicaciones + json_data.paging.total;
+                    $('#CantPublicaciones').text(cantPublicaciones);
+                    $("#spanCategory_" + data.categoryId).text(json_data.paging.total);
+                })
+                    .fail(function () { $.jGrowl('Error en la llamada: ' + url, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 }); });
+            });
+
+            validarSaveButton();
         }
 
-        function BuildListInput(divFormGroup, value) {
-            var selectNombreAtributo = $('<select />',
-                {
-                    name: 'input_' + value.id,
-                    id: 'input_' + value.id,
-                    class: "form-control form-control-sm"
-                })
-                .appendTo(divFormGroup);
+        $(document).on('click', '.removeCategory', function () {
+            var categoryId = $(this).attr('data-category-id');
+            categorySelectedList.splice(categorySelectedList.findIndex(x => x.categoryId == categoryId), 1);
+            UpdateCategoryList();
+        });
 
-            value.values.forEach(function (data, index, array) {
-                
-                var option = $('<option />',
-                    {
-                        name: 'input_' + data.id,
-                        id: 'input_' + data.id,
-                        value: data.id,
-                        class: "custom-control-input",
-                        text: data.name
-                    })
-                    .appendTo(selectNombreAtributo);
+        $(document).ready(function () {
+            $("#searchName").on("change paste keyup", function () {
+                validarSaveButton();
             });
+        });
+
+        function validarSaveButton() {
+            if ($('#searchName').val() != '' && categorySelectedList.length > 0) {
+                $("#SaveButton").removeClass('disabled');
+            }
+            else {
+                $("#SaveButton").addClass('disabled');
+            }
         }
 
-        function BuildNumberUnitInput(divFormGroup, value) {
+        $('#SaveButton').click(function (e) {
+            NewSearchModel.Nombre = $('#searchName').val();
+            NewSearchModel.Descripcion = $('#searchDescription').val();
+            NewSearchModel.CategoryList = categorySelectedList;
+            NewSearchModel.CantidadPublicaciones = parseInt($('#CantPublicaciones').text());
+            modalImprimir(NewSearchModel);
+        });
 
-            var row = $('<div />', { class: "row" }).appendTo(divFormGroup);
+        function modalImprimir(NewSearchModel) {
+            $("#confirmConditionNew").hide();
+            $("#confirmConditionUsed").hide();
 
-            var divTexto = $('<div />', { class: "col-lg-6" }).appendTo(row);
+            $('#confirmName').text(NewSearchModel.Nombre);
+            $('#confirmDescription').text(NewSearchModel.Descripcion);
 
-            $('<input />',
-                {
-                    name: 'input_' + value.id,
-                    id: 'input_' + value.id,
-                    type: 'number',
-                    class: "form-control form-control-sm"
-                })
-                .appendTo(divTexto);
+            $("#confirmConditionNew").show();
+
+            $('#confirmCantPublicaciones').text(NewSearchModel.CantidadPublicaciones);
+            $('#confirmCantidadCategorias').text(NewSearchModel.CategoryList.length);
+
+            if (NewSearchModel.CategoryList.length > 0) {
+                $("#divDetalleCategoria").show();
+                $("#divDetalleCategoria").empty();
+                $.each(NewSearchModel.CategoryList, function (key, value) {
+                    var detalleFondo = $('<div />',
+                        {
+                            class: "w-100 alert-secondary text-center mt-2 p-1"
+                        }).appendTo($("#divDetalleCategoria"));
+
+                    $('<h6 />',
+                        {
+                            class: "m-0",
+                            text: value.categoryName
+                        }).appendTo(detalleFondo);
+
+                    var detalleAtributos = $('<div />',
+                        {
+                            class: "container-fluid w-100"
+                        }).appendTo($("#divDetalleCategoria"));
+
+                    var table = $('<table />',
+                        {
+                            id:"confirmDetalleCategoria",
+                            class: "text-center w-100"
+                        }).appendTo(detalleAtributos);
+
+                    var tbody = $('<tbody />',
+                        {
+                            class: "text-center w-100"
+                        }).appendTo(table);
 
 
-            var divUnit = $('<div />', { class: "col-lg-6" }).appendTo(row);
+                    $.each(value.attributes, function (key, attribute) {
 
-            var selectNombreAtributo = $('<select />',
-                {
-                    name: 'input_' + value.id,
-                    id: 'input_' + value.id,
-                    class: "form-control form-control-sm"
-                })
-                .appendTo(divUnit);
+                        var tr = $('<tr />',
+                            {
+                                class: "text-center w-100"
+                            }).appendTo(tbody);
 
-            value.allowed_units.forEach(function (data, index, array) {
-                 $('<option />',
-                    {
-                        name: 'input_' + data.id,
-                        id: 'input_' + data.id,
-                        value: data.id,
-                        class: "custom-control-input",
-                        text: data.name
-                    })
-                    .appendTo(selectNombreAtributo);
-            });
+                        var td1 = $('<td />',
+                            {
+                                class: "text-right w-50 pr-1",
+                                text: attribute.name
+                            }).appendTo(tr);
+
+                        var td2 = $('<td />',
+                            {
+                                class: "text-left w-50 pl-1 font-weight-semibold",
+                                text: attribute.value_name
+                            }).appendTo(tr);
+                    });
+                });
+            } else {
+                $("#divDetalleCategoria").hide();
+            }
+
+            $('#modal_ConfirmacionBusqueda').modal('toggle');
         }
+
+
+        $('#ConfirmGeneral').click(function (e) {
+             $.ajax({
+                type: "POST",
+                 data: JSON.stringify(NewSearchModel),
+                url: "/Search/SaveNewSearchByCategory",
+                contentType: "application/json"
+            }).done(function (res) {
+                if (res.result == "OK") {
+                    $.jGrowl(res.successMessage, { theme: 'bg-success text-white', header: 'Excelente!', position: 'bottom-right', life: 2000 });
+                    delay(2000);
+
+                    var url = '@Url.Action("Search", "Searches")';
+                     window.location.href = url
+
+                    //$.ajax({
+                    //    cache: false,
+                    //    type: "GET",
+                    //    url: "/Search/Searches",
+                    //    dataType: "html"
+                    //});
+
+                } else {
+                    $.jGrowl(res.errorMessage, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 });
+                }
+            });
+        });
+
 
     </script>
 }

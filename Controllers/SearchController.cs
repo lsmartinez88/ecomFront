@@ -155,7 +155,7 @@ namespace ecomFront.Controllers
 
 
         [HttpPost]
-        public JsonResult SaveNewSearch([FromBody] NewSearchModel model)
+        public JsonResult SaveNewSearchByLink([FromBody] NewSearchModel model)
         {
             Search newSearch;
             Criterion newCriteria;
@@ -215,6 +215,74 @@ namespace ecomFront.Controllers
                         _searchData.SaveCriteriaAttribute(criteria_attribute);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = "ERROR", errorMessage = "Error Guardando el Criterio: " + ex.Message });
+            }
+
+            return Json(new { result = "OK", successMessage = "El id " + newSearch.IdSearch + " fue creado correctamente!!" });
+        }
+
+
+        [HttpPost]
+        public JsonResult SaveNewSearchByCategory([FromBody] NewSearchByCategoryModel model)
+        {
+            Search newSearch;
+            Criterion newCriteria;
+            try
+            {
+                var search = new Search
+                {
+                    Description = model.Nombre,
+                    Name = model.Nombre,
+                    SearchType = SearchType.Categoria,
+                    Version = 0,
+                    UserId = _userManager.GetUserId(HttpContext.User)
+                };
+
+                newSearch = _searchData.SaveSearch(search);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = "ERROR", errorMessage = "Error Guardando el Search: " + ex.Message });
+            }
+
+            try
+            {
+                foreach (var category in model.CategoryList)
+                {
+                    var criteria = new Criterion
+                    {
+                        CategoryId = category.categoryId,
+                        ItemCondition = ItemCondition.Nuevo,
+                        Quantity = (long)category.attributes.Sum(a => Int32.Parse(a.quantity)),
+                        SearchId = newSearch.IdSearch,
+                        SearchCriteria = "",
+                        Version = 0
+                    };
+
+                    newCriteria = _searchData.SaveCriteria(criteria);
+
+
+                    foreach (var attribute in category.attributes)
+                    {
+                        if (!string.IsNullOrEmpty(attribute.name) && !string.IsNullOrEmpty(attribute.value_id) && !string.IsNullOrEmpty(attribute.value) && !string.IsNullOrEmpty(attribute.value_name))
+                        {
+                            var criteria_attribute = new CriteriaAttribute
+                            {
+                                CriteriaId = (long)newCriteria.IdCriteria,
+                                IdAttributeml = attribute.value_id,
+                                IdAttributeValueml = attribute.value,
+                                NameAttributeml = attribute.name,
+                                NameAttributeValueml = attribute.value_name,
+                                Version = 0
+                            };
+                            _searchData.SaveCriteriaAttribute(criteria_attribute);
+                        }
+                    }
+                }
+               
             }
             catch (Exception ex)
             {
