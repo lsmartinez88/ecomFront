@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ecomFront.Controllers
@@ -38,6 +40,51 @@ namespace ecomFront.Controllers
             homeTrendViewModel.Search = _searchData.GetSearch((int)homeTrendViewModel.Execution.SearchId);
             homeTrendViewModel.Criteria = _searchData.GetFullCriteriasBySearchId((int)homeTrendViewModel.Search.IdSearch);
             return View(homeTrendViewModel);
+        }
+
+        [HttpPost]
+        public JsonResult GetWordCloud(int executionId, int tipo)
+        {
+            List<WordCloudGrouping> items = _groupData.GetWordCloudByExecution(executionId,tipo);
+            var wordCloudViewModel = new WordCloudViewModel();
+
+            if (tipo == WordCloudType.Publicaciones)
+            {
+                items.ForEach(pi =>
+                {
+               
+                    if (pi.CantidadPublicaciones >= 100)
+                    {
+                        wordCloudViewModel.items.Add(new WordCloudItem { text = pi.Palabra, weight = pi.CantidadPublicaciones.Value });
+                    }
+                
+                });
+
+            } else if (tipo == WordCloudType.Ventas) {
+                    items.ForEach(pi =>
+                    {
+
+                        if (pi.CantidadPublicaciones >= 100)
+                        {
+                            wordCloudViewModel.items.Add(new WordCloudItem { text = pi.Palabra, weight = pi.CantidadVentas.Value });
+                        }
+
+                    });
+            } else if (tipo == WordCloudType.Oportunidad)
+            {
+                items.ForEach(pi =>
+                {
+
+                    if (pi.IndicadorOportunidad >= 20 && pi.CantidadPublicaciones >= 5)
+                    {
+                        wordCloudViewModel.items.Add(new WordCloudItem { text = pi.Palabra, weight = pi.IndicadorOportunidad.Value });
+                    }
+
+                });
+            }
+
+
+            return Json(wordCloudViewModel);
         }
 
     }

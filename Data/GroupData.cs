@@ -1,4 +1,5 @@
-﻿using ecomFront.Models;
+﻿using ecomFront.Common;
+using ecomFront.Models;
 using ecomFront.Models.DbFirstModels;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -95,6 +96,21 @@ namespace ecomFront.Data
                     Fecha = x.Key.Fecha,
                     CantidadVentas = x.Sum(i => i.CantidadVentas)
                 }).OrderBy(pi => pi.Fecha).ToList();
+        }
+
+        public List<WordCloudGrouping> GetWordCloudByExecution(int ExecutionId, int tipo)
+        {
+                return _contextModel.WordCloudGrouping.Where(x => x.ExecutionId.Equals(ExecutionId)).GroupBy(x => new { x.ExecutionId, x.Palabra })
+                    .Select(x => new WordCloudGrouping
+                    {
+                        ExecutionId = x.Key.ExecutionId,
+                        Palabra = x.Key.Palabra,
+                        CantidadPublicaciones = x.Sum(i => i.CantidadPublicaciones),
+                        CantidadVentas = x.Sum(i => i.CantidadVentas),
+                        IndicadorOportunidad = x.Sum(i => i.IndicadorOportunidad)
+
+                    }
+                    ).ToList();
         }
     }
 }

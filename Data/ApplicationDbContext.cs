@@ -23,6 +23,7 @@ namespace ecomFront.Data
         public virtual DbSet<PriceRangeGrouping> PriceRangeGrouping { get; set; }
         public virtual DbSet<AveragePricePerDay> AveragePricePerDay { get; set; }
         public virtual DbSet<SalesPerCity> SalesPerCity { get; set; }
+        public virtual DbSet<WordCloudGrouping> WordCloudGrouping { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -44,6 +45,9 @@ namespace ecomFront.Data
 
             modelBuilder.Entity<SalesPerCity>()
             .HasKey(a => new { a.CriteriaId, a.ExecutionId, a.City, a.State });
+
+            modelBuilder.Entity<WordCloudGrouping>()
+           .HasKey(a => new { a.CriteriaId, a.ExecutionId, a.Palabra });
         }
     }
 }

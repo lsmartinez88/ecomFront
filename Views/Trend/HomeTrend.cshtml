@@ -30,35 +30,93 @@
 </div>
 <!-- /page header -->
 <div class="content">
-   
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title ">Nube de palabras x Publicación <i class="icon-info22" data-toggle="tooltip" title="">&nbsp;</i></h5>
+                </div>
+                <div class="card-body">
+                    <div class="" id="wordCloud" style="width:100%;height:500px;">
+
+                    </div>
+                </div>
+                </div>
+            </div><div class="col-md-6">
+                      <div class="card">
+                          <div class="card-header">
+                              <h5 class="card-title ">Nube de palabras x Ventas <i class="icon-info22" data-toggle="tooltip" title="">&nbsp;</i></h5>
+                          </div>
+                          <div class="card-body">
+                              <div class="" id="wordCloud2" style="width:100%;height:500px;">
+
+                              </div>
+                          </div>
+                      </div>
 </div>
+</div><div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title ">Nube de palabras x Oportunidad <i class="icon-info22" data-toggle="tooltip" title="">&nbsp;</i></h5>
+            </div>
+            <div class="card-body">
+                <div class="" id="wordCloud3" style="width:100%;height:500px;">
 
-
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="~/assets/js/jqcloud.min.js"></script>
+<link href="~/assets/css/jqcloud.min.css" rel="stylesheet" type="text/css" />
+<script src="~/assets/js/TrendCharts.js"></script>
 @section Scripts
     {
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
+            $('#sidebar-toggle').click();
+            showCloud(1);
+            showCloud(2);
+            showCloud(3);
+            $('[data-toggle="tooltip"]').tooltip();
+        });
 
-        };
+        function showCloud(tip) {
+            var data = [];
+           $.post('/Trend/GetWordCloud', { executionId: @Model.Execution.IdExecution, tipo: tip })
+                .done(function (wordCloud) {
 
-        var _showGroupingInfoShippingMethod = function (element, size) {
-            $.post('/Analisis/GetGroupingInfoShippingMethod', { executionId: @Model.Execution.IdExecution })
-                .done(function (data) {
-                    var info = []
-                    $.each(data, function (key, value) {
-                        var itemInfo = {
-                            status: value.clasification,
-                            value: value.qtty,
-                            color: colores[key]
-                        };
-                        info.push(itemInfo);
-                    })
-
-                    _donutWithDetails("#groupingInfoShipping", 146, info);
+                    wordCloud.items.forEach(function (valor, indice, array) {
+                        var title = "";
+                        switch (tip) {
+                            case 1:
+                                title = "Cantidad de Publicaciones: " + valor.weight;
+                                valor.html = { "title": title, "data-toggle": "tooltip"};
+                                break;
+                            case 2:
+                                title = "Cantidad de Ventas: " + valor.weight;
+                                valor.html = { "title": title, "data-toggle": "tooltip" };
+                                break;
+                            case 3:
+                                title = "Indicador de oportunidad: " + valor.weight;
+                                valor.html = { "title": title, "data-toggle": "tooltip" };
+                                break;
+                            default:
+                                break;
+                        }
+                        data.push(valor);
+                    });
+                    initCloud(data, tip);
                 })
                 .fail(function (e) {
                     $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
                 });
+
+
+
         }
+       
     </script>
 }

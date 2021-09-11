@@ -17,6 +17,6 @@ namespace ecomFront.Data
         List<PriceRangeGrouping> GetPriceRangeGroupingByExecution(int ExecutionId, String GroupingType);
         List<AveragePricePerDay> GetAveragePriceByExecution(int ExecutionId);
         List<AveragePricePerDay> GetSalesQttyByExecution(int ExecutionId);
-
+        List<WordCloudGrouping> GetWordCloudByExecution(int ExecutionId, int tipo);
     }
 }
