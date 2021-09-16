@@ -112,5 +112,10 @@ namespace ecomFront.Data
                     }
                     ).ToList();
         }
+
+        public List<Event> GetEventsByRange(DateTime from, DateTime to)
+        {
+            return _contextDbFirst.Events.Where(e => e.FechaDesde >= from && e.FechaDesde <= to && e.Estado == 1).ToList();
+        }
     }
 }
