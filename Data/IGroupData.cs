@@ -19,5 +19,7 @@ namespace ecomFront.Data
         List<AveragePricePerDay> GetSalesQttyByExecution(int ExecutionId);
         List<WordCloudGrouping> GetWordCloudByExecution(int ExecutionId, int tipo);
         List<TrendsTreemap> GetTrendsTreemapByExecution(int ExecutionId);
+        List<Event> GetEventsByRange(DateTime from, DateTime to);
+
     }
 }

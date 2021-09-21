@@ -1,6 +1,7 @@
 ﻿using ecomFront.Common;
 using ecomFront.Data;
 using ecomFront.Models;
+using ecomFront.Models.DbFirstModels;
 using ecomFront.Models.SalesViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace ecomFront.Controllers
@@ -61,6 +63,17 @@ namespace ecomFront.Controllers
             salesQttyByDayViewModel.minValue = salesQttyByDayViewModel.items.Min(si => si.Quantity);
 
             return Json(salesQttyByDayViewModel);
+        }
+
+        [HttpPost]
+        public JsonResult GetEventsByRange(string from, string to)
+        {
+            DateTime desde = DateTime.ParseExact(from, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            DateTime hasta = DateTime.ParseExact(to, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+            List<Event> Events = _groupData.GetEventsByRange(desde, hasta);
+           
+            return Json(Events);
         }
     }
 }

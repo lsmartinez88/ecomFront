@@ -109,7 +109,7 @@ var _barChartOportunity = function (divName, salesData, minValue, maxValue, minD
             // Map the score column to color
             dimension: 0,
             inRange: {
-                color: ['#65B581', '#FFCE34', '#FD665F']
+                color: ['#FD665F', '#FFCE34', '#65B581']
             }
         },
         series: [
