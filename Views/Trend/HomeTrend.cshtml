@@ -41,45 +41,80 @@
 
                     </div>
                 </div>
-                </div>
-            </div><div class="col-md-6">
-                      <div class="card">
-                          <div class="card-header">
-                              <h5 class="card-title ">Nube de palabras x Ventas <i class="icon-info22" data-toggle="tooltip" title="">&nbsp;</i></h5>
-                          </div>
-                          <div class="card-body">
-                              <div class="" id="wordCloud2" style="width:100%;height:500px;">
-
-                              </div>
-                          </div>
-                      </div>
-</div>
-</div><div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title ">Nube de palabras x Oportunidad <i class="icon-info22" data-toggle="tooltip" title="">&nbsp;</i></h5>
             </div>
-            <div class="card-body">
-                <div class="" id="wordCloud3" style="width:100%;height:500px;">
+        </div><div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title ">Nube de palabras x Ventas <i class="icon-info22" data-toggle="tooltip" title="">&nbsp;</i></h5>
+                </div>
+                <div class="card-body">
+                    <div class="" id="wordCloud2" style="width:100%;height:500px;">
 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title ">Nube de palabras x Oportunidad <i class="icon-info22" data-toggle="tooltip" title="">&nbsp;</i></h5>
+                </div>
+                <div class="card-body">
+                    <div class="" id="wordCloud3" style="width:100%;height:500px;">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title ">Árbol de Tendencias <i class="icon-info22" data-toggle="tooltip" title="">&nbsp;</i></h5>
+                </div>
+                <div class="card-body">
+                    <div class="" id="trendTreemap" style="width:100%;height:500px;">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title ">Oportunidades <i class="icon-info22" data-toggle="tooltip" title="">&nbsp;</i></h5>
+                </div>
+                <div class="card-body">
+                    <div class="" id="barChartOportunity" style="width:100%;height:500px;">
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
 <script src="~/assets/js/jqcloud.min.js"></script>
 <link href="~/assets/css/jqcloud.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="~/assets/js/TrendCharts.js"></script>
 @section Scripts
     {
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
+            google.charts.load('current', { 'packages': ['treemap'] });
+            google.setOnLoadCallback(showTreemap);
             $('#sidebar-toggle').click();
             showCloud(1);
             showCloud(2);
             showCloud(3);
+            _barChartOportunity();
             $('[data-toggle="tooltip"]').tooltip();
         });
 
@@ -117,6 +152,31 @@
 
 
         }
-       
+
+        function showTreemap() {
+            var data = [];
+            var header = [];
+            debugger;
+           $.post('/Trend/GetTrendTreemap', { executionId: @Model.Execution.IdExecution})
+               .done(function (trendTreemap) {
+                   header = ["Tendencias", "Padres", "IndiceSize", "IndiceColor", "CantidadVentas", "CantidadPublicaciones", "PosicionTendencia", "VentasxPublicacion"]
+                    data.push(header);
+                   header = ["Árbol Tendencias",null,0,0,null,null,null,null];
+                    data.push(header);
+                    trendTreemap.items.forEach(function (valor, indice, array) {
+                        var fila = []
+                        fila = [array[indice].trend, array[indice].parent, array[indice].size, array[indice].color, array[indice].cantidadVentas,array[indice].cantidadPublicaciones, array[indice].posicionTendencia, array[indice].ventasPorPublicacion];
+                        data.push(fila);
+                    });
+                    initTreemap(data);
+                })
+                .fail(function (e) {
+                    $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
+                });
+
+
+
+        }
+
     </script>
 }

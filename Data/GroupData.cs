@@ -110,7 +110,12 @@ namespace ecomFront.Data
                         IndicadorOportunidad = x.Sum(i => i.IndicadorOportunidad)
 
                     }
-                    ).ToList();
+                 ).ToList();
+        }
+
+        public List<TrendsTreemap> GetTrendsTreemapByExecution(int ExecutionId)
+        {
+            return _contextModel.TrendsTreemap.Where(x => x.ExecutionId.Equals(ExecutionId)).ToList();
         }
     }
 }

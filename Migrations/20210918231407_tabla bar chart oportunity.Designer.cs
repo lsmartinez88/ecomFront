@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ecomFront.Data;
 
 namespace ecomFront.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210918231407_tabla bar chart oportunity")]
+    partial class tablabarchartoportunity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -406,25 +408,6 @@ namespace ecomFront.Migrations
                     b.HasKey("CriteriaId", "ExecutionId", "City", "State");
 
                     b.ToTable("front_sales_per_city");
-                });
-
-            modelBuilder.Entity("ecomFront.Models.TopSellers", b =>
-                {
-                    b.Property<int>("ExecutionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SellerId")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("ParameterName")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("ParameterValue")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("ExecutionId", "SellerId", "ParameterName");
-
-                    b.ToTable("front_top_sellers");
                 });
 
             modelBuilder.Entity("ecomFront.Models.TopSellersInfo", b =>

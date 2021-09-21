@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ecomFront.Data;
 
 namespace ecomFront.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210916022613_tablas trends y competidor")]
+    partial class tablastrendsycompetidor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,28 +246,6 @@ namespace ecomFront.Migrations
                     b.ToTable("front_average_price_per_day");
                 });
 
-            modelBuilder.Entity("ecomFront.Models.BarChartOportunity", b =>
-                {
-                    b.Property<int>("ExecutionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Palabra")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<int?>("CantidadAparicionesTendencia")
-                        .HasColumnType("int");
-
-                    b.Property<double?>("IndicadorOportunidad")
-                        .HasColumnType("double");
-
-                    b.Property<int?>("PosicionMejorTendencia")
-                        .HasColumnType("int");
-
-                    b.HasKey("ExecutionId", "Palabra");
-
-                    b.ToTable("front_bar_chart_oportunity");
-                });
-
             modelBuilder.Entity("ecomFront.Models.ItemGrouping", b =>
                 {
                     b.Property<int>("Id")
@@ -408,25 +388,6 @@ namespace ecomFront.Migrations
                     b.ToTable("front_sales_per_city");
                 });
 
-            modelBuilder.Entity("ecomFront.Models.TopSellers", b =>
-                {
-                    b.Property<int>("ExecutionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SellerId")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("ParameterName")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("ParameterValue")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("ExecutionId", "SellerId", "ParameterName");
-
-                    b.ToTable("front_top_sellers");
-                });
-
             modelBuilder.Entity("ecomFront.Models.TopSellersInfo", b =>
                 {
                     b.Property<int>("ExecutionId")
@@ -487,12 +448,6 @@ namespace ecomFront.Migrations
                         .HasColumnType("double");
 
                     b.Property<double>("RatingPositivo")
-                        .HasColumnType("double");
-
-                    b.Property<string>("SellerName")
-                        .HasColumnType("longtext");
-
-                    b.Property<double>("TasaConversion")
                         .HasColumnType("double");
 
                     b.Property<string>("TipoVendedor")

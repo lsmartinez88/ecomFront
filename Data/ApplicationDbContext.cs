@@ -24,6 +24,11 @@ namespace ecomFront.Data
         public virtual DbSet<AveragePricePerDay> AveragePricePerDay { get; set; }
         public virtual DbSet<SalesPerCity> SalesPerCity { get; set; }
         public virtual DbSet<WordCloudGrouping> WordCloudGrouping { get; set; }
+        public virtual DbSet<TrendsTreemap> TrendsTreemap { get; set; }
+        public virtual DbSet<TopSellersInfo> TopSellersInfo { get; set; }
+        public virtual DbSet<BarChartOportunity> BarChartOportunity { get; set; }
+        public virtual DbSet<TopSellers> TopSellers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -48,6 +53,18 @@ namespace ecomFront.Data
 
             modelBuilder.Entity<WordCloudGrouping>()
            .HasKey(a => new { a.CriteriaId, a.ExecutionId, a.Palabra });
+
+            modelBuilder.Entity<TrendsTreemap>()
+           .HasKey(a => new { a.ExecutionId, a.TrendName, a.TrendPadre });
+
+            modelBuilder.Entity<TopSellersInfo>()
+          .HasKey(a => new { a.ExecutionId, a.SellerId });
+
+            modelBuilder.Entity<TopSellers>()
+          .HasKey(a => new { a.ExecutionId, a.SellerId, a.ParameterName });
+
+            modelBuilder.Entity<BarChartOportunity>()
+         .HasKey(a => new { a.ExecutionId, a.Palabra });
         }
     }
 }
