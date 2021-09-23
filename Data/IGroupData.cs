@@ -20,6 +20,6 @@ namespace ecomFront.Data
         List<WordCloudGrouping> GetWordCloudByExecution(int ExecutionId, int tipo);
         List<TrendsTreemap> GetTrendsTreemapByExecution(int ExecutionId);
         List<Event> GetEventsByRange(DateTime from, DateTime to);
-
+        List<BarChartOportunity> GetBarChartOportunityByExecution(int ExecutionId);
     }
 }

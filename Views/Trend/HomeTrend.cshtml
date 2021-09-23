@@ -114,7 +114,7 @@
             showCloud(1);
             showCloud(2);
             showCloud(3);
-            _barChartOportunity();
+            showBarChartOportunity();
             $('[data-toggle="tooltip"]').tooltip();
         });
 
@@ -173,10 +173,27 @@
                 .fail(function (e) {
                     $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
                 });
-
-
-
         }
+
+        function showBarChartOportunity() {
+            var data = [];
+            var header = [];
+            debugger;
+            $.post('/Trend/GetBarChartOportunity', { executionId: @Model.Execution.IdExecution})
+               .done(function (barChart) {
+                   header = ['score', 'cantidad', 'palabra','tendencia']
+                    data.push(header);
+                   barChart.data.forEach(function (valor, indice, array) {
+                        var fila = []
+                        fila = [array[indice].indice, array[indice].cantidadApariciones, array[indice].palabra, array[indice].mejorTendencia];
+                        data.push(fila);
+                   });
+                   _barChartOportunity('barChartOportunity', data, barChart.minValue,barChart.maxValue);
+                })
+                .fail(function (e) {
+                    $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
+                });
+            }
 
     </script>
 }

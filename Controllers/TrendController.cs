@@ -94,5 +94,22 @@ namespace ecomFront.Controllers
 
             return Json(trendViewModel);
         }
+
+        [HttpPost]
+        public JsonResult GetBarChartOportunity(int executionId)
+        {
+            List<BarChartOportunity> items = _groupData.GetBarChartOportunityByExecution(executionId);
+            items = items.OrderBy(a => a.IndicadorOportunidad).ToList();
+            var barChartViewModel = new BarChartOportunityViewModel();
+            barChartViewModel.maxValue = items.Max(a => a.IndicadorOportunidad).Value;
+            barChartViewModel.minValue = items.Min(a => a.IndicadorOportunidad).Value;
+
+            items.ForEach(pi =>
+            {
+                barChartViewModel.data.Add(new BarChartOportunityItem { Palabra = pi.Palabra, CantidadApariciones = pi.CantidadAparicionesTendencia.Value, Indice = pi.IndicadorOportunidad.Value, MejorTendencia= pi.PosicionMejorTendencia.Value});
+            });
+
+            return Json(barChartViewModel);
+        }
     }
 }

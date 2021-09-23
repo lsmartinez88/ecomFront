@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ecomFront.Data;
 
 namespace ecomFront.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210922012107_main dashboard")]
+    partial class maindashboard
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -342,25 +344,6 @@ namespace ecomFront.Migrations
                     b.HasKey("CriteriaId", "ExecutionId", "TipoIndicador");
 
                     b.ToTable("front_listing_indicador");
-                });
-
-            modelBuilder.Entity("ecomFront.Models.MainDashboard", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<int>("SearchId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ParameterName")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("ParameterValue")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("UserId", "SearchId", "ParameterName");
-
-                    b.ToTable("front_main_dashboard");
                 });
 
             modelBuilder.Entity("ecomFront.Models.PriceRangeGrouping", b =>

@@ -118,6 +118,11 @@ namespace ecomFront.Data
             return _contextModel.TrendsTreemap.Where(x => x.ExecutionId.Equals(ExecutionId)).ToList();
         }
 
+        public List<BarChartOportunity> GetBarChartOportunityByExecution(int ExecutionId)
+        {
+            return _contextModel.BarChartOportunity.Where(x => x.ExecutionId.Equals(ExecutionId)).OrderByDescending(a => a.IndicadorOportunidad).Take(10).ToList();
+        }
+
         public List<Event> GetEventsByRange(DateTime from, DateTime to)
         {
             return _contextDbFirst.Events.Where(e => e.FechaDesde >= from && e.FechaDesde <= to && e.Estado == 1).ToList();

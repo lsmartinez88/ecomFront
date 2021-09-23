@@ -25,10 +25,9 @@ namespace ecomFront.Data
         public virtual DbSet<SalesPerCity> SalesPerCity { get; set; }
         public virtual DbSet<WordCloudGrouping> WordCloudGrouping { get; set; }
         public virtual DbSet<TrendsTreemap> TrendsTreemap { get; set; }
-        public virtual DbSet<TopSellersInfo> TopSellersInfo { get; set; }
         public virtual DbSet<BarChartOportunity> BarChartOportunity { get; set; }
         public virtual DbSet<TopSellers> TopSellers { get; set; }
-
+        public virtual DbSet<MainDashboard> MainDashboard { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -57,14 +56,14 @@ namespace ecomFront.Data
             modelBuilder.Entity<TrendsTreemap>()
            .HasKey(a => new { a.ExecutionId, a.TrendName, a.TrendPadre });
 
-            modelBuilder.Entity<TopSellersInfo>()
-          .HasKey(a => new { a.ExecutionId, a.SellerId });
-
             modelBuilder.Entity<TopSellers>()
           .HasKey(a => new { a.ExecutionId, a.SellerId, a.ParameterName });
 
             modelBuilder.Entity<BarChartOportunity>()
          .HasKey(a => new { a.ExecutionId, a.Palabra });
+
+            modelBuilder.Entity<MainDashboard>()
+        .HasKey(a => new { a.UserId, a.SearchId, a.ParameterName });
         }
     }
 }
