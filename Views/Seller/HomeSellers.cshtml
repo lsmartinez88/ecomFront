@@ -1,0 +1,301 @@
+﻿@using ecomFront.Models.SellerViewModel
+@using ecomFront.Common
+@using Newtonsoft.Json;
+
+@{
+    ViewData["Title"] = "Home Sellers";
+    Layout = "_Layout";
+}
+@model HomeSellerViewModel
+<!-- Page header -->
+<div class="page-header page-header-light">
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                <a asp-area="" asp-controller="Search" asp-action="Searches" class="breadcrumb-item"> Busqueda</a>
+                <a asp-area="" asp-controller="Analisis" asp-action="HomeAnalisis" asp-route-executionId="@Model.Execution.IdExecution" class="breadcrumb-item"> @Model.Search.Description</a>
+                <span class="breadcrumb-item active">Análisis de Competidores</span>
+            </div>
+            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+        </div>
+        <div class="header-elements d-none">
+            <div class="breadcrumb justify-content-center">
+                <a href="#" class="breadcrumb-elements-item">
+                    <i class="icon-comment-discussion mr-2"></i>
+                    Necesito Ayuda
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+<div class="content">
+    @{
+        var sellerList = Model.SellerInformation.Select(ts => ts.sellerId).Distinct();
+    }
+    <div class="row">
+        @foreach (var sellerId in sellerList.Take(3))
+        {
+            var sellerData = Model.SellerInformation.FirstOrDefault(ts => ts.sellerId == sellerId).SellerData;
+            var style = Model.SellerInformation.FirstOrDefault(ts => ts.sellerId == sellerId).style;
+        <div class="col-lg-4">
+            <div class="card card-body border border-@style bg-@style-100">
+                <div class="media">
+                    <div class="mr-2">
+                        <img id="logo_@sellerId" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="rounded-circle" width="42" height="42" alt="">
+                    </div>
+
+                    <div class="media-body">
+                        <h6 class="mb-0">
+                            @sellerData.FirstOrDefault(d => d.ParameterName == "NombreVendedor").ParameterValue
+                        </h6>
+                        <span class="text-muted" id="address_@sellerId"></span>
+                    </div>
+
+                    <div class="ml-2 align-self-center">
+                        <div class="list-icons">
+                            <div class="dropdown position-static">
+                                <a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right" style="">
+                                    <a href="#" target="_blank" class="dropdown-item"><i class="icon-list"></i> Ver Publicaciones</a>
+                                    <a href="#" target="_blank" class="dropdown-item" id="ecommerceLink_@sellerId"><i class="icon-cart"></i> Ver en ecommerce</a>
+                                    @*<div class="dropdown-divider"></div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border border-@style ">
+                <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between mb-2">
+                        <span class="font-size-xs line-height-xs text-uppercase text-muted font-weight-semibold">PUBLICACION MAS POPULAR</span>
+                        <span class="font-size-xs line-height-xs text-uppercase text-success font-weight-bold ">@sellerData.FirstOrDefault(d => d.ParameterName == "PublicacionMayorVentaCantidad")?.ParameterValue VENTAS</span>
+                    </div>
+
+                    <h6 class="pt-0">
+                        <a id="listing_link_@sellerId" target="_blank" href="#">@sellerData.FirstOrDefault(d => d.ParameterName == "PublicacionMayorVenta")?.ParameterValue</a>
+                    </h6>
+
+                    <div class="d-flex flex-wrap mt-1 mb-1">
+                        <span class="font-size-xs line-height-xs text-uppercase text-muted font-weight-bold mr-1">PRECIO </span>
+                        <span class="font-size-xs line-height-xs text-uppercase text-muted font-weight-normal" id="listing_price_@sellerId"> </span>
+                        <span class="font-size-xs line-height-xs text-uppercase text-muted font-weight-bold ml-1 mr-1">|</span>
+                        <span class="font-size-xs line-height-xs text-uppercase text-muted font-weight-bold mr-1">ESTADO </span>
+                        <span class="font-size-xs line-height-xs text-uppercase text-muted font-weight-normal " id="listing_status_@sellerId"> </span>
+                        <span class="font-size-xs line-height-xs text-uppercase text-muted font-weight-bold ml-1 mr-1">|</span>
+                        <span class="font-size-xs line-height-xs text-uppercase text-muted font-weight-bold mr-1">CONDICION </span>
+                        <span class="font-size-xs line-height-xs text-uppercase text-muted font-weight-normal"> NUEVO</span>
+                    </div>
+
+                    <div class="d-flex flex-wrap align-items-center" id="listing_image_@sellerId">
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card card-body text-center border border-@style border-2">
+                        <h6 class="font-weight-semibold mb-0 mt-1">Calificaciones</h6>
+                        <div class="font-size-lg text-muted mb-1">@sellerData.FirstOrDefault(d => d.ParameterName == "CantidadReviews")?.ParameterValue reviews</div>
+
+                        <div class="svg-center" id="rating_@sellerId"></div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card card-body text-center border border-@style">
+                        <h6 class="font-weight-semibold mb-3 mt-2">Retraso en entregas</h6>
+                        <div class="svg-center mb-3" id="delay_@sellerId"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card card-body text-center border border-@style">
+                        <h6 class="font-weight-semibold mb-3 mt-2">Taza de Cancelaciones</h6>
+                        <div class="svg-center mb-3" id="cancelationRate_@sellerId"></div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card card-body text-center border border-@style">
+                        <h6 class="font-weight-semibold mb-3 mt-2">Taza de Reclamos</h6>
+                        <div class="svg-center mb-3" id="claimsRate_@sellerId"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card card-body border border-@style">
+                        <div class="row text-center">
+                            <div class="col-3">
+                                <p><i class="icon-eye icon-2x d-inline-block text-@style"></i></p>
+                                <h5 class="font-weight-semibold mb-0" id="visitas_@sellerId"></h5>
+                                <span class="text-muted font-size-base">visitas</span>
+                            </div>
+
+                            <div class="col-3">
+                                <p><i class="icon-coins icon-2x d-inline-block text-@style"></i></p>
+                                <h5 class="font-weight-semibold mb-0" id="ventas_@sellerId"></h5>
+                                <span class="text-muted font-size-base">ventas</span>
+                            </div>
+
+                            <div class="col-3">
+                                <p><i class="icon-list icon-2x d-inline-block text-@style"></i></p>
+                                <h5 class="font-weight-semibold mb-0" id="publicaciones_@sellerId"></h5>
+                                <span class="text-muted font-size-base">publicaciones</span>
+                            </div>
+
+                            <div class="col-3">
+                                <p><i class="icon-question7 icon-2x d-inline-block text-@style"></i></p>
+                                <h5 class="font-weight-semibold mb-0" id="preguntas_@sellerId"></h5>
+                                <span class="text-muted font-size-base">preguntas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+
+<script src="~/assets/js/SellerCharts.js"></script>
+@section Scripts
+    {
+    <script type="text/javascript">
+        var sellerInformation =  @Html.Raw(JsonConvert.SerializeObject(Model.SellerInformation, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            $('#sidebar-toggle').click();
+            @foreach (var sellerId in sellerList.Take(3))
+            {
+                var sellerName = Model.SellerInformation.FirstOrDefault(ts => ts.sellerId == sellerId).SellerData.FirstOrDefault(d => d.ParameterName =="NombreVendedor").ParameterValue;
+                <text>ActualizarDatosDeSellers('@sellerName', '@sellerId'); </text>
+            }
+        });
+
+        function ActualizarDatosDeSellers(sellerName, sellerId) {
+            $.getJSON('https://api.mercadolibre.com/sites/MLA/search?nickname=' + sellerName)
+                .done(function (json_data) {
+                    if (json_data) {
+                        if (json_data.seller && json_data.seller.eshop && json_data.seller.eshop.eshop_logo_url) {
+                            $('#logo_' + sellerId).attr('src', json_data.seller.eshop.eshop_logo_url);
+                        }
+                        $('#ecommerceLink_' + sellerId).attr('href', 'https://listado.mercadolibre.com.ar/_CustId_' + sellerId);
+
+                        $.getJSON('https://api.mercadolibre.com/users/' + sellerId)
+                            .done(function (sellerInfo) {
+                                $("#address_" + sellerId).text(sellerInfo.address.city);
+                            });
+
+                        var idPublicacion = sellerInformation.find(d => d.sellerId == sellerId).SellerData.find(d => d.ParameterName == "IdPublicacionMayorVenta")?.ParameterValue;
+                        if (idPublicacion) {
+                            $.getJSON('https://api.mercadolibre.com/items/' + idPublicacion)
+                                .done(function (data) {
+                                    $("#listing_price_" + sellerId).text('$' + data.price);
+                                    $("#listing_status_" + sellerId).text(data.status);
+                                    $("#listing_link_" + sellerId).attr('href', data.permalink);
+                                    $("#listing_image_" + sellerId).empty();
+                                    var cant = 7;
+                                    data.pictures.forEach(function (value, index, array) {
+                                        if (cant > 0) {
+                                            var href = $('<a />',
+                                                {
+                                                    id: 'href_' + value.id,
+                                                    href: value.url,
+                                                    class: 'mr-1',
+                                                    target:'_blank'
+                                                })
+                                                .appendTo($('#listing_image_' + sellerId));
+
+                                            var img = $('<img />',
+                                                {
+                                                    id: 'img_' + value.id,
+                                                    src: value.url,
+                                                    class: 'rounded-pill',
+                                                    width: 36,
+                                                    height: 36
+                                                })
+                                                .appendTo(href);
+                                            cant--;
+                                        }
+                                    });
+                                });
+                        }
+
+
+                    }
+                });
+
+            //grafico de rating
+            _ratingChart("#rating_" + sellerId, 125, getRatingData(sellerInformation, sellerId));
+
+            //grafico de delay
+            var delayRate = (parseFloat(sellerInformation.find(d => d.sellerId == sellerId).SellerData.find(d => d.ParameterName == "DelayedRate")?.ParameterValue) || 0 ) * 100;
+            if (delayRate > 0) {
+                _progressArcSingle("#delay_" + sellerId, 75, '#45748a', 0, 100, delayRate);
+            } else {
+                $("#delay_" + sellerId).text('No hay datos para mostrar en este indicador!');
+            }
+
+
+            //Taza de cancelaciones
+            var cancelationRate = (parseFloat(sellerInformation.find(d => d.sellerId == sellerId).SellerData.find(d => d.ParameterName == "CancellationRate")?.ParameterValue) || 0) * 100;
+            if (cancelationRate > 0) {
+                _segmentedGauge("#cancelationRate_" + sellerId, 150, 0, 5, 5, '#d9dcf0', '#3F51B5', cancelationRate / 5);
+            } else {
+                $("#cancelationRate_" + sellerId).text('No hay datos para mostrar en este indicador!');
+            }
+
+            //Taza de reclamos
+            var claimsRate = (parseFloat(sellerInformation.find(d => d.sellerId == sellerId).SellerData.find(d => d.ParameterName == "ClaimsRate")?.ParameterValue) || 0) * 100;
+            if (claimsRate > 0) {
+                _segmentedGauge("#claimsRate_" + sellerId, 150, 0, 10, 4, '#cceae7', '#009688', claimsRate / 10);
+            } else {
+                $("#claimsRate_" + sellerId).text('No hay datos para mostrar en este indicador!');
+            }
+
+            //info estatica de cantidades
+            var visitas = (parseInt(sellerInformation.find(d => d.sellerId == sellerId).SellerData.find(d => d.ParameterName == "CantidadVisitas")?.ParameterValue) || 0);
+            $('#visitas_' + sellerId).text(visitas.toLocaleString("es-AR"));
+
+            var ventas = (parseInt(sellerInformation.find(d => d.sellerId == sellerId).SellerData.find(d => d.ParameterName == "CantidadVentas")?.ParameterValue) || 0) ;
+            $('#ventas_' + sellerId).text(ventas.toLocaleString("es-AR"));
+
+            var publicaciones = (parseInt(sellerInformation.find(d => d.sellerId == sellerId).SellerData.find(d => d.ParameterName == "CantidadPublicaciones")?.ParameterValue) || 0);
+            $('#publicaciones_' + sellerId).text(publicaciones.toLocaleString("es-AR"));
+
+            var preguntas = (parseInt(sellerInformation.find(d => d.sellerId == sellerId).SellerData.find(d => d.ParameterName == "CantidadPreguntas")?.ParameterValue) || 0) ;
+            $('#preguntas_' + sellerId).text(preguntas.toLocaleString("es-AR"));
+        }
+
+
+
+        function getRatingData(sellerInformation, sellerId) {
+            var neutrales = (parseFloat(sellerInformation.find(d => d.sellerId == sellerId).SellerData.find(d => d.ParameterName == "RatingNeutral")?.ParameterValue) || 0);
+            var positivas = (parseFloat(sellerInformation.find(d => d.sellerId == sellerId).SellerData.find(d => d.ParameterName == "RatingPositivo")?.ParameterValue) || 0);
+            var negativas = (parseFloat(sellerInformation.find(d => d.sellerId == sellerId).SellerData.find(d => d.ParameterName == "RatingNegativo")?.ParameterValue) || 0);
+            return [
+                {
+                    "status": "Neutrales",
+                    "icon": "<i class='icon-dash text-blue mr-2'></i>",
+                    "value": neutrales,
+                    "color": "#29B6F6"
+                }, {
+                    "status": "Positivas",
+                    "icon": "<i class='icon-checkmark3 text-success mr-2'></i>",
+                    "value": positivas,
+                    "color": "#66BB6A"
+                }, {
+                    "status": "Negativas",
+                    "icon": "<i class='icon-cross2 text-danger mr-2'></i>",
+                    "value": negativas,
+                    "color": "#EF5350"
+                }
+            ];
+        }
+    </script>
+}

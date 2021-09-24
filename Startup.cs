@@ -72,6 +72,7 @@ namespace ecomFront
             services.AddScoped<ISearchData, SearchData>();
             services.AddScoped<IAuthData, AuthData>();
             services.AddScoped<IGroupData, GroupData>();
+            services.AddScoped<ISellerData, SellerData>();
 
             services.AddDbContextPool<ApplicationDbContext>(options => options.UseMySql(Startup.ConnectionString, ServerVersion.AutoDetect(Startup.ConnectionString)));
             services.AddDbContextPool<DBFirstDbContext>(options => options.UseMySql(Startup.ConnectionString, ServerVersion.AutoDetect(Startup.ConnectionString)));
