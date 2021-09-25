@@ -15,5 +15,8 @@ namespace ecomFront.Data
         Execution GetExecution(int? executionId);
         List<Criterion> GetFullCriteriasBySearchId(int? SearchId);
         List<TopSellers> GetSellersListByExecution(int? executionId);
+        List<TopSellers> GetSalesMonthSeller(int? executionId, String sellerId);
+
+        List<TopSellers> GetPriceMonthSeller(int? executionId, String sellerId);
     }
 }

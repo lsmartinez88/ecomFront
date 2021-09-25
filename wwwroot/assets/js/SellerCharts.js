@@ -346,19 +346,17 @@ var _heatMapSellers = function (element, data) {
                 // Bind data
             // ------------------------------
 
+
+       // d3.json(dataCantidad, function (error, data) {
+
             // Nest data
-            var nested_data = d3.nest().key(function (d) { return d.app; }),
+            var nested_data = d3.nest().key(function (d) { return d.sellerId; }),
                 nest = nested_data.entries(data);
 
             // Format date
-            var format = d3.time.format('%Y/%m/%d %H:%M'),
-                formatTime = d3.time.format('%H:%M');
 
             // Pull out values
-            data.forEach(function (d, i) {
-                d.date = format.parse(d.date),
-                    d.value = +d.value
-            });
+
 
 
 
@@ -369,7 +367,7 @@ var _heatMapSellers = function (element, data) {
             var d3Container = d3.select(element);
             margin = { top: 20, right: 0, bottom: 30, left: 0 },
                 width = d3Container.node().getBoundingClientRect().width - margin.left - margin.right,
-                gridSize = width / new Date(data[data.length - 1].date).getHours(), // dynamically set grid size
+                gridSize = width / data.length, // dynamically set grid size
                 rowGap = 40, // vertical gap between rows
                 height = (rowGap + gridSize) * (d3.max(nest, function (d, i) { return i + 1 })) - margin.top,
                 buckets = 5, // number of colors in range
@@ -388,7 +386,7 @@ var _heatMapSellers = function (element, data) {
 
             // Colors
             var colorScale = d3.scale.quantile()
-                .domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
+                .domain([0, buckets - 1, d3.max(data, function (d) { return d.cantidad; })])
                 .range(colors);
 
 
@@ -396,11 +394,12 @@ var _heatMapSellers = function (element, data) {
             // Set input domains
             // ------------------------------
 
-            // Horizontal
-            x.domain([new Date(data[0].date), d3.time.hour.offset(new Date(data[data.length - 1].date), 1)]);
+        // Horizontal
+            x.domain([new Date(data[0].month.split("-")[0], data[0].month.split("-")[1], 01), new Date(data[data.length - 1].month.split("-")[0], data[data.length - 1].month.split("-")[1], 01)]);
+          //  x.domain([data[0].month, data[data.length - 1].month]);
 
-            // Vertical
-            y.domain([0, d3.max(data, function (d) { return d.app; })]);
+        // Vertical
+           y.domain([0, d3.max(data, function (d) { return d.sellerId; })]);
 
 
 
@@ -440,7 +439,7 @@ var _heatMapSellers = function (element, data) {
                 .attr('class', 'd3-text')
                 .attr('x', 0)
                 .attr('y', -(margin.top / 2))
-                .text(function (d, i) { return d.key; });
+                .text(function (d, i) { return d.month; });
 
             // Sales count text
             hourGroup
@@ -449,7 +448,7 @@ var _heatMapSellers = function (element, data) {
                 .attr('x', width)
                 .attr('y', -(margin.top / 2))
                 .style('text-anchor', 'end')
-                .text(function (d, i) { return d3.sum(d.values, function (d) { return d.value; }) + ' sales today' });
+                .text(function (d, i) { return d3.sum(d.values, function (d) { return d.cantidad; }) + ' ventas' });
 
 
 
@@ -461,7 +460,7 @@ var _heatMapSellers = function (element, data) {
                 .data(function (d) { return d.values })
                 .enter()
                 .append('rect')
-                .attr('x', function (d, i) { return x(d.date); })
+                .attr('x', function (d, i) { return x(new Date(d.month.split("-")[0], d.month.split("-")[1], 01)); })
                 .attr('y', 0)
                 .attr('class', 'heatmap-hour d3-slice-border d3-bg')
                 .attr('width', gridSize)
@@ -472,18 +471,18 @@ var _heatMapSellers = function (element, data) {
             heatMap.transition()
                 .duration(250)
                 .delay(function (d, i) { return i * 20; })
-                .style('fill', function (d) { return colorScale(d.value); })
+                .style('fill', function (d) { return colorScale(d.cantidad); })
 
             // Add user interaction
             hourGroup.each(function (d) {
                 heatMap
                     .on('mouseover', function (d, i) {
                         d3.select(this).style('opacity', 0.75);
-                        d3.select(this.parentNode).select('.sales-count').text(function (d) { return d.values[i].value + ' sales at ' + formatTime(d.values[i].date); })
+                        d3.select(this.parentNode).select('.sales-count').text(function (d) { return d.values[i].cantidad + ' ventas el ' + d.values[i].month; })
                     })
                     .on('mouseout', function (d, i) {
                         d3.select(this).style('opacity', 1);
-                        d3.select(this.parentNode).select('.sales-count').text(function (d, i) { return d3.sum(d.values, function (d) { return d.value; }) + ' sales today' })
+                        d3.select(this.parentNode).select('.sales-count').text(function (d, i) { return d3.sum(d.values, function (d) { return d.cantidad; }) + ' ventas' })
                     })
             })
 
@@ -495,8 +494,8 @@ var _heatMapSellers = function (element, data) {
             // Get min and max values
             var minValue, maxValue;
             data.forEach(function (d, i) {
-                maxValue = d3.max(data, function (d) { return d.value; });
-                minValue = d3.min(data, function (d) { return d.value; });
+                maxValue = d3.max(data, function (d) { return d.cantidad; });
+                minValue = d3.min(data, function (d) { return d.cantidad; });
             });
 
             // Place legend inside separate group
@@ -575,7 +574,7 @@ var _heatMapSellers = function (element, data) {
                 width = d3Container.node().getBoundingClientRect().width - margin.left - margin.right,
 
                     // Grid size
-                    gridSize = width / new Date(data[data.length - 1].date).getHours(),
+                    gridSize = width / data.length,
 
                     // Height
                     height = (rowGap + gridSize) * (d3.max(nest, function (d, i) { return i + 1 })) - margin.top,
@@ -601,7 +600,7 @@ var _heatMapSellers = function (element, data) {
                 svg.selectAll('.heatmap-hour')
                     .attr('width', gridSize)
                     .attr('height', gridSize)
-                    .attr('x', function (d, i) { return x(d.date); });
+                    .attr('x', function (d, i) { return x(new Date(d.month.split("-")[0], d.month.split("-")[1], 01)); });
 
                 // Legend group
                 svg.selectAll('.legend-group')
@@ -620,8 +619,376 @@ var _heatMapSellers = function (element, data) {
                 svg.selectAll('.max-legend-value')
                     .attr('x', (buckets * gridSize) + 10);
             }
+        //});
     }
 };
+
+var _DailyRevenueLineChart = function (element, data) {
+    if (typeof d3 == 'undefined') {
+        console.warn('Warning - d3.min.js is not loaded.');
+        return;
+    }
+
+    var height = 400;
+    // Initialize chart only if element exsists in the DOM
+    if (element) {
+
+
+        // Basic setup
+        // ------------------------------
+
+        // Add data set
+       /* var dataset = [
+            {
+                'date': '04/13/14',
+                'alpha': '60'
+            }, {
+                'date': '04/14/14',
+                'alpha': '35'
+            }, {
+                'date': '04/15/14',
+                'alpha': '65'
+            }, {
+                'date': '04/16/14',
+                'alpha': '50'
+            }, {
+                'date': '04/17/14',
+                'alpha': '65'
+            }, {
+                'date': '04/18/14',
+                'alpha': '20'
+            }, {
+                'date': '04/19/14',
+                'alpha': '60'
+            }
+        ];*/
+
+        // Main variables
+        var d3Container = d3.select(element),
+            margin = { top: 0, right: 0, bottom: 0, left: 0 },
+            width = d3Container.node().getBoundingClientRect().width - margin.left - margin.right,
+            height = height - margin.top - margin.bottom,
+            padding = 20;
+
+        // Format date
+        var parseDate = d3.time.format('%m/%d/%y').parse,
+            formatDate = d3.time.format('%a, %B %e');
+
+        // Colors
+        var lineColor = '#fff',
+            guideColor = 'rgba(255,255,255,0.3)';
+
+
+
+        // Add tooltip
+        // ------------------------------
+
+        var tooltip = d3.tip()
+            .attr('class', 'd3-tip')
+            .html(function (d) {
+                return '<ul class="list-unstyled mb-1">' +
+                    '<li>' + '<div class="font-size-base my-1"><i class="icon-check2 mr-2"></i>' + d.month + '</div>' + '</li>' +
+                    '<li>' + 'Sales: &nbsp;' + '<span class="font-weight-semibold float-right">' + d.price + '</span>' + '</li>' +
+                    '<li>' + 'Revenue: &nbsp; ' + '<span class="font-weight-semibold float-right">' + '$' + d.price + '</span>' + '</li>' +
+                    '</ul>';
+            });
+
+
+
+        // Create chart
+        // ------------------------------
+
+        // Add svg element
+        var container = d3Container.append('svg');
+
+        // Add SVG group
+        var svg = container
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom)
+            .append('g')
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+            .call(tooltip);
+
+
+
+        // Load data
+        // ------------------------------
+
+
+
+
+        // Construct scales
+        // ------------------------------
+
+        // Horizontal
+        var x = d3.time.scale()
+            .range([padding, width - padding]);
+
+        // Vertical
+        var y = d3.scale.linear()
+            .range([height, 5]);
+
+
+
+        // Set input domains
+        // ------------------------------
+
+        // Horizontal
+        x.domain([new Date(data[0].month.split("-")[0], data[0].month.split("-")[1], 01), new Date(data[data.length - 1].month.split("-")[0], data[data.length - 1].month.split("-")[1], 01)]);
+
+
+        // Vertical
+        y.domain([d3.min(data, function (d) { return d.price; }), d3.max(data, function (d) { return d.price; })]);
+
+
+
+        // Construct chart layout
+        // ------------------------------
+
+        // Line
+        var line = d3.svg.line()
+            .x(function (d) {
+                return x(new Date(d.month.split("-")[0], d.month.split("-")[1], 01));
+            })
+            .y(function (d) {
+                return y(d.price)
+            });
+
+
+
+        //
+        // Append chart elements
+        //
+
+        // Add mask for animation
+        // ------------------------------
+
+        // Add clip path
+        var clip = svg.append('defs')
+            .append('clipPath')
+            .attr('id', 'clip-line-small');
+
+        // Add clip shape
+        var clipRect = clip.append('rect')
+            .attr('class', 'clip')
+            .attr('width', 0)
+            .attr('height', height);
+
+        // Animate mask
+        clipRect
+            .transition()
+            .duration(1000)
+            .ease('linear')
+            .attr('width', width);
+
+
+
+        // Line
+        // ------------------------------
+
+        // Path
+        var path = svg.append('path')
+            .attr({
+                'd': line(data),
+                'clip-path': 'url(#clip-line-small)',
+                'class': 'd3-line d3-line-medium'
+            })
+            .style('stroke', lineColor);
+
+        // Animate path
+        svg.select('.line-tickets')
+            .transition()
+            .duration(1000)
+            .ease('linear');
+
+
+
+        // Add vertical guide lines
+        // ------------------------------
+
+        // Bind data
+        var guide = svg.append('g')
+            .selectAll('.d3-line-guides-group')
+            .data(data);
+
+        // Append lines
+        guide
+            .enter()
+            .append('line')
+            .attr('class', 'd3-line-guides')
+            .attr('x1', function (d, i) {
+                return x(new Date(d.month.split("-")[0], d.month.split("-")[1], 01));
+            })
+            .attr('y1', function (d, i) {
+                return height;
+            })
+            .attr('x2', function (d, i) {
+                return x(new Date(d.month.split("-")[0], d.month.split("-")[1], 01));
+            })
+            .attr('y2', function (d, i) {
+                return height;
+            })
+            .style('stroke', guideColor)
+            .style('stroke-dasharray', '4,2')
+            .style('shape-rendering', 'crispEdges');
+
+        // Animate guide lines
+        guide
+            .transition()
+            .duration(1000)
+            .delay(function (d, i) { return i * 150; })
+            .attr('y2', function (d, i) {
+                return y(d.price);
+            });
+
+
+
+        // Alpha app points
+        // ------------------------------
+
+        // Add points
+        var points = svg.insert('g')
+            .selectAll('.d3-line-circle')
+            .data(data)
+            .enter()
+            .append('circle')
+            .attr('class', 'd3-line-circle d3-line-circle-medium')
+            .attr('cx', line.x())
+            .attr('cy', line.y())
+            .attr('r', 3)
+            .style('stroke', lineColor)
+            .style('fill', lineColor);
+
+
+
+        // Animate points on page load
+        points
+            .style('opacity', 0)
+            .transition()
+            .duration(250)
+            .ease('linear')
+            .delay(1000)
+            .style('opacity', 1);
+
+
+        // Add user interaction
+        points
+            .on('mouseover', function (d) {
+                tooltip.offset([-10, 0]).show(d);
+
+                // Animate circle radius
+                d3.select(this).transition().duration(250).attr('r', 4);
+            })
+
+            // Hide tooltip
+            .on('mouseout', function (d) {
+                tooltip.hide(d);
+
+                // Animate circle radius
+                d3.select(this).transition().duration(250).attr('r', 3);
+            });
+
+        // Change tooltip direction of first point
+        d3.select(points[0][0])
+            .on('mouseover', function (d) {
+                tooltip.offset([0, 10]).direction('e').show(d);
+
+                // Animate circle radius
+                d3.select(this).transition().duration(250).attr('r', 4);
+            })
+            .on('mouseout', function (d) {
+                tooltip.direction('n').hide(d);
+
+                // Animate circle radius
+                d3.select(this).transition().duration(250).attr('r', 3);
+            });
+
+        // Change tooltip direction of last point
+        d3.select(points[0][points.size() - 1])
+            .on('mouseover', function (d) {
+                tooltip.offset([0, -10]).direction('w').show(d);
+
+                // Animate circle radius
+                d3.select(this).transition().duration(250).attr('r', 4);
+            })
+            .on('mouseout', function (d) {
+                tooltip.direction('n').hide(d);
+
+                // Animate circle radius
+                d3.select(this).transition().duration(250).attr('r', 3);
+            })
+
+
+
+        // Resize chart
+        // ------------------------------
+
+        // Call function on window resize
+        var resizeRevenueTimer;
+        window.addEventListener('resize', function () {
+            clearTimeout(resizeRevenueTimer);
+            resizeRevenueTimer = setTimeout(function () {
+                revenueResize();
+            }, 200);
+        });
+
+        // Call function on sidebar width change
+        var sidebarToggle = document.querySelectorAll('.sidebar-control');
+        if (sidebarToggle) {
+            sidebarToggle.forEach(function (togglers) {
+                togglers.addEventListener('click', revenueResize);
+            });
+        }
+
+        // Resize function
+        // 
+        // Since D3 doesn't support SVG resize by default,
+        // we need to manually specify parts of the graph that need to 
+        // be updated on window resize
+        function revenueResize() {
+
+            // Layout variables
+            width = d3Container.node().getBoundingClientRect().width - margin.left - margin.right;
+
+
+            // Layout
+            // -------------------------
+
+            // Main svg width
+            container.attr('width', width + margin.left + margin.right);
+
+            // Width of appended group
+            svg.attr('width', width + margin.left + margin.right);
+
+            // Horizontal range
+            x.range([padding, width - padding]);
+
+
+            // Chart elements
+            // -------------------------
+
+            // Mask
+            clipRect.attr('width', width);
+
+            // Line path
+            svg.selectAll('.d3-line').attr('d', line(data));
+
+            // Circles
+            svg.selectAll('.d3-line-circle').attr('cx', line.x());
+
+            // Guide lines
+            svg.selectAll('.d3-line-guides')
+                .attr('x1', function (d, i) {
+                    return x(new Date(d.month.split("-")[0], d.month.split("-")[1], 01));
+                })
+                .attr('x2', function (d, i) {
+                    return x(new Date(d.month.split("-")[0], d.month.split("-")[1], 01));
+                });
+        }
+    }
+};
+
+
 
 /*
 // Progress arc - single color

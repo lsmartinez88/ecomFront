@@ -60,5 +60,15 @@ namespace ecomFront.Data
         {
             return _contextModel.TopSellers.Where(ts => ts.ExecutionId == (int)executionId).ToList();
         }
+
+        public List<TopSellers> GetSalesMonthSeller(int? executionId, String sellerId)
+        {
+            return _contextModel.TopSellers.Where(ts => ts.ExecutionId == (int)executionId && ts.SellerId.Equals(sellerId) && ts.ParameterName.StartsWith("Cantidad_")).OrderBy(ts => ts.ParameterName).ToList();
+        }
+
+        public List<TopSellers> GetPriceMonthSeller(int? executionId, String sellerId)
+        {
+            return _contextModel.TopSellers.Where(ts => ts.ExecutionId == (int)executionId && ts.SellerId.Equals(sellerId) && ts.ParameterName.StartsWith("Precio_")).OrderBy(ts => ts.ParameterName).ToList();
+        }
     }
 }

@@ -62,5 +62,32 @@ namespace ecomFront.Controllers
             return View(homeSellerViewModel);
         }
 
+
+        [HttpPost]
+        public JsonResult GetSalesMonthSeller(int executionId, String sellerId)
+        {
+            List<TopSellers> items = _sellerData.GetSalesMonthSeller(executionId, sellerId);
+            List<SellerSalesMonth> lista = new List<SellerSalesMonth>();
+            foreach (var item in items)
+            {
+                lista.Add(new SellerSalesMonth() { sellerId = item.SellerId, month = item.ParameterName.Replace("Cantidad_", ""), cantidad = int.Parse(item.ParameterValue) });
+            }
+
+            return Json(lista);
+        }
+
+        [HttpPost]
+        public JsonResult GetPriceMonthSeller(int executionId, String sellerId)
+        {
+            List<TopSellers> items = _sellerData.GetPriceMonthSeller(executionId, sellerId);
+            List<SellerPricesMonth> lista = new List<SellerPricesMonth>();
+            foreach (var item in items)
+            {
+                lista.Add(new SellerPricesMonth() { month = item.ParameterName.Replace("Precio_", ""), price = item.ParameterValue });
+            }
+
+            return Json(lista);
+        }
+
     }
 }
