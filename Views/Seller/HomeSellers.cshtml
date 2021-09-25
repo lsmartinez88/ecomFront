@@ -186,12 +186,10 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header header-elements-inline">
-                            <h6 class="card-title">Ventas en el último año</h6>
-                            <div class="header-elements">
-                                <span class="font-weight-bold text-danger ml-2"></span>
-                            </div>
+                    <div class="card border border-@style">
+                        <div class="card-header bg-transparent p-2">
+                            <i class="icon-coins text-success mr-2 ml-2" style="font-size:20px"></i>
+                            <span class="card-title font-weight-semibold m-1">Ventas mensuales en el último año</span>
                         </div>
                         <div class="card-body">
                             <div class="chart" id="sales-heatmap_@sellerId"></div>
@@ -200,21 +198,32 @@
                 </div>
             </div>
 
-            <div class="row">
+            <!--<div class="row">
                 <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header header-elements-inline">
-                            <h6 class="card-title">Precio medio en el último año</h6>
-                            <div class="header-elements">
-                                <span class="font-weight-bold text-danger ml-2"></span>
+                    <div class="col-sm-6 col-xl-3">-->
+                        <!-- Basic bar chart -->
+                        <!--<div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <h3 class="font-weight-semibold mb-0">3,450</h3>
+                                    <span class="badge badge-success badge-pill align-self-center ml-auto">+53,6%</span>
+                                </div>
+
+                                <div>
+                                    Members online
+                                    <div class="text-muted font-size-sm">489 avg</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart" id="sales-barchart-price_@sellerId"></div>
-                        </div>
-                    </div>
+
+                            <div class="container-fluid">
+                                <div id="precio_medio_anual"></div>
+                            </div>
+                        </div>-->
+                        <!-- /basic bar chart -->
+
+                    <!--</div>
                 </div>
-            </div>
+            </div>-->
         </div>
         }
     </div>
@@ -339,21 +348,11 @@
                     $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
                 });
 
-            //$.post('/Seller/GetPriceMonthSeller', { executionId: @Model.Execution.IdExecution, sellerId: sellerId})
-          //     .done(function (salesMonth) {
-          //         _DailyRevenueLineChart('#sales-barchart-price_' + sellerId, salesMonth);
-          //      })
-          //      .fail(function (e) {
-          //          $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
-          //  });
 
-            ////HeatMap de ventas
-            //var datos = [
-            //    { app: 'a', date: '2015/06/24 00:00', value: 24 },
-            //    { app: 'a', date: '2015/06/24 01:00', value: 10 },
-            //    { app: 'a', date: '2015/06/24 02:00', value: 2 }
-            //]
-            //_heatMapSellers('#sales-heatmap', datos);
+            var data = [
+                {mes:'05-2020', valor: 50}
+            ]
+                //_precioMedioAnual("#precio_medio_anual", 12, 50, true, "elastic", 1200, 50, "#EF5350", "members");
         }
 
 
