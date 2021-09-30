@@ -7,6 +7,11 @@ namespace ecomFront.Models.DbFirstModels
 {
     public partial class Execution
     {
+        public Execution()
+        {
+            Listings = new HashSet<Listing>();
+        }
+
         public long IdExecution { get; set; }
         public long Version { get; set; }
         public DateTime DateCreated { get; set; }
@@ -18,5 +23,6 @@ namespace ecomFront.Models.DbFirstModels
         public long ListingQtty { get; set; }
 
         public virtual Search Search { get; set; }
+        public virtual ICollection<Listing> Listings { get; set; }
     }
 }

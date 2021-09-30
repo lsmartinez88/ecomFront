@@ -4,16 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ecomFront.Models.AnalisisViewModels
+namespace ecomFront.Models.PricingViewModels
 {
-    public class GrouppingCategoriesViewModel
+    public class ListingListViewModel
     {
-        public GrouppingCategoriesViewModel()
+        public ListingListViewModel()
         {
         }
         public Models.DbFirstModels.Search Search{ get; set; }
         public Execution Execution { get; set; }
         public List<Criterion> Criteria{ get; set; }
-        public string GroupingMethod { get; set; }
     }
 }

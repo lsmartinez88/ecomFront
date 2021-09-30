@@ -10,7 +10,7 @@ namespace ecomFront.Data
     public interface ISearchData
     {
         List<Search> GetFullSearches(string UserId);
-        Search GetSearch(int? searchId);
+        Models.DbFirstModels.Search GetSearch(int? searchId);
         Execution GetExecution(int? executionId);
 
         List<Criterion> GetFullCriteriasBySearchId(int ?SearchId);
@@ -18,7 +18,7 @@ namespace ecomFront.Data
 
         List<Execution> GetFullExecutionsBySearchId(int? SearchId);
 
-        Search SaveSearch(Search search);
+        Models.DbFirstModels.Search SaveSearch(Models.DbFirstModels.Search search);
         Criterion SaveCriteria(Criterion search);
 
         CriteriaAttribute SaveCriteriaAttribute(CriteriaAttribute criteriaAttribute);

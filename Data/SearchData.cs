@@ -1,4 +1,4 @@
-﻿using ecomFront.Models;
+﻿
 using ecomFront.Models.DbFirstModels;
 using ecomFront.Models.SearchViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -62,13 +62,13 @@ namespace ecomFront.Data
         }
 
 
-        public Search GetSearch(int? searchId)
+        public Models.DbFirstModels.Search GetSearch(int? searchId)
         {
             return _contextDbFirst.Searches
                 .FirstOrDefault(s => s.IdSearch == searchId);
         }
 
-        public Search SaveSearch(Search search)
+        public Models.DbFirstModels.Search SaveSearch(Search search)
         {
             _contextDbFirst.Searches.Add(search);
             _contextDbFirst.SaveChanges();

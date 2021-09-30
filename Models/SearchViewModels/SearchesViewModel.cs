@@ -14,7 +14,7 @@ namespace ecomFront.Models.SearchViewModels
             RelatedItems = new List<SearchRelatedItem>();
         }
 
-        public List<Search> Searches { get; set; }
+        public List<Models.DbFirstModels.Search> Searches { get; set; }
 
         public List<SearchRelatedItem> RelatedItems { get; set; }
     }

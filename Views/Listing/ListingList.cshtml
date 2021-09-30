@@ -1,0 +1,259 @@
+﻿@using ecomFront.Models.PricingViewModels
+@using ecomFront.Common
+
+@{
+    ViewData["Title"] = "Listing List";
+    Layout = "_Layout";
+}
+@model ListingListViewModel
+<!-- Page header -->
+<div class="page-header page-header-light">
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                <a asp-area="" asp-controller="Search" asp-action="Searches" class="breadcrumb-item"> Busqueda</a>
+                @*<a asp-area="" asp-controller="Analisis" asp-action="HomeAnalisis" asp-route-executionId="@Model.Execution.IdExecution" class="breadcrumb-item"> @Model.Search.Description</a>*@
+                <span class="breadcrumb-item active">Analisis de Precios</span>
+            </div>
+            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+        </div>
+        <div class="header-elements d-none">
+            <div class="breadcrumb justify-content-center">
+                <a href="#" class="breadcrumb-elements-item">
+                    <i class="icon-comment-discussion mr-2"></i>
+                    Necesito Ayuda
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <div id="tabla" class="row boxed">
+            <div class="table-responsive">
+                <table class="table  datatable-basic dataTable no-footer">
+                    <thead>
+                        <tr>
+                            <th class="text-center"></th>
+                            <th class="text-center">ID </th>
+                            <th class="text-center">Creada </th>
+                            <th class="text-center">Estado </th>
+                            <th class="text-center">Precio </th>
+                            <th class="text-center">Vendidas </th>
+                            <th class="text-center">Titulo </th>
+                            <th class="text-center">Preguntas </th>
+                            <th class="text-center">Visitas </th>
+                            <th class="text-center">Reviews </th>
+                            <th class="text-center">Tipo </th>
+                            <th class="text-center">Categoria </th>
+                        </tr>
+                    </thead>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /page header -->
+
+
+    <style>
+        table > tbody > tr > td {
+            padding:5px !important;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 12px;
+        }
+
+        .trHeader {
+            border-bottom: 0px !important;
+            border-right: 1px solid #ddd;
+            padding: 10px 10px !important;
+            text-align: center;
+            text-transform: capitalize;
+            font-weight: 400;
+            font-size: 11px;
+        }
+        .left-col {
+            float: left;
+            width: 30%;
+        }
+
+        .center-col {
+            float: left;
+            width: 30%;
+        }
+
+        .right-col {
+            float: left;
+            width: 30%;
+        }
+    </style>
+
+
+<script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+@section Scripts
+    {
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            $('#sidebar-toggle').click();
+        });
+
+        // Scrollable datatable
+        $('.datatable-basic').DataTable({
+            autoWidth: true,
+            ordering:false,
+            dom: '<"top"<"left-col"i><"center-col"p><"right-col"l>>',
+            language: {
+                search: '_INPUT_',
+                lengthMenu: '<span>Mostrar:</span> _MENU_',
+                paginate: { 'first': 'Primeros', 'last': 'Ultimo', 'next': '>', 'previous': '<' },
+                emptyTable: 'No hay datos para mostrar',
+                info: 'Mostrando _START_ a _END_ de _TOTAL_ filas',
+                infoFiltered: '(total de _MAX_ filtradas)',
+                loadingRecords: 'Cargando...',
+                processing: '<i class="icon-spinner2 spinner icon-5x"></i>',
+                zeroRecords: 'No hay registros encontrados'
+            },
+            processing: true,
+            serverSide: true,
+            pageLength: 25   ,
+            filter: false,
+            ajax: {
+                url: "@Url.Action("ListingInfoDataTable", "Listing")",
+                type: 'POST',
+                data: { executionId: @Model.Execution.IdExecution}
+            },
+            lengthMenu: [[10, 50, 100, 500], [10, 50, 100, 500]],
+            columns: [
+                {
+                    data: "thumbnail",
+                    className: "text-center",
+                    render: function (data, type, row) {
+                        if (type === "display" )
+                            return '<img src="' + data + '" width=40 height=40  />';
+                    }
+                },
+                {
+                    data: "idMl",
+                    className: "text-center",
+                    render: function (data, type, row) {
+                        if (type === "display")
+                            return '<a href="' + row.permalink + '" target="_blank">' + data + '</a>';
+
+                        return ''
+                    }
+                },
+                {
+                    data: "dateCreated",
+                    className: "text-center",
+                    render: function (data, type, row) {
+                        // If display or filter data is requested, format the date
+                        if (type === "display" || type === "filter") {
+                            return moment(data).format("DD/MM/YYYY");
+                        }
+                        // Otherwise the data type requested (`type`) is type detection or
+                        // sorting data, for which we want to use the raw date value, so just return
+                        // that, unaltered
+
+                        return data;
+                    }
+                },
+                {
+                    data: "listingCondition",
+                    className: "text-center",
+                    render: function (data, type, full, meta) {
+                        if (type === "display")
+                            if (data == 'new')
+                                return '<span class="badge badge-secondary-100">NUEVO</span>';
+                            else if (data == 'used')
+                                return '<span class="badge badge-primary-100">USADO</span>';
+                            else
+                                return '<span class="badge badge-indigo-100">DESCONOCIDO</span>';
+
+                        return data;
+                    }
+                },
+                {
+                    data: "price",
+                    className: "text-center",
+                    render: function (data, type, full, meta) {
+                        if (type === "display")
+                            return '<span class="badge badge-success">$ ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); + '</span>';
+
+                        return data;
+                    }
+                },
+                {
+                    data: "soldQuantity",
+                    className:"text-center",
+                    render: function (data, type, full, meta) {
+                        if (type === "display")
+                            return '<span class="badge badge-indigo">+ ' + data + '</span>';
+
+                        return data;
+                    }
+                },
+                {
+                    data: "title"
+                },
+                {
+                    data: "totalQuestions",
+                    className: "text-center",
+                    render: function (data, type, full, meta) {
+                        if (type === "display")
+                            return '<span class="badge badge-teal-100">' + data + '</span>';
+
+                        return data;
+                    }
+                },
+                {
+                    data: "visitsQuantity",
+                    className: "text-center",
+                    render: function (data, type, full, meta) {
+                        if (type === "display")
+                            return '<span class="badge badge-teal-100">' + data + '</span>';
+
+                        return data;
+                    }
+                },
+                {
+                    data: "reviewsQuantity",
+                    className: "text-center",
+                    render: function (data, type, full, meta) {
+                        if (type === "display")
+                            return '<span class="badge badge-teal-100">' + data + '</span>';
+
+                        return data;
+                    }
+                },
+                {
+                    data: "listingTypeId",
+                    className: "text-center",
+                    render: function (data, type, full, meta) {
+                        if (type === "display")
+                            if (data == 'gold_pro' || data == 'gold_premium')
+                                return '<span class="badge badge-warning">PREMIUM</span>';
+                            else if (data == 'gold_special' || data == 'gold')
+                                return '<span class="badge badge-yellow ">CLASICA</span>';
+                            else if (data == 'free')
+                                return '<span class="badge badge-light">GRATUITA</span>';
+                            else
+                                return '<span class="badge badge-transparent">DESCONOCIDO</span>';
+
+                        return data;
+                    }
+                },
+                {
+                    data: "category.nameml",
+                    className: "text-center font-weight-semibold",}
+            ]
+        });
+
+
+
+    </script>
+}

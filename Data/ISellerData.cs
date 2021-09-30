@@ -10,8 +10,8 @@ namespace ecomFront.Data
 {
     public interface ISellerData
     {
-        List<Search> GetFullSearches(string UserId);
-        Search GetSearch(int? searchId);
+        List<Models.DbFirstModels.Search> GetFullSearches(string UserId);
+        Models.DbFirstModels.Search GetSearch(int? searchId);
         Execution GetExecution(int? executionId);
         List<Criterion> GetFullCriteriasBySearchId(int? SearchId);
         List<TopSellers> GetSellersListByExecution(int? executionId);
