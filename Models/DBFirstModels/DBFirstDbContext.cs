@@ -24,6 +24,7 @@ namespace ecomFront.Models.DbFirstModels
         public virtual DbSet<Criterion> Criteria { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Execution> Executions { get; set; }
+        public virtual DbSet<Listing> Listings { get; set; }
         public virtual DbSet<Search> Searches { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -411,6 +412,145 @@ namespace ecomFront.Models.DbFirstModels
                     .HasForeignKey(d => d.SearchId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_n99e6gu7gdsmy7yotcxs45out");
+            });
+
+            modelBuilder.Entity<Listing>(entity =>
+            {
+                entity.HasKey(e => new { e.IdMl, e.ExecutionId })
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+
+                entity.ToTable("listing");
+
+                entity.HasIndex(e => e.CriteriaId, "FK_a9acw8l293sshxgnqbgdvc6mj");
+
+                entity.HasIndex(e => new { e.SellerIdMl, e.SellerExecutionId }, "FK_grestosbo0sopxlmjgjtxjk93");
+
+                entity.HasIndex(e => e.CategoryId, "FK_phb706a6e0upg5f8ara08j96e");
+
+                entity.HasIndex(e => e.ExecutionId, "FK_thrdq98o2f4gq74kq4gjsdqn8");
+
+                entity.Property(e => e.IdMl).HasColumnName("id_ml");
+
+                entity.Property(e => e.ExecutionId).HasColumnName("execution_id");
+
+                entity.Property(e => e.AcceptsMercadopago)
+                    .HasColumnType("bit(1)")
+                    .HasColumnName("accepts_mercadopago");
+
+                entity.Property(e => e.AvailableQuantity).HasColumnName("available_quantity");
+
+                entity.Property(e => e.BuyingMode)
+                    .HasMaxLength(255)
+                    .HasColumnName("buying_mode");
+
+                entity.Property(e => e.CatalogProductId)
+                    .HasMaxLength(255)
+                    .HasColumnName("catalog_product_id");
+
+                entity.Property(e => e.CategoryId)
+                    .IsRequired()
+                    .HasColumnName("category_id");
+
+                entity.Property(e => e.CriteriaId).HasColumnName("criteria_id");
+
+                entity.Property(e => e.CurrencyId)
+                    .HasMaxLength(255)
+                    .HasColumnName("currency_id");
+
+                entity.Property(e => e.DateCreated)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date_created");
+
+                entity.Property(e => e.DomainId)
+                    .HasMaxLength(255)
+                    .HasColumnName("domain_id");
+
+                entity.Property(e => e.Elegible)
+                    .HasColumnType("bit(1)")
+                    .HasColumnName("elegible");
+
+                entity.Property(e => e.ListingCondition)
+                    .HasMaxLength(255)
+                    .HasColumnName("listing_condition");
+
+                entity.Property(e => e.ListingTypeId)
+                    .HasMaxLength(255)
+                    .HasColumnName("listing_type_id");
+
+                entity.Property(e => e.OfficialStoreId).HasColumnName("official_store_id");
+
+                entity.Property(e => e.OrderBackend).HasColumnName("order_backend");
+
+                entity.Property(e => e.OriginalPrice).HasColumnName("original_price");
+
+                entity.Property(e => e.Permalink)
+                    .HasMaxLength(255)
+                    .HasColumnName("permalink");
+
+                entity.Property(e => e.Price).HasColumnName("price");
+
+                entity.Property(e => e.RatingAverage).HasColumnName("rating_average");
+
+                entity.Property(e => e.ReviewsQuantity).HasColumnName("reviews_quantity");
+
+                entity.Property(e => e.SellerExecutionId).HasColumnName("seller_execution_id");
+
+                entity.Property(e => e.SellerIdMl).HasColumnName("seller_id_ml");
+
+                entity.Property(e => e.SiteId)
+                    .HasMaxLength(255)
+                    .HasColumnName("site_id");
+
+                entity.Property(e => e.SoldQuantity).HasColumnName("sold_quantity");
+
+                entity.Property(e => e.StopTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("stop_time");
+
+                entity.Property(e => e.Tags)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("tags");
+
+                entity.Property(e => e.Thumbnail)
+                    .HasMaxLength(255)
+                    .HasColumnName("thumbnail");
+
+                entity.Property(e => e.ThumbnailId)
+                    .HasMaxLength(255)
+                    .HasColumnName("thumbnail_id");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(255)
+                    .HasColumnName("title");
+
+                entity.Property(e => e.TotalQuestions).HasColumnName("total_questions");
+
+                entity.Property(e => e.UseThumbnailId)
+                    .HasColumnType("bit(1)")
+                    .HasColumnName("use_thumbnail_id");
+
+                entity.Property(e => e.Version).HasColumnName("version");
+
+                entity.Property(e => e.VisitsQuantity).HasColumnName("visits_quantity");
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.Listings)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_phb706a6e0upg5f8ara08j96e");
+
+                entity.HasOne(d => d.Criteria)
+                    .WithMany(p => p.Listings)
+                    .HasForeignKey(d => d.CriteriaId)
+                    .HasConstraintName("FK_a9acw8l293sshxgnqbgdvc6mj");
+
+                entity.HasOne(d => d.Execution)
+                    .WithMany(p => p.Listings)
+                    .HasForeignKey(d => d.ExecutionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_thrdq98o2f4gq74kq4gjsdqn8");
             });
 
             modelBuilder.Entity<Search>(entity =>

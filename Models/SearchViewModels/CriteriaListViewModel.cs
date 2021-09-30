@@ -13,6 +13,6 @@ namespace ecomFront.Models.SearchViewModels
             criteriaItems = new List<CriteriaItemList>();
         }
         public List<CriteriaItemList> criteriaItems { get; set; }
-        public Search search { get; set; }
+        public Models.DbFirstModels.Search search { get; set; }
     }
 }

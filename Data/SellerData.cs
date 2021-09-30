@@ -36,7 +36,7 @@ namespace ecomFront.Data
                     .ToList();
         }
 
-        public List<Search> GetFullSearches(string UserId)
+        public List<Models.DbFirstModels.Search> GetFullSearches(string UserId)
         {
             return _contextDbFirst.Searches
                         .Include(s => s.Criteria)
@@ -50,7 +50,7 @@ namespace ecomFront.Data
         }
 
 
-        public Search GetSearch(int? searchId)
+        public Models.DbFirstModels.Search GetSearch(int? searchId)
         {
             return _contextDbFirst.Searches
                 .FirstOrDefault(s => s.IdSearch == searchId);

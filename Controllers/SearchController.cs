@@ -157,11 +157,11 @@ namespace ecomFront.Controllers
         [HttpPost]
         public JsonResult SaveNewSearchByLink([FromBody] NewSearchModel model)
         {
-            Search newSearch;
+            Models.DbFirstModels.Search newSearch;
             Criterion newCriteria;
             try
             {
-                var search = new Search
+                var search = new Models.DbFirstModels.Search
                 {
                     Description = model.Nombre,
                     Name = model.Nombre,
@@ -228,11 +228,11 @@ namespace ecomFront.Controllers
         [HttpPost]
         public JsonResult SaveNewSearchByCategory([FromBody] NewSearchByCategoryModel model)
         {
-            Search newSearch;
+            Models.DbFirstModels.Search newSearch;
             Criterion newCriteria;
             try
             {
-                var search = new Search
+                var search = new Models.DbFirstModels.Search
                 {
                     Description = model.Nombre,
                     Name = model.Nombre,

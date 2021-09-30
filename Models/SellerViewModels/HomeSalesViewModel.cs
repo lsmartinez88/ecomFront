@@ -14,7 +14,7 @@ namespace ecomFront.Models.SellerViewModel
         {
             SellerInformation = new List<SellerInformation>();
         }
-        public Search Search{ get; set; }
+        public Models.DbFirstModels.Search Search{ get; set; }
         public Execution Execution { get; set; }
         public List<Criterion> Criteria{ get; set; }
         public List<SellerInformation> SellerInformation { get; set; }

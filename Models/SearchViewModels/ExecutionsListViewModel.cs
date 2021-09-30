@@ -13,6 +13,6 @@ namespace ecomFront.Models.SearchViewModels
             ExecutionsList = new List<Execution>();
         }
         public List<Execution> ExecutionsList { get; set; }
-        public Search search{ get; set; }
+        public Models.DbFirstModels.Search search{ get; set; }
     }
 }

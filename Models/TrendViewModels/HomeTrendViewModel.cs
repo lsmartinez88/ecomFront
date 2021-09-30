@@ -11,7 +11,7 @@ namespace ecomFront.Models.TrendViewModels
         public HomeTrendViewModel()
         {
         }
-        public Search Search{ get; set; }
+        public Models.DbFirstModels.Search Search{ get; set; }
         public Execution Execution { get; set; }
         public List<Criterion> Criteria{ get; set; }
     }

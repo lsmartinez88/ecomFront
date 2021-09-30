@@ -11,6 +11,7 @@ namespace ecomFront.Models.DbFirstModels
         {
             CategoryAttributes = new HashSet<CategoryAttribute>();
             Criteria = new HashSet<Criterion>();
+            Listings = new HashSet<Listing>();
         }
 
         public string IdCategoryml { get; set; }
@@ -25,5 +26,6 @@ namespace ecomFront.Models.DbFirstModels
 
         public virtual ICollection<CategoryAttribute> CategoryAttributes { get; set; }
         public virtual ICollection<Criterion> Criteria { get; set; }
+        public virtual ICollection<Listing> Listings { get; set; }
     }
 }

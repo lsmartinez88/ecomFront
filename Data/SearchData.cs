@@ -1,4 +1,5 @@
-﻿using ecomFront.Models;
+﻿
+using ecomFront.Models;
 using ecomFront.Models.DbFirstModels;
 using ecomFront.Models.SearchViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -48,7 +49,7 @@ namespace ecomFront.Data
                     .ToList();
         }
 
-        public List<Search> GetFullSearches(string UserId)
+        public List<Models.DbFirstModels.Search> GetFullSearches(string UserId)
         {
             return _contextDbFirst.Searches
                         .Include(s => s.Criteria)
@@ -62,19 +63,18 @@ namespace ecomFront.Data
         }
 
 
-        public Search GetSearch(int? searchId)
+        public Models.DbFirstModels.Search GetSearch(int? searchId)
         {
             return _contextDbFirst.Searches
                 .FirstOrDefault(s => s.IdSearch == searchId);
         }
 
-        public Search GetSearchWithExecutions(int? searchId)
+        public Models.DbFirstModels.Search GetSearchWithExecutions(int? searchId)
         {
             return _contextDbFirst.Searches.Include(s =>s.Executions)
                 .FirstOrDefault(s => s.IdSearch == searchId);
         }
-
-        public Search SaveSearch(Search search)
+        public Models.DbFirstModels.Search SaveSearch(Models.DbFirstModels.Search search)
         {
             _contextDbFirst.Searches.Add(search);
             _contextDbFirst.SaveChanges();

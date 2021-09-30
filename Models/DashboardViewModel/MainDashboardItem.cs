@@ -15,7 +15,7 @@ namespace ecomFront.Models.DashboardViewModel
 
         }
 
-        public Search Search { get; set; }
+        public Models.DbFirstModels.Search Search { get; set; }
         public int CantidadVentas { get; set; }
         public int CantidadCompetidores { get; set; }
         public int CantidadPublicaciones { get; set; }

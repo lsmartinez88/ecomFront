@@ -12,7 +12,7 @@ namespace ecomFront.Models.SalesViewModels
         public HomeSalesViewModel()
         {
         }
-        public Search Search{ get; set; }
+        public Models.DbFirstModels.Search Search{ get; set; }
         public Execution Execution { get; set; }
         public List<Criterion> Criteria{ get; set; }
         public List<SalesQuantityMap> SalesPerCityComprador { get; set; }
