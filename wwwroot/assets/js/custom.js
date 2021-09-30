@@ -227,6 +227,159 @@ var _donutWithDetails = function (element, size, data) {
     }
 };
 
+
+var _pieDonutBasic = function (elemento, data) {
+    if (typeof d3 == 'undefined') {
+        console.warn('Warning - d3.min.js is not loaded.');
+        return;
+    }
+
+    // Main variables
+    var element = document.getElementById(elemento);
+
+
+    // Initialize chart only if element exsists in the DOM
+    if (element) {
+
+
+        // Basic setup
+        // ------------------------------
+
+        // Add data set
+
+
+        // Main variables
+        var d3Container = d3.select(element),
+            distance = 2, // reserve 2px space for mouseover arc moving
+            radius = 80;
+
+        data.forEach(function (d) {
+            d.text = d.text.replace('CantidadCompetidores_', '');
+            d.text = d.text.charAt(0).toUpperCase() + d.text.slice(1);
+        });
+
+
+
+        // Tooltip
+        // ------------------------------
+
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .direction('e')
+            .html(function (d) {
+                return '<ul class="list-unstyled mb-1">' +
+                    '<li>' + '<div class="font-size-base mb-1 mt-1">' + d.data.text + '</div>' + '</li>' +
+                    '<li>' + 'Cantidad: &nbsp;' + '<span class="font-weight-semibold float-right">' + d.value + '</span>' + '</li>' +
+                    '</ul>';
+            });
+
+
+        // Create chart
+        // ------------------------------
+
+        // Add svg element
+        var container = d3Container.append('svg').call(tip);
+
+        // Add SVG group
+        var svg = container
+            .attr('width', radius*2)
+            .attr('height', radius * 2)
+            .append('g')
+            .attr('transform', 'translate(' + (radius) + ',' + (radius) + ')');
+
+
+
+        // Construct chart layout
+        // ------------------------------
+
+        // Pie
+        var pie = d3.layout.pie()
+            .sort(null)
+            .startAngle(Math.PI)
+            .endAngle(3 * Math.PI)
+            .value(function (d) {
+                return d.value;
+            });
+
+        // Arc
+        var arc = d3.svg.arc()
+            .outerRadius(radius)
+            .innerRadius(radius / 2);
+
+
+
+
+        //
+        // Append chart elements
+        //
+
+        // Group chart elements
+        var arcGroup = svg.selectAll('.d3-arc')
+            .data(pie(data))
+            .enter()
+            .append('g')
+            .attr('class', 'd3-arc d3-slice-border')
+            .style('cursor', 'pointer');
+
+        // Append path
+        var arcPath = arcGroup
+            .append('path')
+            .style('fill', function (d) { return d.data.color; });
+
+        // Add tooltip
+        arcPath
+            .on('mouseover', function (d, i) {
+
+                // Transition on mouseover
+                d3.select(this)
+                    .transition()
+                    .duration(500)
+                    .ease('elastic')
+                    .attr('transform', function (d) {
+                        d.midAngle = ((d.endAngle - d.startAngle) / 2) + d.startAngle;
+                        var x = Math.sin(d.midAngle) * distance;
+                        var y = -Math.cos(d.midAngle) * distance;
+                        return 'translate(' + x + ',' + y + ')';
+                    });
+            })
+
+            .on('mousemove', function (d) {
+
+                // Show tooltip on mousemove
+                tip.show(d)
+                    .style('top', (d3.event.pageY - 40) + 'px')
+                    .style('left', (d3.event.pageX + 30) + 'px');
+            })
+
+            .on('mouseout', function (d, i) {
+
+                // Mouseout transition
+                d3.select(this)
+                    .transition()
+                    .duration(500)
+                    .ease('bounce')
+                    .attr('transform', 'translate(0,0)');
+
+                // Hide tooltip
+                tip.hide(d);
+            });
+
+        // Animate chart on load
+        arcPath
+            .transition()
+            .delay(function (d, i) { return i * 500; })
+            .duration(500)
+            .attrTween('d', function (d) {
+                var interpolate = d3.interpolate(d.startAngle, d.endAngle);
+                return function (t) {
+                    d.endAngle = interpolate(t);
+                    return arc(d);
+                };
+            });
+    }
+};
+
 // Donut with legend
 var _animatedDonutWithLegend = function (element, size, data) {
     if (typeof d3 == 'undefined') {
@@ -561,6 +714,150 @@ var _progressArcSingle = function (element, size, colorContainter, min, max, val
             });
         }
     }
+};
+
+
+var _linesStacked = function (element, dataX, dataLegend,dataSeries) {
+    if (typeof echarts == 'undefined') {
+        console.warn('Warning - echarts.min.js is not loaded.');
+        return;
+    }
+
+    // Define element
+    var line_stacked_element = document.getElementById(element);
+
+
+    //
+    // Charts configuration
+    //
+
+    if (line_stacked_element) {
+
+        // Initialize chart
+        var line_stacked = echarts.init(line_stacked_element);
+
+
+        //
+        // Chart config
+        //
+
+        // Options
+        line_stacked.setOption({
+
+            // Global text styles
+            textStyle: {
+                fontFamily: 'Roboto, Arial, Verdana, sans-serif',
+                fontSize: 13
+            },
+
+            // Chart animation duration
+            animationDuration: 750,
+
+            // Setup grid
+            grid: {
+                left: 0,
+                right: 20,
+                top: 35,
+                bottom: 0,
+                containLabel: true
+            },
+
+            // Add legend
+            legend: {
+                data: dataLegend,
+                itemHeight: 8,
+                itemGap: 20
+            },
+
+            // Add tooltip
+            tooltip: {
+                trigger: 'axis',
+                backgroundColor: 'rgba(0,0,0,0.75)',
+                padding: [10, 15],
+                textStyle: {
+                    fontSize: 13,
+                    fontFamily: 'Roboto, sans-serif'
+                },
+                formatter: function (params, ticket, callback) {
+                    return "Ejecucion: " + params[0].axisValue + "<br> " + params[0].marker + " $ " + parseFloat(params[0].data).toFixed(2) + "<br> " + params[1].marker + " $ " + parseFloat(params[1].data).toFixed(2);
+                },
+            },
+
+            // Horizontal axis
+            xAxis: [{
+                type: 'category',
+                boundaryGap: false,
+                data: dataX,
+                axisLabel: {
+                    color: '#333'
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#999'
+                    }
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: ['#eee']
+                    }
+                }
+            }],
+
+            // Vertical axis
+            yAxis: [{
+                type: 'value',
+                axisLabel: {
+                    color: '#333'
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#999'
+                    }
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: ['#eee']
+                    }
+                },
+                splitArea: {
+                    show: true,
+                    areaStyle: {
+                        color: ['rgba(250,250,250,0.1)', 'rgba(0,0,0,0.01)']
+                    }
+                }
+            }],
+
+            // Add series
+            series: dataSeries
+        });
+    }
+
+
+    //
+    // Resize charts
+    //
+
+    // Resize function
+    var triggerChartResize = function () {
+        line_stacked_element && line_stacked.resize();
+    };
+
+    // On sidebar width change
+    var sidebarToggle = document.querySelectorAll('.sidebar-control');
+    if (sidebarToggle) {
+        sidebarToggle.forEach(function (togglers) {
+            togglers.addEventListener('click', triggerChartResize);
+        });
+    }
+
+    // On window resize
+    var resizeCharts;
+    window.addEventListener('resize', function () {
+        clearTimeout(resizeCharts);
+        resizeCharts = setTimeout(function () {
+            triggerChartResize();
+        }, 200);
+    });
 };
 
    // Scatter punch chart

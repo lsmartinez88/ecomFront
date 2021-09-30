@@ -1,4 +1,5 @@
-﻿using ecomFront.Models.DbFirstModels;
+﻿using ecomFront.Models;
+using ecomFront.Models.DbFirstModels;
 using ecomFront.Models.SearchViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace ecomFront.Data
     {
         List<Search> GetFullSearches(string UserId);
         Search GetSearch(int? searchId);
+        Search GetSearchWithExecutions(int? searchId);
         Execution GetExecution(int? executionId);
 
         List<Criterion> GetFullCriteriasBySearchId(int ?SearchId);
@@ -25,6 +27,10 @@ namespace ecomFront.Data
 
         List<SalesQuantityMap> GetSalesMap(int ExecutionId, SalesType tipo);
         List<SalesQuantityMap> GetSalesMapCriteria(int ExecutionId, int CriteriaId, SalesType tipo);
-        
+
+        List<MainDashboard> GetMainDashboards(String userId);
+        List<MainDashboard> GetSellersTypeSearch(int searchId);
+        List<MainDashboard> GetAvgPriceSearch(int searchId);
+        List<MainDashboard> GetAvgSellPriceSearch(int searchId);
     }
 }

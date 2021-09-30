@@ -68,6 +68,12 @@ namespace ecomFront.Data
                 .FirstOrDefault(s => s.IdSearch == searchId);
         }
 
+        public Search GetSearchWithExecutions(int? searchId)
+        {
+            return _contextDbFirst.Searches.Include(s =>s.Executions)
+                .FirstOrDefault(s => s.IdSearch == searchId);
+        }
+
         public Search SaveSearch(Search search)
         {
             _contextDbFirst.Searches.Add(search);
@@ -120,6 +126,24 @@ namespace ecomFront.Data
                  }).ToList();
         }
 
-        
+        public List<MainDashboard> GetMainDashboards(String userId)
+        {
+            return _contextModel.MainDashboard.Where(a => a.UserId.Equals(userId)).ToList();
+        }
+
+        public List<MainDashboard> GetSellersTypeSearch(int searchId)
+        {
+            return _contextModel.MainDashboard.Where(a => a.SearchId.Equals(searchId) && a.ParameterName.Contains("CantidadCompetidores_")).ToList();
+        }
+
+        public List<MainDashboard> GetAvgPriceSearch(int searchId)
+        {
+            return _contextModel.MainDashboard.Where(a => a.SearchId.Equals(searchId) && a.ParameterName.Contains("EjecucionPrecioMedio_")).ToList();
+        }
+
+        public List<MainDashboard> GetAvgSellPriceSearch(int searchId)
+        {
+            return _contextModel.MainDashboard.Where(a => a.SearchId.Equals(searchId) && a.ParameterName.Contains("EjecucionPrecioMedioVenta_")).ToList();
+        }
     }
 }

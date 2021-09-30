@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using ecomFront.Services;
 using ecomFront.Data;
 using ecomFront.Models.MLModels;
+using ecomFront.Models.DashboardViewModel;
+using System.Globalization;
 
 namespace ecomFront.Controllers
 {
@@ -20,31 +22,99 @@ namespace ecomFront.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private IGroupData _groupData;
+        private ISearchData _searchData;
 
         public HomeController(SignInManager<ApplicationUser> signInManager, ILogger<HomeController> logger,
-                                IGroupData groupData)
+                                IGroupData groupData, ISearchData searchData)
         {
             _signInManager = signInManager;
             _logger = logger;
             _groupData = groupData;
+            _searchData = searchData;
         }
 
         public IActionResult Index()
         {
-            /*try
-            {
-                List<ListingGrouping> resp = _groupData.GetGrouping(3, 3, "PAYMENT_METHODS");
-                List<ListingGrouping> resp3 = _groupData.GetGroupingByExecution(3, "PAYMENT_METHODS");
-
-            }
-            catch (Exception e) { }*/
-
-
             if (User.Identity.IsAuthenticated)
             {
-                return View();
+                List<MainDashboard> dashboard = _searchData.GetMainDashboards(_signInManager.UserManager.GetUserId(User));
+                List<int> ids = dashboard.Select(a => a.SearchId).Distinct().ToList();
+                var homeViewModel = new MainDashboardViewModel();
+                MainDashboardItem dashItem;
+                foreach (int id in ids)
+                {
+                    dashItem = new MainDashboardItem();
+                    dashItem.Search = _searchData.GetSearchWithExecutions(id);
+                    dashItem.CantidadCompetidores = int.Parse(dashboard.Single(a => a.SearchId.Equals(id) && a.ParameterName.Equals("CantidadCompetidores")).ParameterValue);
+                    dashItem.CantidadPublicaciones = int.Parse(dashboard.Single(a => a.SearchId.Equals(id) && a.ParameterName.Equals("CantidadPublicaciones")).ParameterValue);
+                    dashItem.CantidadVentas = int.Parse(dashboard.Single(a => a.SearchId.Equals(id) && a.ParameterName.Equals("CantidadVentas")).ParameterValue);
+                    dashItem.TemperaturaCategoriaPorcentaje = int.Parse(dashboard.Single(a => a.SearchId.Equals(id) && a.ParameterName.Equals("TemperaturaCategoriaPorcentaje")).ParameterValue, CultureInfo.InvariantCulture);
+                   
+                    if(dashItem.TemperaturaCategoriaPorcentaje > 75)
+                    {
+                        dashItem.TemperaturaCategoriaLeyenda = "MUY COMPETITIVO";
+                        dashItem.TemperaturaCategoriaClase = "bg-danger";
+
+                    } else if(dashItem.TemperaturaCategoriaPorcentaje > 30)
+                    {
+                        dashItem.TemperaturaCategoriaLeyenda = "POCA COMPETENCIA";
+                        dashItem.TemperaturaCategoriaClase = "bg-primary";
+
+                    } else
+                    {
+                        dashItem.TemperaturaCategoriaLeyenda = "MUCHA OPORTUNIDAD";
+                        dashItem.TemperaturaCategoriaClase = "bg-success";
+
+                    }
+                    homeViewModel.Items.Add(dashItem);
+                }
+
+                return View(homeViewModel);
             }
             return LocalRedirect("/Identity/Account/Login");
+        }
+
+        [HttpPost]
+        public JsonResult GetSellersType(int searchId)
+        {
+            List<MainDashboard> items = _searchData.GetSellersTypeSearch(searchId);
+            return Json(items);
+        }
+
+        [HttpPost]
+        public JsonResult GetAvgPriceLine(int searchId)
+        {
+            List<MainDashboard> avgPrice = _searchData.GetAvgPriceSearch(searchId);
+            List<MainDashboard> avgPriceSell = _searchData.GetAvgSellPriceSearch(searchId);
+            var homeViewModel = new AveragePriceLineChart();
+
+            List<int> x = avgPrice.Select(a => int.Parse(a.ParameterName.Replace("EjecucionPrecioMedio_", ""))).ToList();
+
+            x = x.OrderBy(s => s).ToList();
+            //homeViewModel.xList = avgPrice.Select(a => a.ParameterName.Replace("EjecucionPrecioMedio_", "")).ToList();
+            homeViewModel.xList = x.Select(s => s.ToString()).ToList();
+            NumberFormatInfo nfi = new NumberFormatInfo();
+            nfi.NumberDecimalSeparator = ",";
+
+            foreach (var item in avgPrice)
+            {
+                item.ParameterName = item.ParameterName.Replace("EjecucionPrecioMedio_", "");
+            }
+
+            foreach (var item in avgPriceSell)
+            {
+                item.ParameterName = item.ParameterName.Replace("EjecucionPrecioMedioVenta_", "");
+            }
+
+            avgPrice = avgPrice.OrderBy(a => int.Parse(a.ParameterName)).ToList();
+            avgPriceSell = avgPriceSell.OrderBy(a => int.Parse(a.ParameterName)).ToList();
+
+            homeViewModel.dataLegend.Add("Precio medio publicación");
+            homeViewModel.dataLegend.Add("Precio medio venta");
+            homeViewModel.dataSeries.Add(new AveragePriceLineSeries() { legend = "Precio medio publicación", yList = avgPrice.Select(a => a.ParameterValue).ToList() });
+            homeViewModel.dataSeries.Add(new AveragePriceLineSeries() { legend = "Precio medio venta", yList = avgPriceSell.Select(a => a.ParameterValue).ToList() });
+
+            return Json(homeViewModel);
         }
 
         public async Task<IActionResult> Logout(string returnUrl = null)
