@@ -37,6 +37,14 @@ namespace ecomFront.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+                var searches = _searchData.GetFullSearches(_signInManager.UserManager.GetUserId(User));
+                if(searches.Count == 0 )
+                {
+                    return LocalRedirect("/Search/HomeAddSearch");
+                }
+
+
+
                 List<MainDashboard> dashboard = _searchData.GetMainDashboards(_signInManager.UserManager.GetUserId(User));
                 List<int> ids = dashboard.Select(a => a.SearchId).Distinct().ToList();
                 var homeViewModel = new MainDashboardViewModel();
@@ -57,12 +65,12 @@ namespace ecomFront.Controllers
 
                     } else if(dashItem.TemperaturaCategoriaPorcentaje > 30)
                     {
-                        dashItem.TemperaturaCategoriaLeyenda = "POCA COMPETENCIA";
-                        dashItem.TemperaturaCategoriaClase = "bg-primary";
+                        dashItem.TemperaturaCategoriaLeyenda = "EQUILIBRADO";
+                        dashItem.TemperaturaCategoriaClase = "bg-yellow";
 
                     } else
                     {
-                        dashItem.TemperaturaCategoriaLeyenda = "MUCHA OPORTUNIDAD";
+                        dashItem.TemperaturaCategoriaLeyenda = "MUCHAS OPORTUNIDADES";
                         dashItem.TemperaturaCategoriaClase = "bg-success";
 
                     }

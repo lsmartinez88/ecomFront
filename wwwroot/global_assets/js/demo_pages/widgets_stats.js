@@ -2161,8 +2161,8 @@ var StatisticWidgets = function() {
                 .attr('text-anchor', 'middle')
                 .attr('dy', 6)
                 .style({
-                    'font-size': '17px',
-                    'font-weight': 500
+                    'font-size': '14px',
+                    'font-weight': 400
                 });
 
             // Animate text
