@@ -43,8 +43,6 @@ namespace ecomFront.Controllers
                     return LocalRedirect("/Search/HomeAddSearch");
                 }
 
-
-
                 List<MainDashboard> dashboard = _searchData.GetMainDashboards(_signInManager.UserManager.GetUserId(User));
                 List<int> ids = dashboard.Select(a => a.SearchId).Distinct().ToList();
                 var homeViewModel = new MainDashboardViewModel();
@@ -79,7 +77,9 @@ namespace ecomFront.Controllers
 
                 return View(homeViewModel);
             }
-            return LocalRedirect("/Identity/Account/Login");
+
+
+            return LocalRedirect("/Static/HomeStatic");
         }
 
         [HttpPost]
@@ -135,7 +135,7 @@ namespace ecomFront.Controllers
             }
             else
             {
-                return LocalRedirect("/Identity/Account/Logout");
+                return LocalRedirect("/");
             }
         }
 

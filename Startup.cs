@@ -54,7 +54,7 @@ namespace ecomFront
             services.AddAuthorization();
             services.ConfigureApplicationCookie(options =>
             {
-                options.LogoutPath = "/Identity/Account/Login";
+                options.LogoutPath = "/Static/HomeStatic";
                 options.LoginPath = "/Identity/Account/Login";
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.ExpireTimeSpan = TimeSpan.FromDays(1);
