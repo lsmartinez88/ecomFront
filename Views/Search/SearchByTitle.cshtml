@@ -7,30 +7,559 @@
     Layout = "_Layout";
 }
 @model SearchByTitleViewModel
-<!-- Page header -->
-<div class="page-header page-header-light">
-    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
-        <div class="d-flex">
-            <div class="breadcrumb">
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-                <span class="breadcrumb-item active">Busqueda Por Categoria</span>
+
+    <!-- Page header -->
+    <div class="page-header page-header-light sticky-top">
+        <div class="page-header-content header-elements-lg-inline">
+            <div class="page-title d-flex breadcrumb pt-0">
+                <h4>
+                    <a class="breadcrumb-item" href="/"><i class="icon-home2 mr-2"></i> Home</a>
+                    <span class="breadcrumb-item active">Nueva Búsqueda</span>
+                </h4>
             </div>
-
-            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
-        </div>
-
-        <div class="header-elements d-none">
-            <div class="breadcrumb justify-content-center">
-                <a href="#" class="breadcrumb-elements-item">
-                    <i class="icon-comment-discussion mr-2"></i>
-                    Necesito Ayuda
-                </a>
+            <div class="header-elements d-none">
+                <div class="d-flex justify-content-center border-left">
+                    <a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
+                        <h2 class="p-0 m-0 font-weight-normal" id="CantCategorias">0</h2>
+                        <span class="font-weight-normal">CATEGORIAS</span>
+                    </a>
+                </div>
+                <div class="d-flex justify-content-center border-left">
+                    <a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
+                        <h2 class="p-0 m-0 font-weight-normal" id="CantPublicaciones">0</h2>
+                        <span class="font-weight-normal">PUBLICACIONES</span>
+                    </a>
+                </div>
+                <div class="d-flex justify-content-center border-left @*bg-success-100*@">
+                    <a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body disabled" id="SaveButton">
+                        <i class="mi-save mi-2x text-success p-0"></i>
+                        <span class="font-weight-bold text-success">GUARDAR</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- /page header -->
+    <!-- /page header -->
 
-<div class="content">
-</div>
+    <div class="content">
+        <div class="card">
+            <div class="card-header bg-transparent header-elements-sm-inline">
+                <span class="card-title font-weight-semibold font-size-lg">1. Ingresá las palabras clave para iniciar la búsqueda</span>
+                <div class="header-elements">
+                    <div class="d-flex align-items-center">
+                        <span class="m-0"><i class="icon-spinner2 spinner icon-2x" style="display: none;"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <form id="formLink">
+                    <div class="d-sm-flex">
+                        <div class="form-group-feedback form-group-feedback-left flex-grow-1 mb-3 mb-sm-0">
+                            <input id="inputLink" type="text" class="form-control form-control-lg" placeholder="ejemplo: impresion 3D">
+                            <div class="form-control-feedback form-control-feedback-lg">
+                                <i class="icon-search4 text-muted"></i>
+                            </div>
+                        </div>
 
+                        <div class="ml-sm-3">
+                            <select class="custom-select custom-select-lg wmin-sm-200 mb-3 mb-sm-0">
+                                <option value="1">Mercado Libre</option>
+                            </select>
+                        </div>
+
+                        <div class="ml-sm-3">
+                            <button id="btnSubmitSearch" type="submit" class="btn btn-primary btn-lg w-100 w-sm-auto">Buscar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div id="infoBusqueda" class="col-lg-8 col-sm-12">
+                <div class="card">
+                    <div class="card-header  bg-info-100 header-elements-inline">
+                        <div class="card-title font-weight-semibold"> 2. Selección de Categoria <div class="card-title font-weight-light ">Navegá hasta la categoria de interés.</div></div>
+                    </div>
+                    <div class="card-header bg-transparent" id="CategoryPath"></div>
+
+                    <div class="card-body">
+                        <ul class="media-list media-list-linked overflow-auto border-top" style="max-height:500px" id="MainList">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="infoResumen" class="col-lg-4 col-sm-12">
+                <div class="card">
+                    <div class="sidebar-section">
+                        <div class="card-header bg-info-100">
+                            <span class="card-title font-weight-semibold">3. Información de la búsqueda</span>
+                        </div>
+                        <div class="sidebar-section-body">
+                            <form action="#" id="formBusqueda">
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label" for="searchName">Nombre:</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control form-control-sm" placeholder="Ingresá el nombre" id="searchName" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-4 col-form-label">Descripción:</label>
+                                    <div class="col-lg-8">
+                                        <textarea rows="1" class="form-control form-control-sm" placeholder="Ingresá la descripcion de la búsqueda" id="searchDescription"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-header bg-success-100">
+                            <span class="card-title font-weight-semibold">Resumen De Categorias </span>
+                        </div>
+                        <div class="sidebar-section-body">
+                            <ul class="media-list" id="resumenCategoria">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="modal_ConfirmacionBusqueda" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Confirmá la selección de criterios</h5>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="alert alert-info alert-dismissible alert-styled-left border-top-0 border-bottom-0 border-right-0">
+                        <span class="font-weight-semibold">Atención! </span> Estos son los criterios de búsqueda que seleccionaste para realizar tu análisis.
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                    </div>
+                    <div class="w-100 alert-success text-center mt-2 p-1"><h5 class="m-0">Información de la Búsqueda</h5></div>
+                    <div class="container-fluid w-100">
+                        <table class="text-center w-100">
+                            <tbody>
+                                <tr>
+                                    <td class="text-right w-50 pr-1"> Nombre</td>
+                                    <td class="text-left w-50 pl-1 font-weight-semibold" id="confirmName"></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right w-50 pr-1"> Descripción</td>
+                                    <td class="text-left w-50 pl-1 font-weight-semibold" id="confirmDescription"></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right w-50 pr-1"> Condición</td>
+                                    <td class="text-left w-50 pl-1 font-weight-semibold">
+                                        <span id="confirmConditionNew" class="badge badge-success">NUEVO</span>
+                                        <span id="confirmConditionUsed" class="badge badge-primary">USADO</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right w-50 pr-1"> Publicaciones para Analizar</td>
+                                    <td class="text-left w-50 pl-1 font-weight-semibold" id="confirmCantPublicaciones"></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right w-50 pr-1"> Categorias Seleccionadas</td>
+                                    <td class="text-left w-50 pl-1 font-weight-semibold" id="confirmCantidadCategorias"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="divDetalleCategoria">
+
+                    </div>
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link " data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" id="ConfirmGeneral">Guardar Búsqueda</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts
+    {
+        <script type="text/javascript">
+            var path_from_root = '';
+            var attributes = [];
+            var categorySelectedList = [];
+            var selectedCategory = '';
+            var selectedCategoryName = '';
+            var selectedCategoryQtty = '';
+
+            var cantPublicaciones = 0;
+            var NewSearchModel = {};
+            var criterioBusqueda = '';
+
+
+            document.addEventListener('DOMContentLoaded', function () {
+                $('#sidebar-toggle').click();
+                $("#SaveButton").addClass('disabled');
+                criterioBusqueda = '';
+            });
+
+
+            function buildCategoryItem(cList, category) {
+                var hasChildren = false;
+                $.getJSON('https://api.mercadolibre.com/categories/' + category.id, function (dataCategory, textStatus, jqXHR) {
+                    if (dataCategory.children_categories.length > 0) {
+                        hasChildren = true;
+                    }
+                    else {
+                        hasChildren = false;
+                    }
+                })
+                    .always(function () {
+                        var li = $('<li/>',
+                            {
+                                class: 'border-bottom',
+                                id: 'li_' + category.id
+                            })
+                            .appendTo(cList);
+
+                        var divMain = $('<div />',
+                            {
+                                class: 'media'
+                            })
+                            .appendTo(li);
+
+                        var divTitulo = $('<div/>',
+                            {
+                                class: 'media-body'
+                            })
+                            .appendTo(divMain);
+
+                        var h4 = $('<h4/>',
+                            {
+                                class: 'font-weight-light mb-0',
+                                text: category.name
+                            })
+                            .appendTo(divTitulo);
+
+                        var badge = $('<span/>',
+                            {
+                                class: 'badge badge-light badge-pill align-self-center ml-3',
+                                text: category.results,
+                                title: '',
+                                'data-popup': 'tooltip',
+                                'data-placement': 'right',
+                                'data-original-title': 'Cantidad de items en categoria'
+                            })
+                            .appendTo(h4)
+                            .tooltip();
+
+                        var spanIcon = $('<span />',
+                            {
+                                class: "text-muted"
+                            })
+                            .appendTo(divMain);
+
+                        if (hasChildren) {
+                            var btnVerMas = $('<button />',
+                                {
+                                    type: 'button',
+                                    class: 'btn btn-outline-secondary btn-sm btnVerMas',
+                                    text: 'Ver Mas',
+                                    'data-id': category.id
+                                })
+                                .appendTo(spanIcon);
+                        }
+
+                        var btnAgregar = $('<button />',
+                            {
+                                type: 'button',
+                                class: 'btn btn-outline-success btn-sm ml-2 btnAgregar',
+                                text: 'Agregar',
+                                'data-id': category.id,
+                                'data-category-name': category.name,
+                                'data-category-qtty': category.results
+                            })
+                            .appendTo(spanIcon);
+                    });
+            }
+
+            $('#formLink').submit(function (e) {
+                e.preventDefault();
+                $('.spinner').show();
+                $("#conditionNew").hide();
+                $("#conditionUsed").hide();
+                $('#InfoPublicacion').hide();
+                $('#CantPublicaciones').text(0);
+                $('#CantCategorias').text(0);
+                itemEncontrado = null;
+                $('#MainList').empty();
+                $('#CategoryPath').empty();
+                categorySelectedList = [];
+                UpdateCategoryList();
+
+                buildMainList($('#inputLink').val(),'');
+            });
+
+            function buildMainList(criterio, category) {
+                $('#MainList').empty();
+                $('#CategoryPath').empty();
+
+                criterioBusqueda = criterio;
+                //$('#panelDeResultados').addClass('loader');
+                var url = '';
+                if (category == '')
+                    url = 'https://api.mercadolibre.com/sites/MLA/search?q=' + criterioBusqueda;
+                else
+                    url = 'https://api.mercadolibre.com/sites/MLA/search?q=' + criterioBusqueda + '&category=' + category;
+
+                $.getJSON(url, function (data, textStatus, jqXHR) {
+                    if (data != null) {
+                        var categories = data.available_filters.find(x => x.id == 'category');
+                        if (jqXHR.status != 200) {
+                            $.jGrowl('Error en la llamada: ' + url, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 });
+                            return;
+                        }
+
+                        if (categories == undefined || categories.values == undefined || categories.values.length == 0) {
+                            $.jGrowl("No se encontraron categorias relacionadas a ese criterio de búsqueda", { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: '', life: 5000 });
+                            return;
+                        }
+
+                        //alert(JSON.stringify(categories))
+                        var cList = $('#MainList');
+                        $.each(categories.values, function (key, value) {
+                            buildCategoryItem(cList, value);
+                        });
+
+                    }
+                })
+                    .fail(function (e) {
+                        $.jGrowl(e.responseText, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 });
+                    })
+                    .always(function (e) {
+                        $('.spinner').hide();
+                        validarSaveButton();
+                    });
+            }
+
+            $(document).on('click', '.btnVerMas', function () {
+                var categoryId = $(this).attr('data-id');
+                buildPath(categoryId);
+                buildMainList(criterioBusqueda, categoryId);
+            });
+
+
+            function validarSaveButton() {
+                if ($('#searchName').val() != '' && categorySelectedList.length > 0) {
+                    $("#SaveButton").removeClass('disabled');
+                }
+                else {
+                    $("#SaveButton").addClass('disabled');
+                }
+            }
+
+
+            function buildPath(category) {
+                var CategoryPath = $('#CategoryPath');
+                CategoryPath.empty();
+                var url = 'https://api.mercadolibre.com/categories/' + category;
+                $.getJSON(url, function (json_data, textStatus, jqXHR) {
+                    if (jqXHR.status == 200) {
+                        if (json_data.children_categories.length > 0) {
+                            var href = $('<a />',
+                                {
+                                    href: 'javascript:;',
+                                    text: 'Inicio',
+                                    onclick: 'buildMainList("' + criterioBusqueda + '");'
+                                })
+                                .appendTo(CategoryPath);
+
+                            var i = $('<a />', { class: 'fas fa-chevron-right mr-1 ml-1 text-black-50' }).appendTo(CategoryPath);
+
+                            $.each(json_data.path_from_root, function (key, value) {
+                                if (value.id == json_data.id) {
+                                    var hrefThis = $('<span />',
+                                        {
+                                            text: value.name
+                                        })
+                                        .appendTo(CategoryPath);
+                                }
+                                else {
+                                    var href = $('<a />',
+                                        {
+                                            href: 'javascript:;',
+                                            class: 'btnVerMas',
+                                            'data-id': value.id,
+                                            text: value.name
+                                        })
+                                        .appendTo(CategoryPath);
+                                    var i = $('<a />', { class: 'fas fa-chevron-right mr-1 ml-1 text-black-50' }).appendTo(CategoryPath);
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+
+            $(document).on('click', '.btnAgregar', function () {
+                selectedCategory = $(this).attr('data-id');
+                selectedCategoryName = $(this).attr('data-category-name');
+                selectedCategoryQtty = $(this).attr('data-category-qtty');
+
+
+                categorySelectedList.push({ categoryId: selectedCategory, categoryName: selectedCategoryName, categoryQtty: selectedCategoryQtty});
+                UpdateCategoryList();
+                $.jGrowl('La categoria fue agregada con exito!', { theme: 'bg-success text-white', header: 'Excelente!', position: 'bottom-right', life: 2000 });
+            });
+
+
+            function UpdateCategoryList() {
+                $('#resumenCategoria').empty();
+                cantPublicaciones = 0;
+
+                $('#CantCategorias').text(categorySelectedList.length);
+                $('#CantPublicaciones').text(0);
+
+                categorySelectedList.forEach(function (data, index, array) {
+
+                    var li = $('<li />', { class: "media", }).appendTo($('#resumenCategoria'));
+                    var mediaBody = $('<div />', { class: "media-body", }).appendTo(li);
+                    var divMediaBody = $('<div />',
+                        {
+                            class: "font-weight-semibold",
+                            text: data.categoryName
+                        }).appendTo(mediaBody);
+
+                    $('<span />',
+                        {
+                            class: "badge badge-light badge-pill align-self-center ml-1",
+                            id: 'spanCategory_' + data.categoryId,
+                            text: 0
+                        }).appendTo(divMediaBody);
+
+                    var divRemove = $('<div />',
+                        {
+                            class: "ml-3 align-self-center "
+                        }).appendTo(li);
+
+                    var aRemove = $('<a />',
+                        {
+                            class: "list-icons-item text-danger removeCategory cursor-pointer",
+                            id: 'remove_' + data.categoryId,
+                            "data-category-id": data.categoryId
+                        }).appendTo(divRemove);
+
+                    var aRemove = $('<i />', { class: "icon-trash", }).appendTo(aRemove);
+                    cantPublicaciones = 0;
+                    var url = 'https://api.mercadolibre.com/sites/MLA/search?q=' + criterioBusqueda + '&category=' + data.categoryId;
+                    $.getJSON(url, function (json_data) {
+                        cantPublicaciones = cantPublicaciones + json_data.paging.total;
+                        $('#CantPublicaciones').text(cantPublicaciones);
+                        $("#spanCategory_" + data.categoryId).text(json_data.paging.total);
+                    })
+                        .fail(function () { $.jGrowl('Error en la llamada: ' + url, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 }); });
+                });
+
+                validarSaveButton();
+            }
+
+
+            $(document).on('click', '.removeCategory', function () {
+                var categoryId = $(this).attr('data-category-id');
+                categorySelectedList.splice(categorySelectedList.findIndex(x => x.categoryId == categoryId), 1);
+                UpdateCategoryList();
+            });
+
+            $("#inputLink").keyup(function () {
+                $("#btnSubmitSearch").prop("disabled", !this.value);
+            });
+
+            $(document).ready(function () {
+                $("#searchName").on("change paste keyup", function () {
+                    validarSaveButton();
+                });
+            });
+
+            $('#SaveButton').click(function (e) {
+                NewSearchModel.Nombre = $('#searchName').val();
+                NewSearchModel.Descripcion = $('#searchDescription').val();
+                NewSearchModel.CategoryList = categorySelectedList;
+                NewSearchModel.CantidadPublicaciones = parseInt($('#CantPublicaciones').text());
+                NewSearchModel.SearchCriteria = criterioBusqueda;
+                modalImprimir(NewSearchModel);
+            });
+
+            function modalImprimir(NewSearchModel) {
+                $("#confirmConditionNew").hide();
+                $("#confirmConditionUsed").hide();
+
+                $('#confirmName').text(NewSearchModel.Nombre);
+                $('#confirmDescription').text(NewSearchModel.Descripcion);
+
+                $("#confirmConditionNew").show();
+
+                $('#confirmCantPublicaciones').text(NewSearchModel.CantidadPublicaciones);
+                $('#confirmCantidadCategorias').text(NewSearchModel.CategoryList.length);
+
+                if (NewSearchModel.CategoryList.length > 0) {
+                    $("#divDetalleCategoria").show();
+                    $("#divDetalleCategoria").empty();
+                    $.each(NewSearchModel.CategoryList, function (key, value ) {
+                        var detalleFondo = $('<div />',
+                            {
+                                class: "w-100 alert-secondary text-center mt-2 p-1"
+                            }).appendTo($("#divDetalleCategoria"));
+
+                        $('<h6 />',
+                            {
+                                class: "m-0",
+                                text: value.categoryName
+                            }).appendTo(detalleFondo);
+
+                        var table = $('<table />',
+                            {
+                                id: "confirmDetalleCategoria",
+                                class: "text-center w-100"
+                            }).appendTo($("#divDetalleCategoria"));
+
+                        var tbody = $('<tbody />',
+                            {
+                                class: "text-center w-100"
+                            }).appendTo(table);
+                    });
+                } else {
+                    $("#divDetalleCategoria").hide();
+                }
+
+                $('#modal_ConfirmacionBusqueda').modal('toggle');
+            }
+
+
+            $('#ConfirmGeneral').click(function (e) {
+             $.ajax({
+                type: "POST",
+                 data: JSON.stringify(NewSearchModel),
+                url: "/Search/SaveNewSearchByTitle",
+                contentType: "application/json"
+            }).done(function (res) {
+                if (res.result == "OK") {
+                    $.jGrowl(res.successMessage, { theme: 'bg-success text-white', header: 'Excelente!', position: 'bottom-right', life: 2000 });
+
+                    var url = '@Url.Action("Searches", "Search")';
+                     window.location.href = url
+
+                    //$.ajax({
+                    //    cache: false,
+                    //    type: "GET",
+                    //    url: "/Search/Searches",
+                    //    dataType: "html"
+                    //});
+
+                } else {
+                    $.jGrowl(res.errorMessage, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 });
+                }
+            });
+        });
+
+        </script>
+    }

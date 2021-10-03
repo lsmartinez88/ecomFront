@@ -17,5 +17,6 @@ namespace ecomFront.Models.SearchViewModels
         public string categoryId { get; set; }
         public string categoryName { get; set; }
         public List<ItemSearchCategorySelectedAttribute> attributes { get; set; }
+        public string categoryQtty { get; set; }
     }
 }

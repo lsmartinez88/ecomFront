@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ecomFront.Models.SearchViewModels
 {
-    public class NewSearchByCategoryModel
+    public class NewSearchByTitleModel
     {
-        public NewSearchByCategoryModel()
+        public NewSearchByTitleModel()
         {
 
         }
@@ -18,5 +18,7 @@ namespace ecomFront.Models.SearchViewModels
         public string Descripcion { set; get; }
         public  int CantidadPublicaciones { set; get; }
         public List<ItemSearchCategoryResult> CategoryList { set; get; }
+        public string SearchCriteria { get; set; }
+
     }
 }

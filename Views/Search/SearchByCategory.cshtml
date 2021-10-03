@@ -302,8 +302,6 @@
                 .fail(function () { $.jGrowl('Error en la llamada: ' + url, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 }); });
         }
 
-
-
         $(document).on('click', '.btnVerMas', function () {
             var categoryId = $(this).attr('data-id');
             var cList = $('#MainList');
@@ -737,7 +735,7 @@
                 if (res.result == "OK") {
                     $.jGrowl(res.successMessage, { theme: 'bg-success text-white', header: 'Excelente!', position: 'bottom-right', life: 2000 });
 
-                    var url = '@Url.Action("Search", "Searches")';
+                    var url = '@Url.Action("Searches", "Search")';
                      window.location.href = url
 
                     //$.ajax({

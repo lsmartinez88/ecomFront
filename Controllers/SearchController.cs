@@ -291,5 +291,53 @@ namespace ecomFront.Controllers
 
             return Json(new { result = "OK", successMessage = "El id " + newSearch.IdSearch + " fue creado correctamente!!" });
         }
+
+        [HttpPost]
+        public JsonResult SaveNewSearchByTitle([FromBody] NewSearchByTitleModel model)
+        {
+            Models.DbFirstModels.Search newSearch;
+            Criterion newCriteria;
+            try
+            {
+                var search = new Models.DbFirstModels.Search
+                {
+                    Description = model.Nombre,
+                    Name = model.Nombre,
+                    SearchType = SearchType.Categoria,
+                    Version = 0,
+                    UserId = _userManager.GetUserId(HttpContext.User)
+                };
+
+                newSearch = _searchData.SaveSearch(search);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = "ERROR", errorMessage = "Error Guardando el Search: " + ex.Message });
+            }
+
+            try
+            {
+                foreach (var category in model.CategoryList)
+                {
+                    var criteria = new Criterion
+                    {
+                        CategoryId = category.categoryId,
+                        ItemCondition = ItemCondition.Nuevo,
+                        Quantity = (long)Int32.Parse(category.categoryQtty),
+                        SearchId = newSearch.IdSearch,
+                        SearchCriteria = model.SearchCriteria,
+                        Version = 0
+                    };
+
+                    newCriteria = _searchData.SaveCriteria(criteria);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = "ERROR", errorMessage = "Error Guardando el Criterio: " + ex.Message });
+            }
+
+            return Json(new { result = "OK", successMessage = "El id " + newSearch.IdSearch + " fue creado correctamente!!" });
+        }
     }
 }
