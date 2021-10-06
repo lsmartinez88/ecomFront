@@ -127,5 +127,16 @@ namespace ecomFront.Data
         {
             return _contextDbFirst.Events.Where(e => e.FechaDesde >= from && e.FechaDesde <= to && e.Estado == 1).ToList();
         }
+
+        public List<ListingIndicador> GetIndicadorFunnelByExecution(int ExecutionId)
+        {
+            return _contextModel.ListingIndicador.Where(x => x.ExecutionId.Equals(ExecutionId) && !x.TipoIndicador.Equals("PUBLICACIONES") && !x.TipoIndicador.Equals("REVIEWS")).GroupBy(x => new { x.ExecutionId, x.TipoIndicador })
+                    .Select(x => new ListingIndicador
+                    {
+                        ExecutionId = x.Key.ExecutionId,
+                        TipoIndicador = x.Key.TipoIndicador,
+                        Valor = x.Sum(i => i.Valor)
+                    }).ToList();
+        }
     }
 }

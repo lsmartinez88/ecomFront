@@ -18,16 +18,18 @@ namespace ecomFront.Controllers
         private readonly ILogger<AnalisisController> _logger;
         private ISearchData _searchData;
         private IGroupData _groupData;
+        private IListingData _listingData;
 
         public AnalisisController(UserManager<ApplicationUser> userManager,
                                 ILogger<AnalisisController> logger,
                                 ISearchData searchData,
-                                IGroupData groupData)
+                                IGroupData groupData, IListingData listingData)
         {
             _userManager = userManager;
             _logger = logger;
             _searchData = searchData;
             _groupData = groupData;
+            _listingData = listingData;
         }
 
         public IActionResult HomeAnalisis(int? executionId)
@@ -39,6 +41,10 @@ namespace ecomFront.Controllers
             homeAnalisisListViewModel.Search = _searchData.GetSearch((int)homeAnalisisListViewModel.Execution.SearchId);
             homeAnalisisListViewModel.Criteria = _searchData.GetFullCriteriasBySearchId((int)homeAnalisisListViewModel.Search.IdSearch);
             homeAnalisisListViewModel.Indicadores = _groupData.GetIndicadorByExecution((int)executionId);
+            int filteredResultsCount;
+            int totalResultsCount;
+            homeAnalisisListViewModel.Listing = _listingData.GetListingToDataTable((int)executionId, null, 5, 0, null, true, out filteredResultsCount, out totalResultsCount);
+            homeAnalisisListViewModel.Words = _groupData.GetBarChartOportunityByExecution((int)executionId).Take(3).ToList();
             return View(homeAnalisisListViewModel);
         }
 
@@ -75,5 +81,15 @@ namespace ecomFront.Controllers
 
             return View(grouppingCategoriesViewModel);
         }
+
+
+        [HttpPost]
+        public JsonResult GetFunnelData(int executionId)
+        {
+            var homeAnalisisListViewModel = new HomeAnalisisViewModel();
+            homeAnalisisListViewModel.Indicadores = _groupData.GetIndicadorFunnelByExecution((int)executionId);
+            return Json(homeAnalisisListViewModel.Indicadores);
+        }
+
     }
 }

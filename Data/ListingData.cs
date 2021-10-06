@@ -59,5 +59,33 @@ namespace ecomFront.Data
 
             return result;
         }
+
+        public List<ListingToDataTable> GetListingByCondition(int ExecutionId, int searchBy)
+        {
+
+            var result = _contextDbFirst.Listings.Include(l => l.Category)
+                           .Where(l => l.ExecutionId == ExecutionId && l.Elegible == 1)
+                           .Select(l => new ListingToDataTable
+                           {
+                               IdMl = l.IdMl,
+                               Category = l.Category,
+                               DateCreated = l.DateCreated,
+                               ListingCondition = l.ListingCondition,
+                               ListingTypeId = l.ListingTypeId,
+                               Price = l.Price,
+                               Permalink = l.Permalink,
+                               SellerIdMl = l.SellerIdMl,
+                               SoldQuantity = l.SoldQuantity,
+                               Thumbnail = l.Thumbnail,
+                               Title = l.Title,
+                               TotalQuestions = l.TotalQuestions,
+                               VisitsQuantity = l.VisitsQuantity,
+                               ReviewsQuantity = l.ReviewsQuantity
+                           })
+                           .OrderByDescending(l => l.SoldQuantity) 
+                           .ToList();
+
+            return result;
+        }
     }
 }
