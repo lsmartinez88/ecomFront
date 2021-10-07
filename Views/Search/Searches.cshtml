@@ -43,10 +43,12 @@
                             <div class="card-body">
                                 <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
                                     <div>
-                                        <h6><span class="font-weight-semibold">#@search.IdSearch. @search.Description</span></h6>
+                                        <h6>
+                                            <span class="font-weight-semibold mr-2">#@search.IdSearch. @search.Name</span>
+                                        </h6>
                                         @if (search.SearchType == "CATEGORY")
                                         {
-                                            <p class="mb-3">Categorias: <span class="font-weight-semibold">@search.Criteria.Count()</span> | Ejecuciones: <span class="font-weight-semibold">@search.Executions.Count()</span> </p>
+                                            <p class="mb-3">Categorias: <span class="font-weight-semibold">@search.Criteria.Count()</span> <i class="icon-seven-segment-1 mr-1"></i> Ejecuciones: <span class="font-weight-semibold">@search.Executions.Count()</span> </p>
                                             var listaDeCategoriasConImagen = search.Criteria.Where(c => !string.IsNullOrEmpty(c.Category.Pictureml)).OrderByDescending(c => c.Quantity).Take(10).Select(c => c.Category).ToList();
                                             @foreach (var category in listaDeCategoriasConImagen)
                                             {
@@ -58,9 +60,9 @@
                                         }
                                         else
                                         {
-                                           
+
                                             var searchItem = Model.RelatedItems.FirstOrDefault(ri => ri.searchId == search.IdSearch);
-                                          
+
                                             @if (searchItem != null)
                                             {
                                                 <p class="mb-3">
@@ -72,7 +74,7 @@
                                                 @foreach (var picture in searchItem.item.pictures.Take(5))
                                                 {
                                                     <a href="@picture.url">
-                                                        <img src="@picture.secure_url" class="rounded-circle" width="40" height="40" >
+                                                        <img src="@picture.secure_url" class="rounded-circle" width="40" height="40">
                                                     </a>
                                                 }
                                             }
@@ -82,19 +84,20 @@
                                     </div>
 
                                     <ul class="list list-unstyled mb-0 mt-3 mt-sm-0 ml-auto text-sm-right">
-                                        <li><span class="text-muted">1900-01-01</span></li>
+                                        <li class="mb-2">
+                                            <button type="button" class="btn btn-outline-success btn-sm"><i class="icon-play mr-2"></i>Ejecutar</button>
+                                        </li>
                                         <li>
                                             @if (search.SearchType == SearchType.Categoria)
                                             {
-                                                <span class="badge badge-flat border-purple text-purple">CATEGORIA</span>
+                                                <span class="badge badge-light badge-striped badge-striped-right border-right-2 border-right-purple">CATEGORIA</span>
                                             }
                                             else
                                             {
-                                                <span class="badge badge-flat border-secondary text-secondary">PUBLICACION</span>
+                                                <span class="badge badge-light badge-striped badge-striped-right border-right-2 border-right-secondary">PUBLICACION</span>
                                             }
+
                                         </li>
-                                        <li>
-                                        <li><a href="#">@search.Criteria.Sum(c => c.Quantity) items</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -104,27 +107,26 @@
                                 {
                                     var fecha = search.Executions.OrderByDescending(e => e.DateFinished).FirstOrDefault().DateFinished;
                                     var fechaFormateada = fecha != null ? fecha.Value.ToString("dd MMM yyyy") : "";
-                                    <span>Ultima Ejecucion: <span class="font-weight-semibold">@fechaFormateada</span> </span>
+                                    <span>Última Ejecución: <span class="font-weight-semibold">@fechaFormateada</span><i class="icon-seven-segment-1 mr-1"></i> <a asp-area="" asp-controller="Listing" asp-action="ListingList" asp-route-executionId="@search.Executions.OrderByDescending(e => e.DateFinished).FirstOrDefault().IdExecution">@search.Criteria.Sum(c => c.Quantity) items</a></span>
+                                }
+                                else
+                                {
+                                    <span> Aún no tiene ejecuciones realizadas</span>
                                 }
 
                                 <ul class="list-inline mb-0 mt-2 mt-sm-0">
-                                    <li class="list-inline-item dropdown position-static">
+                                    <li class="list-inline-item dropright ">
                                         <a href="#" class="text-body dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
                                             <a asp-area="" asp-controller="Search" asp-action="Criteria" asp-route-searchId="@search.IdSearch" class="dropdown-item"><i class="icon-search4"></i> Criterios</a>
                                             <a asp-area="" asp-controller="Search" asp-action="Executions" asp-route-searchId="@search.IdSearch" class="dropdown-item"><i class="icon-gear"></i> Ejecuciones</a>
-                                            <a asp-area="" asp-controller="Search" asp-action="Payments" asp-route-searchId="@search.IdSearch" class="dropdown-item"><i class="icon-cash3"></i> Pagos</a>
+                                            @*<a asp-area="" asp-controller="Search" asp-action="Payments" asp-route-searchId="@search.IdSearch" class="dropdown-item"><i class="icon-cash3"></i> Pagos</a>*@
+                                            <div data-popup="tooltip" title="" data-placement="left" data-original-title="Versión DEMO. No tiene pagos asociados">
+                                                <a class="dropdown-item disabled"><i class="icon-cash3"></i> Pagos</a>
+                                            </div>
                                             <div class="dropdown-divider"></div>
-                                            <a asp-area="" asp-controller="Search" asp-action="Clone" asp-route-searchId="@search.IdSearch" class="dropdown-item"><i class="icon-copy"></i> Clonar</a>
-                                            @if (search.Executions.Count() > 0)
-                                            {
-                                                <a href="#" class="dropdown-item disabled" title="No se puede editar porque ya se ejecuto un proceso"><i class="icon-pencil7"></i> Editar</a>
-                                            }
-                                            else
-                                            {
-                                                <a asp-area="" asp-controller="Search" asp-action="Edit" asp-route-searchId="@search.IdSearch" class="dropdown-item disabled" title="No se puede editar porque ya se ejecuto un proceso"><i class="icon-pencil7"></i> Editar</a>
-                                            }
-                                            <a asp-area="" asp-controller="Search" asp-action="Delete" asp-route-searchId="@search.IdSearch" class="dropdown-item"><i class="icon-cross2"></i> Eliminar</a>
+                                            <button id="confirmClone" data-search-id="@search.IdSearch" data-search-name="@search.Name"  class="dropdown-item"><i class="icon-copy"></i> Clonar</button>
+                                            <button id="confirmRemove" data-search-id="@search.IdSearch" data-search-name="@search.Name" class="dropdown-item"><i class="icon-cross2"></i> Eliminar</button>
                                         </div>
                                     </li>
                                 </ul>
@@ -134,120 +136,74 @@
                 }
             </div>
         </div>
-        <!--<div class="sidebar sidebar-light bg-transparent sidebar-component sidebar-component-right border-0 shadow-none order-1 order-lg-2 sidebar-expand-lg">-->
-            <!-- Sidebar content -->
-            <!--<div class="sidebar-content">
-                <div class="card">
-                    <div class="card-header bg-transparent">
-                        <span class="card-title font-weight-semibold">Acciones Rapidas</span>
-                    </div>
 
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <button type="button" class="btn btn-teal btn-block btn-float font-size-xs">
-                                    <i class="icon-file-plus icon-2x"></i>
-                                    <span>Nueva Busqueda</span>
-                                </button>
+    <script src="~/global_assets/js/plugins/notifications/bootbox.min.js"></script>
+    @section Scripts
+    {
+            <script type="text/javascript">
+                var selectedSearch;
+                // Confirmation dialog
+                $(document).on('click', '#confirmRemove', function () {
+                    selectedSearch = $(this).attr('data-search-id');
+                    bootbox.confirm({
+                        title: 'Confirmar Eliminación de Búsqueda',
+                        message: 'Estás seguro que querés eliminar la búsqueda ' + $(this).attr('data-search-name'),
+                        buttons: {
+                            confirm: {
+                                label: 'Si, quiero eliminarla',
+                                className: 'btn-danger'
+                            },
+                            cancel: {
+                                label: 'Cancelar',
+                                className: 'btn-link'
+                            }
+                        },
+                        callback: function (result) {
+                            if (result) {
+                                $.post('/Search/DeleteSearchById', { idSearch: selectedSearch })
+                                .done(function (res) {
+                                    if (res.result == "OK") {
+                                        $.jGrowl(res.successMessage, { theme: 'bg-success text-white', header: 'Excelente!', position: 'bottom-right', life: 2000 });
+                                        window.location.href = '@Url.Action("Searches", "Search")';
+                                    } else {
+                                        $.jGrowl(res.errorMessage, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 });
+                                    }
+                                });
+                            }
+                        }
+                    });
+                });
 
-                                <button type="button" class="btn btn-purple btn-block btn-float font-size-xs">
-                                    <i class="icon-cash3 icon-2x"></i>
-                                    <span>Pagos efectuados</span>
-                                </button>
-                            </div>
 
-                            <div class="col">
-                                <button type="button" class="btn btn-warning btn-block btn-float font-size-xs">
-                                    <i class="icon-stats-bars icon-2x"></i>
-                                    <span>Analisis Disponibles</span>
-                                </button>
-
-                                <button type="button" class="btn btn-primary btn-block btn-float font-size-xs">
-                                    <i class="icon-archive icon-2x"></i>
-                                    <span>Busquedas Eliminadas</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header bg-transparent">
-                        <span class="card-title font-weight-semibold">Ultimas Actualizaciones</span>
-                    </div>
-
-                    <div class="card-body">
-                        <ul class="media-list">
-                            <li class="media">
-                                <div class="mr-3">
-                                    <a href="#" class="btn bg-transparent border-success text-success rounded-pill border-2 btn-icon">
-                                        <i class="icon-checkmark3"></i>
-                                    </a>
-                                </div>
-
-                                <div class="media-body">
-                                    <a href="#">Richard Vango</a> paid invoice #0020
-                                    <div class="text-muted font-size-sm">4 minutes ago</div>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <a href="#" class="btn bg-transparent border-secondary text-secondary rounded-pill border-2 btn-icon">
-                                        <i class="icon-infinite"></i>
-                                    </a>
-                                </div>
-
-                                <div class="media-body">
-                                    Status of invoice <a href="#">#0029</a> has been changed to "On hold"
-                                    <div class="text-muted font-size-sm">36 minutes ago</div>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <a href="#" class="btn bg-transparent border-success text-success rounded-pill border-2 btn-icon">
-                                        <i class="icon-checkmark3"></i>
-                                    </a>
-                                </div>
-
-                                <div class="media-body">
-                                    <a href="#">Chris Arney</a> paid invoice #0031 with Paypal
-                                    <div class="text-muted font-size-sm">2 hours ago</div>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <a href="#" class="btn bg-transparent border-danger text-danger rounded-pill border-2 btn-icon">
-                                        <i class="icon-cross2"></i>
-                                    </a>
-                                </div>
-
-                                <div class="media-body">
-                                    Invoice <a href="#">#0041</a> has been canceled
-                                    <div class="text-muted font-size-sm">Mar 18, 18:36</div>
-                                </div>
-                            </li>
-
-                            <li class="media">
-                                <div class="mr-3">
-                                    <a href="#" class="btn bg-transparent border-primary text-primary rounded-pill border-2 btn-icon">
-                                        <i class="icon-plus3"></i>
-                                    </a>
-                                </div>
-
-                                <div class="media-body">
-                                    New invoice #0029 has been sent to <a href="#">Beatrix Diaz</a>
-                                    <div class="text-muted font-size-sm">Dec 12, 05:46</div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-    </div>
-</div>
-
-<!-- /content area -->
+                $(document).on('click', '#confirmClone', function () {
+                    selectedSearch = $(this).attr('data-search-id');
+                    bootbox.confirm({
+                        title: 'Confirmar Copia de búsqueda',
+                        message: 'Estás seguro de clonar la búsqueda ' + $(this).attr('data-search-name'),
+                        buttons: {
+                            confirm: {
+                                label: 'Si, quiero copiarla',
+                                className: 'btn-success'
+                            },
+                            cancel: {
+                                label: 'Cancelar',
+                                className: 'btn-link'
+                            }
+                        },
+                        callback: function (result) {
+                            if (result) {
+                                $.post('/Search/CloneSearch', { idSearch: selectedSearch })
+                                .done(function (res) {
+                                    if (res.result == "OK") {
+                                        $.jGrowl(res.successMessage, { theme: 'bg-success text-white', header: 'Excelente!', position: 'bottom-right', life: 2000 });
+                                        window.location.href = '@Url.Action("Searches", "Search")';
+                                    } else {
+                                        $.jGrowl(res.errorMessage, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 });
+                                    }
+                                });
+                            }
+                        }
+                    });
+                });
+            </script>
+        }

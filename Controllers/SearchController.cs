@@ -223,7 +223,7 @@ namespace ecomFront.Controllers
 
             return Json(new { result = "OK", successMessage = "El id " + newSearch.IdSearch + " fue creado correctamente!!" });
         }
-
+              
 
         [HttpPost]
         public JsonResult SaveNewSearchByCategory([FromBody] NewSearchByCategoryModel model)
@@ -339,5 +339,48 @@ namespace ecomFront.Controllers
 
             return Json(new { result = "OK", successMessage = "El id " + newSearch.IdSearch + " fue creado correctamente!!" });
         }
+
+        [HttpPost]
+        public JsonResult DeleteSearchById(int idSearch)
+        {
+            try
+            {
+                if(_searchData.DeleteSearchById(idSearch))
+                {
+                    return Json(new { result = "OK" });
+                }
+                else
+                {
+                    throw new Exception();
+                }   
+            }
+            catch
+            {
+                return Json(new { result = "ERROR", errorMessage = "No se pudo borrar la busqueda"});
+            }
+        }
+
+
+        [HttpPost]
+        public JsonResult CloneSearch(int idSearch)
+        {
+            try
+            {
+                var newSearch = _searchData.CloneSearch(idSearch);
+                if (newSearch != null)
+                {
+                    return Json(new { result = "OK", successMessage = "La búsqueda se ha clonado con éxito!" });
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            catch(Exception ex)
+            {
+                return Json(new { result = "ERROR", errorMessage = "No se pudo clonar la búsqueda" });
+            }
+        }
+
     }
 }

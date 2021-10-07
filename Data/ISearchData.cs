@@ -35,5 +35,8 @@ namespace ecomFront.Data
         List<MainDashboard> GetSellersTypeSearch(int searchId);
         List<MainDashboard> GetAvgPriceSearch(int searchId);
         List<MainDashboard> GetAvgSellPriceSearch(int searchId);
+        bool DeleteSearchById(int searchId);
+        Models.DbFirstModels.Search CloneSearch(int searchId);
+
     }
 }

@@ -8,7 +8,7 @@ namespace ecomFront.Models.DbFirstModels
 {
     public partial class DBFirstDbContext : DbContext
     {
-
+      
         public DBFirstDbContext(DbContextOptions<DBFirstDbContext> options)
             : base(options)
         {
@@ -586,6 +586,10 @@ namespace ecomFront.Models.DbFirstModels
                     .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("search_type");
+
+                entity.Property(e => e.Status)
+                    .HasColumnName("status")
+                    .HasDefaultValueSql("'1'");
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 

@@ -21,6 +21,7 @@ namespace ecomFront.Models.DbFirstModels
         public string CatalogProductIdml { get; set; }
         public string ListingPermalink { get; set; }
         public string Name { get; set; }
+        public int Status { get; set; }
 
         public virtual ICollection<Criterion> Criteria { get; set; }
         public virtual ICollection<Execution> Executions { get; set; }

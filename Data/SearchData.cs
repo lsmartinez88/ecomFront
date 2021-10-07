@@ -57,7 +57,7 @@ namespace ecomFront.Data
                         .Include(s => s.Criteria)
                         .ThenInclude(c => c.CriteriaAttributes)
                         .Include(s => s.Executions)
-                        .Where(s => s.UserId == UserId)
+                        .Where(s => s.UserId == UserId && s.Status == 1)
                         .AsSplitQuery()
                         .ToList();
         }
@@ -144,6 +144,84 @@ namespace ecomFront.Data
         public List<MainDashboard> GetAvgSellPriceSearch(int searchId)
         {
             return _contextModel.MainDashboard.Where(a => a.SearchId.Equals(searchId) && a.ParameterName.Contains("EjecucionPrecioMedioVenta_")).ToList();
+        }
+
+
+        public bool DeleteSearchById(int searchId)
+        {
+            try
+            {
+                var search = _contextDbFirst.Searches.FirstOrDefault(search => search.IdSearch == searchId);
+                search.Status = 0;
+                _contextDbFirst.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            
+        }
+
+        public Models.DbFirstModels.Search CloneSearch(int searchId)
+        {
+            var search = _contextDbFirst.Searches
+                        .Include(s => s.Criteria)
+                        .ThenInclude(cri => cri.Category)
+                        .Include(s => s.Criteria)
+                        .ThenInclude(c => c.CriteriaAttributes)
+                        .Include(s => s.Executions)
+                        .FirstOrDefault(s => s.IdSearch == searchId);
+
+            var newSearch = new Models.DbFirstModels.Search
+            {
+                CatalogProductIdml = search.CatalogProductIdml,
+                Description = search.Description,
+                ListingPermalink = search.ListingPermalink,
+                Name = "Copia de " + search.Name,
+                SearchType = search.SearchType,
+                Status = 1,
+                UserId = search.UserId,
+                Version = search.Version
+            };
+
+            _contextDbFirst.Searches.Add(newSearch);
+            _contextDbFirst.SaveChanges();
+
+            foreach (var citerio in search.Criteria)
+            {
+                var nuevoCriterio = new Criterion
+                {
+                    Category = citerio.Category,
+                    CategoryId = citerio.CategoryId,
+                    ItemCondition = citerio.ItemCondition,
+                    RelatedLink = citerio.RelatedLink,
+                    SearchCriteria = citerio.SearchCriteria,
+                    Version = citerio.Version,
+                    SearchId = newSearch.IdSearch
+                };
+
+                _contextDbFirst.Criteria.Add(nuevoCriterio);
+                _contextDbFirst.SaveChanges();
+
+                foreach (var criteriaAttribute in citerio.CriteriaAttributes)
+                {
+                    var newCriterioAttribute = new CriteriaAttribute
+                    {
+                        IdAttributeml = criteriaAttribute.IdAttributeml,
+                        IdAttributeValueml = criteriaAttribute.IdAttributeValueml,
+                        NameAttributeml = criteriaAttribute.NameAttributeml,
+                        NameAttributeValueml = criteriaAttribute.NameAttributeValueml,
+                        Version = criteriaAttribute.Version,
+                        CriteriaId = nuevoCriterio.IdCriteria
+                    };
+                    _contextDbFirst.CriteriaAttributes.Add(newCriterioAttribute);
+                    _contextDbFirst.SaveChanges();
+                }
+
+            }
+
+            return newSearch;
         }
     }
 }

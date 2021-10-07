@@ -17,7 +17,7 @@
         <div class="header-elements d-none">
             <div class="d-flex justify-content-center">
                 <a asp-area="" asp-controller="Search" asp-action="Executions" asp-route-searchId="@Model.search.IdSearch" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
-                    <i class="icon-cog3 text-pink"></i>
+                    <i class="icon-cog3 icon-2x text-pink"></i>
                     <span>Ejecuciones</span>
                 </a>
             </div>
@@ -60,7 +60,7 @@
                         <th># items</th>
                         <th>Condicion</th>
                         <th>Atributos</th>
-                        <th class="text-center" style="width: 30px;"><i class="icon-menu-open2"></i></th>
+                        @*<th class="text-center" style="width: 30px;"><i class="icon-menu-open2"></i></th>*@
                     </tr>
                 </thead>
                 <tbody>
@@ -94,7 +94,7 @@
                                     <button type="button" class="btn btn-link" data-popup="popover" title="" data-html="true" data-content="@atributosHtml">Ver Atributos</button>
                                 }
                             </td>
-                            <td class="text-center">
+                            @*<td class="text-center">
                                 <div class="list-icons">
                                     <div class="dropdown">
                                         <a href="#" class="list-icons-item" data-toggle="dropdown">
@@ -108,7 +108,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </td>
+                            </td>*@
                         </tr>
                                     }
 
