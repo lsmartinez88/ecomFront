@@ -2,6 +2,8 @@
 using ecomFront.Data;
 using ecomFront.Models;
 using ecomFront.Models.AnalisisViewModels;
+using ecomFront.Models.ListingViewModels;
+using ecomFront.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,16 +20,18 @@ namespace ecomFront.Controllers
         private readonly ILogger<AnalisisController> _logger;
         private ISearchData _searchData;
         private IGroupData _groupData;
+        private IListingData _listingData;
 
         public AnalisisController(UserManager<ApplicationUser> userManager,
                                 ILogger<AnalisisController> logger,
                                 ISearchData searchData,
-                                IGroupData groupData)
+                                IGroupData groupData, IListingData listingData)
         {
             _userManager = userManager;
             _logger = logger;
             _searchData = searchData;
             _groupData = groupData;
+            _listingData = listingData;
         }
 
         public IActionResult HomeAnalisis(int? executionId)
@@ -39,6 +43,9 @@ namespace ecomFront.Controllers
             homeAnalisisListViewModel.Search = _searchData.GetSearch((int)homeAnalisisListViewModel.Execution.SearchId);
             homeAnalisisListViewModel.Criteria = _searchData.GetFullCriteriasBySearchId((int)homeAnalisisListViewModel.Search.IdSearch);
             homeAnalisisListViewModel.Indicadores = _groupData.GetIndicadorByExecution((int)executionId);
+
+            homeAnalisisListViewModel.Words = _groupData.GetBarChartOportunityByExecution((int)executionId).Take(10).ToList();
+            homeAnalisisListViewModel.Trends = _groupData.GetTrendsTreemapByExecution((int)executionId).OrderByDescending(a => a.IndiceSize).Take(10).ToList();
             return View(homeAnalisisListViewModel);
         }
 
@@ -75,5 +82,30 @@ namespace ecomFront.Controllers
 
             return View(grouppingCategoriesViewModel);
         }
+
+
+        [HttpPost]
+        public JsonResult GetFunnelData(int executionId)
+        {
+            var homeAnalisisListViewModel = new HomeAnalisisViewModel();
+            homeAnalisisListViewModel.Indicadores = _groupData.GetIndicadorFunnelByExecution((int)executionId);
+            return Json(homeAnalisisListViewModel.Indicadores);
+        }
+
+
+        [HttpPost]
+        public JsonResult GetListingData(int executionId, int listadoType)
+        {
+            var viewModel = new ListingExecutionList();
+            viewModel.Items = _listingData.GetListingByCondition((int)executionId, listadoType).Take(10).ToList();
+            foreach (var item in viewModel.Items)
+            {
+                var pics = MLService.GetItemById(item.IdMl).pictures;
+                if(pics != null)
+                    item.Pictures = pics.ToList();
+            }
+            return Json(viewModel);
+        }
+
     }
 }

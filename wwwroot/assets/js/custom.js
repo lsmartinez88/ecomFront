@@ -860,4 +860,284 @@ var _linesStacked = function (element, dataX, dataLegend,dataSeries) {
     });
 };
 
+
+var _funnelBasicLightExample = function (element,dataSeries, dataLegend, valuesInd) {
+    if (typeof echarts == 'undefined') {
+        console.warn('Warning - echarts.min.js is not loaded.');
+        return;
+    }
+
+    // Define element
+    var funnel_basic_element = document.getElementById(element);
+
+
+    //
+    // Charts configuration
+    //
+
+    if (funnel_basic_element) {
+
+        // Initialize chart
+        var funnel_basic = echarts.init(funnel_basic_element);
+
+
+        //
+        // Chart config
+        //
+
+        // Options
+        funnel_basic.setOption({
+
+            // Colors
+            color:colores,
+
+            // Global text styles
+            textStyle: {
+                fontFamily: 'Roboto, Arial, Verdana, sans-serif',
+                fontSize: 13
+            },
+
+            // Add title
+            title: {
+                text: 'Embudo de ventas',
+                subtext: 'Como se llega a una venta',
+                left: 'center',
+                textStyle: {
+                    fontSize: 17,
+                    fontWeight: 500
+                },
+                subtextStyle: {
+                    fontSize: 12
+                }
+            },
+
+            // Add tooltip
+            tooltip: {
+                trigger: 'item',
+                backgroundColor: 'rgba(0,0,0,0.75)',
+                padding: [10, 15],
+                textStyle: {
+                    fontSize: 13,
+                    fontFamily: 'Roboto, sans-serif'
+                },
+                formatter: function (params, ticket, callback) {
+                    return params.marker + params.data.name + ": " + params.data.cantidad;
+                }
+            },
+
+            // Add legend
+            legend: {
+                orient: 'vertical',
+                top: 'center',
+                left: 0,
+                formatter: function (params, ticket, callback) {
+                    return valuesInd[params];
+                },
+                data: dataLegend,
+                itemHeight: 8,
+                itemWidth: 8
+            },
+
+            // Add series
+            series: [
+                {
+                    name: 'Indicadores',
+                    type: 'funnel',
+                    left: '25%',
+                    right: '25%',
+                    top: '16%',
+                    height: '84%',
+                    itemStyle: {
+                        normal: {
+                            borderColor: '#fff',
+                            borderWidth: 1,
+                            label: {
+                                position: 'right'
+                            }
+                        }
+                    },
+                    data: dataSeries/*[
+                        { value: 60, name: 'Safari' },
+                        { value: 40, name: 'Firefox' },
+                        { value: 20, name: 'Chrome' },
+                        { value: 80, name: 'Opera' },
+                        { value: 100, name: 'IE' }
+                    ]*/
+                }
+            ]
+        });
+    }
+
+
+    //
+    // Resize charts
+    //
+
+    // Resize function
+    var triggerChartResize = function () {
+        funnel_basic_element && funnel_basic.resize();
+    };
+
+    // On sidebar width change
+    var sidebarToggle = document.querySelectorAll('.sidebar-control');
+    if (sidebarToggle) {
+        sidebarToggle.forEach(function (togglers) {
+            togglers.addEventListener('click', triggerChartResize);
+        });
+    }
+
+    // On window resize
+    var resizeCharts;
+    window.addEventListener('resize', function () {
+        clearTimeout(resizeCharts);
+        resizeCharts = setTimeout(function () {
+            triggerChartResize();
+        }, 200);
+    });
+};
+
+
+var _DashboardDonutChart = function (elemento, size, data) {
+    if (typeof d3 == 'undefined') {
+        console.warn('Warning - d3.min.js is not loaded.');
+        return;
+    }
+
+    var element = document.getElementById(elemento);
+    // Initialize chart only if element exsists in the DOM
+    if (element) {
+
+
+        // Basic setup
+        // ------------------------------
+
+        // Add data set
+
+        // Main variables
+        var d3Container = d3.select(element),
+            distance = 2, // reserve 2px space for mouseover arc moving
+            radius = (size / 2) - distance,
+            sum = d3.sum(data, function (d) { return d.value; });
+
+
+
+
+        // Tooltip
+        // ------------------------------
+
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .direction('e')
+            .html(function (d) {
+                return '<ul class="list-unstyled mb-1">' +
+                    '<li>' + '<div class="font-size-base mb-1 mt-1">' + d.data.status + '</div>' + '</li>' +
+                    '<li>' + '<span class="font-weight-semibold float-right">' + d.value + '</span>' + '</li>' +
+                    '</ul>';
+            });
+
+
+        // Create chart
+        // ------------------------------
+
+        // Add svg element
+        var container = d3Container.append('svg').call(tip);
+
+        // Add SVG group
+        var svg = container
+            .attr('width', size)
+            .attr('height', size)
+            .append('g')
+            .attr('transform', 'translate(' + (size / 2) + ',' + (size / 2) + ')');
+
+
+
+        // Construct chart layout
+        // ------------------------------
+
+        // Pie
+        var pie = d3.layout.pie()
+            .sort(null)
+            .startAngle(Math.PI)
+            .endAngle(3 * Math.PI)
+            .value(function (d) {
+                return d.value;
+            });
+
+        // Arc
+        var arc = d3.svg.arc()
+            .outerRadius(radius)
+            .innerRadius(radius / 2);
+
+
+        //
+        // Append chart elements
+        //
+
+        // Group chart elements
+        var arcGroup = svg.selectAll('.d3-arc')
+            .data(pie(data))
+            .enter()
+            .append('g')
+            .attr('class', 'd3-arc d3-slice-border')
+            .style('cursor', 'pointer');
+
+        // Append path
+        var arcPath = arcGroup
+            .append('path')
+            .style('fill', function (d) { return d.data.color });
+
+        // Add tooltip
+        arcPath
+            .on('mouseover', function (d, i) {
+
+                // Transition on mouseover
+                d3.select(this)
+                    .transition()
+                    .duration(500)
+                    .ease('elastic')
+                    .attr('transform', function (d) {
+                        d.midAngle = ((d.endAngle - d.startAngle) / 2) + d.startAngle;
+                        var x = Math.sin(d.midAngle) * distance;
+                        var y = -Math.cos(d.midAngle) * distance;
+                        return 'translate(' + x + ',' + y + ')';
+                    });
+            })
+
+            .on('mousemove', function (d) {
+
+                // Show tooltip on mousemove
+                tip.show(d)
+                    .style('top', (d3.event.pageY - 40) + 'px')
+                    .style('left', (d3.event.pageX + 30) + 'px');
+            })
+
+            .on('mouseout', function (d, i) {
+
+                // Mouseout transition
+                d3.select(this)
+                    .transition()
+                    .duration(500)
+                    .ease('bounce')
+                    .attr('transform', 'translate(0,0)');
+
+                // Hide tooltip
+                tip.hide(d);
+            });
+
+        // Animate chart on load
+        arcPath
+            .transition()
+            .delay(function (d, i) { return i * 500; })
+            .duration(500)
+            .attrTween('d', function (d) {
+                var interpolate = d3.interpolate(d.startAngle, d.endAngle);
+                return function (t) {
+                    d.endAngle = interpolate(t);
+                    return arc(d);
+                };
+            });
+    }
+};
+
    // Scatter punch chart

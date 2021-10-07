@@ -90,3 +90,8 @@
         transform: rotate(360deg);
     }
 }
+
+.owl-item img {
+    max-height: 150px !important;
+    object-fit: scale-down;
+}

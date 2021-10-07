@@ -1,4 +1,5 @@
-﻿using ecomFront.Models;
+﻿using ecomFront.Common;
+using ecomFront.Models;
 using ecomFront.Models.DbFirstModels;
 using ecomFront.Models.ListingViewModels;
 using ecomFront.Models.SearchViewModels;
@@ -58,6 +59,44 @@ namespace ecomFront.Data
             totalResultsCount = filteredResultsCount;
 
             return result;
+        }
+
+        public List<ListingExecutionDashboardModel> GetListingByCondition(int ExecutionId, int searchBy)
+        {
+
+            var result = _contextDbFirst.Listings
+                           .Where(l => l.ExecutionId == ExecutionId && l.Elegible == 1).Select(l => new ListingExecutionDashboardModel
+                           {
+                               IdMl = l.IdMl,
+                               Price = l.Price,
+                               SoldQuantity = l.SoldQuantity,
+                               Title = l.Title,
+                               TotalQuestions = l.TotalQuestions,
+                               VisitsQuantity = l.VisitsQuantity,
+                               ReviewsQuantity = l.ReviewsQuantity,
+                               IndexQuestionsxVentas = (l.SoldQuantity / l.TotalQuestions),
+                               IndexVisitsxVentas = (l.SoldQuantity / l.VisitsQuantity)
+
+                           });
+
+            switch(searchBy)
+            {
+                case ListingSearchType.VisitasxVentas:
+                    return result.OrderByDescending(l => (l.SoldQuantity / l.VisitsQuantity)).ToList();
+                case ListingSearchType.PreguntasxVentas:
+                    return result.OrderByDescending(l => (l.SoldQuantity / l.TotalQuestions)).ToList();
+                case ListingSearchType.CantVisitas:
+                    return result.OrderByDescending(l => l.VisitsQuantity).ToList();
+                case ListingSearchType.CantVentas:
+                    return result.OrderByDescending(l => l.SoldQuantity).ToList();
+                case ListingSearchType.CantReviews:
+                    return result.OrderByDescending(l => l.ReviewsQuantity).ToList();
+                case ListingSearchType.CantPreguntas:
+                    return result.OrderByDescending(l => l.TotalQuestions).ToList();
+            }
+
+            return null;
+
         }
     }
 }
