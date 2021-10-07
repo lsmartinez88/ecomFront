@@ -899,15 +899,14 @@ var _funnelBasicLightExample = function (element,dataSeries, dataLegend, valuesI
 
             // Add title
             title: {
-                text: 'Embudo de ventas',
-                subtext: 'Como se llega a una venta',
+                text: 'Como se llega a una venta',
                 left: 'center',
                 textStyle: {
-                    fontSize: 17,
-                    fontWeight: 500
+                    fontSize: 18,
+                    fontWeight: 400
                 },
                 subtextStyle: {
-                    fontSize: 12
+                    fontSize: 14
                 }
             },
 
@@ -1047,6 +1046,7 @@ var _DashboardDonutChart = function (elemento, size, data) {
         var svg = container
             .attr('width', size)
             .attr('height', size)
+            .style('margin', 'auto')
             .append('g')
             .attr('transform', 'translate(' + (size / 2) + ',' + (size / 2) + ')');
 

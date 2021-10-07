@@ -73,9 +73,9 @@
         var publicaciones = Model.Indicadores.FirstOrDefault(i => i.TipoIndicador == IndicatorType.Publicaciones).Valor;
     }
     <div class="row">
-        <div class="col-sm-12 col-xl-12">
-            <div class="card card-body">
-                <div class="row text-center">
+        <div class="col-sm-12 col-xl-8 ">
+            <div class="card card-body border border-secondary">
+                <div class="row text-center mb-1">
 
                     @if (publicaciones > 0)
                     {
@@ -226,251 +226,208 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-8 col-xl-8">
-            <div class="card">
-                <div class="card-body d-sm-flex align-items-sm-center justify-content-sm-between flex-sm-wrap">
-                    <div class="d-flex align-items-center mb-3 mb-sm-0">
-                        <div id="groupingInfoShipping1"></div>
-                        <div class="ml-3">
-                            <h5 class="font-weight-semibold mb-0">Forma de envio</h5>
-                            @if (Model.Criteria.Count() > 1)
-                            {
-                                <div>
-                                    <a asp-area="" asp-controller="Analisis" asp-action="GrouppingCategories" asp-route-executionId="@Model.Execution.IdExecution" asp-route-grouping="@GroupingType.ShippingMethod">Detalle Categorias</a>
+        <div class="col-sm-6 col-xl-2">
+            <div class="card card-body text-center  border border-secondary">
+                <h6 class="font-weight-semibold mb-0 mt-1">FORMAS DE ENVIO</h6>
+                <div id="groupingInfoShipping1" class="w-100 mb-1"></div>
+                @if (Model.Criteria.Count() > 1)
+                {
+                    <div>
+                        <a asp-area="" asp-controller="Analisis" asp-action="GrouppingCategories" asp-route-executionId="@Model.Execution.IdExecution" asp-route-grouping="@GroupingType.ShippingMethod">Detalle Categorias</a>
 
-                                </div>
-                            }
-                        </div>
                     </div>
-                    <div class="d-flex align-items-center mb-3 mb-sm-0">
-                        <div id="groupingInfoPaymentMethod1"></div>
-                        <div class="ml-3">
-                            <h5 class="font-weight-semibold mb-0">Medio de pago</h5>
-                            @if (Model.Criteria.Count() > 1)
-                            {
-                                <div>
-                                    <a asp-area="" asp-controller="Analisis" asp-action="GrouppingCategories" asp-route-executionId="@Model.Execution.IdExecution" asp-route-grouping="@GroupingType.PaymentMethod">Detalle Categorias</a>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div><div class="card">
-                <div class="card-header header-elements-sm-inline">
-                    <h6 class="card-title">Publicaciones mas relevantes por</h6>
-                    <div class="header-elements">
-                        <select id="tipoListado" name="tipoListado" onchange="cambiarListing(0);">
-                            <option value="1">Indice de visitas x ventas</option>
-                            <option value="2">Indice de preguntas x ventas</option>
-                            <option value="3">Cantidad de ventas</option>
-                            <option value="4">Cantidad de visitas</option>
-                            <option value="5">Cantidad de preguntas</option>
-                            <option value="6">Cantidad de reviews</option>
-                        </select>
-
-                        <a asp-area="" asp-controller="Listing" asp-action="ListingList" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-link btn-float font-size-xs font-weight-semibold text-body" style="width:120px">Ver todas</a>
-                    </div>
-                </div><div class="card-body d-sm-flex align-items-sm-center justify-content-sm-between flex-sm-wrap">
-                    <div class="table-responsive">
-                        <table class="table tableListing text-nowrap">
-                            @*<tbody>
-            @foreach (var item in Model.Listing)
-            {
-                <tr>
-                    <td class="text-center">
-                        <a href="@item.Permalink" target="_blank"> @item.Title </a>
-                    </td>
-                    <td class="text-center">
-                        <span class="badge badge-success">$@String.Format("{0:n0}", item.Price)</span>
-                    </td>
-                </tr>
-            }
-        </tbody>*@
-                        </table>
-                    </div>
-                </div>
-                @*<div class="table-responsive">
-                        <table class="table text-nowrap">
-                            <thead>
-                                <tr>
-                                    <th class="text-center"></th>
-                                    <th class="text-center">ID </th>
-                                    <th class="text-center">Creada </th>
-                                    <th class="text-center">Estado </th>
-                                    <th class="text-center">Precio </th>
-                                    <th class="text-center">Vendidas </th>
-                                    <th class="text-center">Titulo </th>
-                                    <th class="text-center">Preguntas </th>
-                                    <th class="text-center">Visitas </th>
-                                    <th class="text-center">Reviews </th>
-                                    <th class="text-center">Tipo </th>
-                                    <th class="text-center">Categoria </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.Listing)
-                                {
-                                    <tr>
-                                        <td>
-                                            <img src="@item.Thumbnail" width=40 height=40 />
-                                        </td>
-                                        <td>
-                                            <a href="@item.Permalink" target="_blank">@item.IdMl</a>
-                                        </td>
-                                        <td>
-                                            @item.DateCreated
-                                        </td>
-                                        <td>
-                                            @if (item.ListingCondition == "new")
-                                            {
-                                                <span class="badge badge-secondary-100">NUEVO</span>
-                                            }
-                                            else if (item.ListingCondition == "used")
-                                            {
-                                                <span class="badge badge-primary-100">USADO</span>
-                                            }
-                                            else
-                                            { <span class="badge badge-indigo-100">DESCONOCIDO</span>}
-
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-success">$@String.Format("{0:n0}", item.Price)</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-indigo">@item.SoldQuantity</span>
-                                        </td>
-                                        <td>
-                                            @item.Title
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-teal-100">@item.TotalQuestions</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-teal-100">@item.VisitsQuantity</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-teal-100">@item.ReviewsQuantity</span>
-                                        </td>
-                                        <td>
-                                            @if (item.ListingTypeId == "gold_pro" || item.ListingTypeId == "gold_premium")
-                                            {
-                                                <span class="badge badge-warning">PREMIUM</span>
-                                            }
-                                            else if (item.ListingTypeId == "gold_special" || item.ListingTypeId == "gold")
-                                            {
-                                                <span class="badge badge-yellow ">CLASICA</span>
-                                            }
-                                            else if (item.ListingTypeId == "free")
-                                            {
-                                                <span class="badge badge-light">GRATUITA</span>
-                                            }
-                                            else
-                                            { <span class="badge badge-transparent">DESCONOCIDO</span>}
-                                        </td>
-                                        <td>
-                                            @item.Category.Nameml
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>*@
+                }
             </div>
-
         </div>
-        <div class="col-sm-4 col-xl-4">
-            <div class="card">
-                <div class="card-body text-center">
-                    <div class="svg-center" id="funnelExecution" style="height:300px;"></div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header header-elements-sm-inline">
-                    <h6 class="card-title">Palabras clave</h6>
-                    <div class="header-elements">
-                        <a asp-area="" asp-controller="Trend" asp-action="HomeTrend" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-link btn-float font-size-xs font-weight-semibold text-body" style="width:120px">Ver detalle</a>
+        <div class="col-sm-6 col-xl-2">
+            <div class="card card-body text-center  border border-secondary">
+                <h6 class="font-weight-semibold mb-0 mt-1">MEDIOS DE PAGO</h6>
+                <div id="groupingInfoPaymentMethod1" class="w-100 mb-1"></div>
+                @if (Model.Criteria.Count() > 1)
+                {
+                    <div>
+                        <a asp-area="" asp-controller="Analisis" asp-action="GrouppingCategories" asp-route-executionId="@Model.Execution.IdExecution" asp-route-grouping="@GroupingType.PaymentMethod">Detalle Categorias</a>
                     </div>
-                </div><div class="card-body d-sm-flex align-items-sm-center justify-content-sm-between flex-sm-wrap">
-                    <div class="table-responsive">
-                        <table class="table text-nowrap">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">#</th>
-                                    <th class="text-center">Palabra </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{ int i = 0;
-                                }
-                                @foreach (var item in Model.Words)
-                                {
-                                    i = i + 1;
-                                    <tr>
-                                        <td class="text-center">
-                                            @i
-                                        </td>
-                                        <td class="text-center">
-                                            @item.Palabra
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm col-xl">
-            <div class="card">
-                <div class="card-header header-elements-sm-inline">
-                    <h6 class="card-title">Imágenes de las publicaciones relevantes</h6>
-                </div>
-                <div class="card-body text-center">
-                    <div class="owl-carousel">
-
+        <div class="col-sm-12 col-xl-8 p-0">
+            <div class="col-sm-12 col-xl-12">
+                <div class="card  border border-warning">
+                    <div class="card-body ">
+                        <div class="media mb-2 pb-2 border-bottom ">
+                            <div class="media-body">
+                                <h6 class="font-weight-semibold mb-0">PUBLICACIONES MAS RELEVANTES</h6>
+                                <span class="opacity-75">seleccioná un filtro</span>
+                            </div>
+                            <div class="ml-3 align-self-center">
+                                <select id="tipoListado" name="tipoListado" onchange="cambiarListing(0);" class="custom-select custom-select-sm wmin-sm-200 mb-3 mb-sm-0">
+                                    <option value="1">Indice de visitas x ventas</option>
+                                    <option value="2">Indice de preguntas x ventas</option>
+                                    <option value="3">Cantidad de ventas</option>
+                                    <option value="4">Cantidad de visitas</option>
+                                    <option value="5">Cantidad de preguntas</option>
+                                    <option value="6">Cantidad de reviews</option>
+                                </select>
+                            </div>
+                            <div class="ml-3 align-self-center">
+                                <a asp-area="" asp-controller="Listing" asp-action="ListingList" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-outline-warning btn-sm"><i class="icon-eye mr-2"></i>Ver todas</a>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table tableListing text-nowrap">
+                            </table>
+                        </div>
+                        <div id="divTabla"></div>
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header header-elements-sm-inline">
-                    <h6 class="card-title">Mejores Tendencias</h6>
-                    <div class="header-elements">
-                        <a asp-area="" asp-controller="Trend" asp-action="HomeTrend" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-link btn-float font-size-xs font-weight-semibold text-body" style="width:120px">Ver detalle</a>
+            <div class="col-sm-12 col-xl-12">
+                <div class="card border border-pink">
+                    <div class="card-body">
+                        <div class="media mb-2 pb-2 border-bottom ">
+                            <div class="media-body">
+                                <h6 class="font-weight-semibold mb-0">IMAGENES DE PUBLICACIONES MAS RELEVANTES</h6>
+                            </div>
+                        </div>
+                        <div class="owl-carousel">
+
+                        </div>
                     </div>
-                </div><div class="card-body d-sm-flex align-items-sm-center justify-content-sm-between flex-sm-wrap">
-                    <div class="table-responsive">
-                        <table class="table text-nowrap">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">#</th>
-                                    <th class="text-center">Tendencia </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{ int j = 0;
-                                }
-                                @foreach (var item in Model.Trends)
-                                {
-                                    j = j + 1;
-                                    <tr>
-                                        <td class="text-center">
-                                            @j
-                                        </td>
-                                        <td class="text-center">
-                                            @item.TrendName
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="card border border-secondary">
+                            <div class="card-body">
+                                <div class="media mb-2 pb-2 border-bottom ">
+                                    <div class="media-body">
+                                        <h6 class="font-weight-semibold mb-0">MEJORES TENDENCIAS</h6>
+                                    </div>
+                                    <div class=" align-self-center">
+                                        <a asp-area="" asp-controller="Trend" asp-action="HomeTrend" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-outline-secondary btn-sm"><i class="icon-graph mr-2"></i>Ver detalle</a>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">#</th>
+                                                <th class="text-center">Tendencia </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{ int j = 0;
+                                            }
+                                            @foreach (var item in Model.Trends)
+                                            {
+                                                j = j + 1;
+                                                <tr>
+                                                    <td class="text-center">
+                                                        @j
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @item.TrendName
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="card border border-secondary">
+                            <div class="card-body">
+                                <div class="media mb-2 pb-2 border-bottom ">
+                                    <div class="media-body">
+                                        <h6 class="font-weight-semibold mb-0">PROXIMOS EVENTOS</h6>
+                                    </div>
+                                    <div class=" align-self-center">
+                                        <a asp-area="" asp-controller="Sales" asp-action="HomeSales" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-outline-secondary btn-sm"><i class="icon-calendar mr-2"></i>Ver detalle</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+            <div class="col-sm-12 col-xl-4 p-0">
+                <div class="col-sm-6 col-xl-12">
+                    <div class="card  border border-pink">
+                        <div class="card-body text-center">
+                            <div class="svg-center" id="funnelExecution" style="height:300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xl-12">
+                    <div class="card">
+                        <div class="card-body border border-pink">
+                            <div class="media mb-2 pb-2 border-bottom ">
+                                <div class="media-body">
+                                    <h6 class="font-weight-semibold mb-0">PALABRAS CLAVE</h6>
+                                </div>
+                                <div class="ml-3 align-self-center">
+                                    <a asp-area="" asp-controller="Trend" asp-action="HomeTrend" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-outline-secondary btn-sm"><i class="icon-wordpress mr-2"></i>Ver detalle</a>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">#</th>
+                                            <th class="text-center">Palabra </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{ int i = 0;
+                                        }
+                                        @foreach (var item in Model.Words)
+                                        {
+                                            i = i + 1;
+                                            <tr>
+                                                <td class="text-center">
+                                                    @i
+                                                </td>
+                                                <td class="text-center">
+                                                    @item.Palabra
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
+
+<style type="text/css">
+    .loaderTable {
+        color: #3f51b5;
+        font-size: 90px;
+        text-indent: -9999em;
+        overflow: hidden;
+        width: 1em;
+        height: 1em;
+        border-radius: 50%;
+        margin: 50px auto;
+        position: center;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+        animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+    }
+</style>
 
 <script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
 @section Scripts
@@ -505,7 +462,7 @@
                             })
 
                             //_donutWithDetails("#groupingInfoPaymentMethod", 146, info);
-                            _DashboardDonutChart("groupingInfoPaymentMethod1", 50, info);
+                            _DashboardDonutChart("groupingInfoPaymentMethod1", 80, info);
                         })
                         .fail(function (e) {
                             $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
@@ -526,7 +483,7 @@
                             })
 
                            // _donutWithDetails("#groupingInfoShipping", 146, info);
-                            _DashboardDonutChart("groupingInfoShipping1", 50, info);
+                            _DashboardDonutChart("groupingInfoShipping1", 80, info);
                         })
                         .fail(function (e) {
                             $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
@@ -568,11 +525,12 @@
                 }
 
         function cambiarListing(esPrimera) {
+            $("#divTabla").addClass('loaderTable');
             if (esPrimera == 0) {
                 $('.tableListing').DataTable().destroy(); $('.tableListing').html('');
                 $('.owl-carousel').owlCarousel('destroy'); $('.owl-carousel').html('');
             }
-            $('.tableListing').html("<thead><tr id='tablaHeaderFila'><th class= 'text-center'>Titulo</th ><th class='text-center'>Precio </th></tr></thead>")
+            $('.tableListing').html("<thead><tr id='tablaHeaderFila' ><th class= 'text-center'>Titulo</th ><th class='text-center'>Precio </th></tr></thead>")
                     $.post('/Analisis/GetListingData', { executionId: @Model.Execution.IdExecution, listadoType: $("#tipoListado").val() })
                         .done(function (data) {
                             var col = [];
@@ -667,15 +625,15 @@
                             $.each(data.items, function (key, value) {
                                 if (value.pictures.length > 0) {
                                     if (value.pictures.length == 1)
-                                        $(".owl-carousel").append("<div><img src='" + value.pictures[0].url + "'></img></div>");
+                                        $(".owl-carousel").append("<div><img width=50  height=50 src='" + value.pictures[0].url + "'></img></div>");
                                     else {
                                     for (var i = 0; i <= 1; i++) {
-                                        $(".owl-carousel").append("<div><img src='" + value.pictures[i].url + "'></img></div>");
+                                        $(".owl-carousel").append("<div><img width=50  height=50 src='" + value.pictures[i].url + "'></img></div>");
                                         }
                                     }
                                 }
                             });
-                                
+
                             initializeCarousel(esPrimera);
                         })
                         .fail(function (e) {
@@ -701,19 +659,19 @@
             owl.owlCarousel({
                 loop: true,
                 nav: true,
-                margin: 10,
+                margin: 5,
                 responsive: {
                     0: {
                         items: 1
                     },
                     600: {
-                        items: 3
+                        items: 4
                     },
                     960: {
-                        items: 5
+                        items: 7
                     },
                     1200: {
-                        items: 6
+                        items: 10
                     }
                 }
             });
@@ -728,7 +686,7 @@
         }
 
         function initializeDataTable(datos, columnas) {
-                    $('.tableListing').DataTable({
+            $('.tableListing').DataTable({
             autoWidth: true,
                         ordering: false,
                         searching: false, paging: false, info: false,
@@ -736,10 +694,13 @@
             language: {
                 search: '_INPUT_',
                 loadingRecords: 'Cargando...',
-                processing: '<i class="icon-spinner2 spinner icon-5x"></i>',
+                processing: '',
                 zeroRecords: 'No hay registros encontrados'
             },
             pageLength: 10   ,
+            initComplete: function () {
+                $("#divTabla").removeClass('loaderTable');
+            },
             filter: false,
             data: datos.items,
             lengthMenu: [[10, 50, 100, 500], [10, 50, 100, 500]],

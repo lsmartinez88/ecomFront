@@ -97,7 +97,7 @@ namespace ecomFront.Controllers
         public JsonResult GetListingData(int executionId, int listadoType)
         {
             var viewModel = new ListingExecutionList();
-            viewModel.Items = _listingData.GetListingByCondition((int)executionId, listadoType).Take(10).ToList();
+            viewModel.Items = _listingData.GetListingByCondition((int)executionId, listadoType).Take(7).ToList();
             foreach (var item in viewModel.Items)
             {
                 var pics = MLService.GetItemById(item.IdMl).pictures;
