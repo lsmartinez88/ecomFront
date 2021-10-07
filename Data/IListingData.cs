@@ -12,5 +12,7 @@ namespace ecomFront.Data
     public interface IListingData
     {
         public List<ListingToDataTable> GetListingToDataTable(int ExecutionId, string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount);
+
+        public List<ListingExecutionDashboardModel> GetListingByCondition(int ExecutionId, int searchBy);
     }
 }

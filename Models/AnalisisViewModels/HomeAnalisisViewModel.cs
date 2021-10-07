@@ -20,5 +20,7 @@ namespace ecomFront.Models.AnalisisViewModels
         public List<ListingToDataTable> Listing { get; set; }
 
         public List<BarChartOportunity> Words { get; set; }
+
+        public List<TrendsTreemap> Trends { get; set; }
     }
 }

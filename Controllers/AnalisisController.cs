@@ -2,6 +2,8 @@
 using ecomFront.Data;
 using ecomFront.Models;
 using ecomFront.Models.AnalisisViewModels;
+using ecomFront.Models.ListingViewModels;
+using ecomFront.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,10 +43,9 @@ namespace ecomFront.Controllers
             homeAnalisisListViewModel.Search = _searchData.GetSearch((int)homeAnalisisListViewModel.Execution.SearchId);
             homeAnalisisListViewModel.Criteria = _searchData.GetFullCriteriasBySearchId((int)homeAnalisisListViewModel.Search.IdSearch);
             homeAnalisisListViewModel.Indicadores = _groupData.GetIndicadorByExecution((int)executionId);
-            int filteredResultsCount;
-            int totalResultsCount;
-            homeAnalisisListViewModel.Listing = _listingData.GetListingToDataTable((int)executionId, null, 5, 0, null, true, out filteredResultsCount, out totalResultsCount);
-            homeAnalisisListViewModel.Words = _groupData.GetBarChartOportunityByExecution((int)executionId).Take(3).ToList();
+
+            homeAnalisisListViewModel.Words = _groupData.GetBarChartOportunityByExecution((int)executionId).Take(10).ToList();
+            homeAnalisisListViewModel.Trends = _groupData.GetTrendsTreemapByExecution((int)executionId).OrderByDescending(a => a.IndiceSize).Take(10).ToList();
             return View(homeAnalisisListViewModel);
         }
 
@@ -89,6 +90,21 @@ namespace ecomFront.Controllers
             var homeAnalisisListViewModel = new HomeAnalisisViewModel();
             homeAnalisisListViewModel.Indicadores = _groupData.GetIndicadorFunnelByExecution((int)executionId);
             return Json(homeAnalisisListViewModel.Indicadores);
+        }
+
+
+        [HttpPost]
+        public JsonResult GetListingData(int executionId, int listadoType)
+        {
+            var viewModel = new ListingExecutionList();
+            viewModel.Items = _listingData.GetListingByCondition((int)executionId, listadoType).Take(10).ToList();
+            foreach (var item in viewModel.Items)
+            {
+                var pics = MLService.GetItemById(item.IdMl).pictures;
+                if(pics != null)
+                    item.Pictures = pics.ToList();
+            }
+            return Json(viewModel);
         }
 
     }

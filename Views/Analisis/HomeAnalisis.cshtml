@@ -257,33 +257,35 @@
                 </div>
             </div><div class="card">
                 <div class="card-header header-elements-sm-inline">
-                    <h6 class="card-title">Publicaciones mas relevantes</h6>
+                    <h6 class="card-title">Publicaciones mas relevantes por</h6>
                     <div class="header-elements">
+                        <select id="tipoListado" name="tipoListado" onchange="cambiarListing(0);">
+                            <option value="1">Indice de visitas x ventas</option>
+                            <option value="2">Indice de preguntas x ventas</option>
+                            <option value="3">Cantidad de ventas</option>
+                            <option value="4">Cantidad de visitas</option>
+                            <option value="5">Cantidad de preguntas</option>
+                            <option value="6">Cantidad de reviews</option>
+                        </select>
+
                         <a asp-area="" asp-controller="Listing" asp-action="ListingList" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-link btn-float font-size-xs font-weight-semibold text-body" style="width:120px">Ver todas</a>
                     </div>
                 </div><div class="card-body d-sm-flex align-items-sm-center justify-content-sm-between flex-sm-wrap">
                     <div class="table-responsive">
-                        <table class="table text-nowrap">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">Titulo </th>
-                                    <th class="text-center">Precio </th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.Listing)
-                                {
-                                    <tr>
-                                        <td class="text-center">
-                                            <a href="@item.Permalink" target="_blank"> @item.Title </a>
-                                        </td>
-                                        <td class="text-center">
-                                            <span class="badge badge-success">$@String.Format("{0:n0}", item.Price)</span>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
+                        <table class="table tableListing text-nowrap">
+                            @*<tbody>
+            @foreach (var item in Model.Listing)
+            {
+                <tr>
+                    <td class="text-center">
+                        <a href="@item.Permalink" target="_blank"> @item.Title </a>
+                    </td>
+                    <td class="text-center">
+                        <span class="badge badge-success">$@String.Format("{0:n0}", item.Price)</span>
+                    </td>
+                </tr>
+            }
+        </tbody>*@
                         </table>
                     </div>
                 </div>
@@ -431,11 +433,46 @@
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header header-elements-sm-inline">
+                    <h6 class="card-title">Mejores Tendencias</h6>
+                    <div class="header-elements">
+                        <a asp-area="" asp-controller="Trend" asp-action="HomeTrend" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-link btn-float font-size-xs font-weight-semibold text-body" style="width:120px">Ver detalle</a>
+                    </div>
+                </div><div class="card-body d-sm-flex align-items-sm-center justify-content-sm-between flex-sm-wrap">
+                    <div class="table-responsive">
+                        <table class="table text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">Tendencia </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ int j = 0;
+                                }
+                                @foreach (var item in Model.Trends)
+                                {
+                                    j = j + 1;
+                                    <tr>
+                                        <td class="text-center">
+                                            @j
+                                        </td>
+                                        <td class="text-center">
+                                            @item.TrendName
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-
+<script src="~/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
 @section Scripts
             {
     <script type="text/javascript">
@@ -443,42 +480,14 @@
                     _showGroupingInfoPaymentMethod();
                     _showGroupingInfoShippingMethod();
                     _showFunnel();
+                    @*
                     @foreach (var item in Model.Listing)
                     {
                          <text>GetImagenesPublicaciones("@item.IdMl");</text>
 
-                    }
-                    setTimeout(function () {
-                        var owl = $('.owl-carousel');
-                        owl.owlCarousel({
-                            loop: true,
-                            nav: true,
-                            margin: 10,
-                            responsive: {
-                                0: {
-                                    items: 1
-                                },
-                                600: {
-                                    items: 3
-                                },
-                                960: {
-                                    items: 5
-                                },
-                                1200: {
-                                    items: 6
-                                }
-                            }
-                        });
-                        owl.on('mousewheel', '.owl-stage', function (e) {
-                            if (e.deltaY > 0) {
-                                owl.trigger('next.owl');
-                            } else {
-                                owl.trigger('prev.owl');
-                            }
-                            e.preventDefault();
-                        });
-                    }, 1000);
-                   
+                    }*@
+                    cambiarListing(1);
+
                     //_progressArcSingle("#arc_single", 78, '#29B6F6', 0, 100, 70);
                 });
 
@@ -558,7 +567,123 @@
                     return 0;
                 }
 
-                function GetImagenesPublicaciones(idML) {
+        function cambiarListing(esPrimera) {
+            if (esPrimera == 0) {
+                $('.tableListing').DataTable().destroy(); $('.tableListing').html('');
+                $('.owl-carousel').owlCarousel('destroy'); $('.owl-carousel').html('');
+            }
+            $('.tableListing').html("<thead><tr id='tablaHeaderFila'><th class= 'text-center'>Titulo</th ><th class='text-center'>Precio </th></tr></thead>")
+                    $.post('/Analisis/GetListingData', { executionId: @Model.Execution.IdExecution, listadoType: $("#tipoListado").val() })
+                        .done(function (data) {
+                            var col = [];
+                            var itemInfo = {
+                                data: "title",
+                                className: "text-center",
+                                render: function (data, type, row) {
+                                    return '<a href="' + row.permalink + '" target="_blank">' + data + '</a>';
+                                }
+                            };
+                            col.push(itemInfo);
+                            var itemInfo = {
+                                data: "price",
+                                className: "text-center",
+                                render: function (data, type, full, meta) {
+                                    return '<span class="badge badge-success">$ ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); + '</span>';
+                                }
+                            };
+                            col.push(itemInfo);
+                            switch ($("#tipoListado").val()) {
+                                case "1":
+                                    var itemInfo = {
+                                        data: "indexVisitsxVentas",
+                                        className: "text-center",
+                                    };
+                                    col.push(itemInfo);
+                                    var itemInfo = {
+                                        data: "soldQuantity",
+                                        className: "text-center",
+                                    };
+                                    col.push(itemInfo);
+                                    var itemInfo = {
+                                        data: "visitsQuantity",
+                                        className: "text-center",
+                                    };
+                                    col.push(itemInfo);
+                                    $("#tablaHeaderFila").append("<th>Ventas x Visitas</th><th>Ventas</th><th>Visitas </th>");
+                                    break;
+                                case "2":
+                                    var itemInfo = {
+                                        data: "indexQuestionsxVentas",
+                                        className: "text-center",
+                                    };
+                                    col.push(itemInfo);
+                                    var itemInfo = {
+                                        data: "soldQuantity",
+                                        className: "text-center",
+                                    };
+                                    col.push(itemInfo);
+                                    var itemInfo = {
+                                        data: "totalQuestions",
+                                        className: "text-center",
+                                    };
+                                    col.push(itemInfo);
+                                    $("#tablaHeaderFila").append("<th>Ventas x Preguntas</th><th>Ventas</th><th>Preguntas </th>");
+                                    break;
+                                case "3":
+                                    var itemInfo = {
+                                        data: "soldQuantity",
+                                        className: "text-center",
+                                    };
+                                    col.push(itemInfo);
+                                    $("#tablaHeaderFila").append("<th>Ventas</th>");
+                                    break;
+                                case "4":
+                                    var itemInfo = {
+                                        data: "visitsQuantity",
+                                        className: "text-center",
+                                    };
+                                    col.push(itemInfo);
+                                    $("#tablaHeaderFila").append("<th>Visitas</th>");
+                                    break;
+                                case "5":
+                                    var itemInfo = {
+                                        data: "totalQuestions",
+                                        className: "text-center",
+                                    };
+                                    col.push(itemInfo);
+                                    $("#tablaHeaderFila").append("<th>Preguntas</th>");
+                                    break;
+                                case "6":
+                                    var itemInfo = {
+                                        data: "reviewsQuantity",
+                                        className: "text-center",
+                                    };
+                                    col.push(itemInfo);
+                                    $("#tablaHeaderFila").append("<th>Reviews</th>");
+                                    break;
+                            }
+
+                            initializeDataTable(data, col);
+                            $.each(data.items, function (key, value) {
+                                if (value.pictures.length > 0) {
+                                    if (value.pictures.length == 1)
+                                        $(".owl-carousel").append("<div><img src='" + value.pictures[0].url + "'></img></div>");
+                                    else {
+                                    for (var i = 0; i <= 1; i++) {
+                                        $(".owl-carousel").append("<div><img src='" + value.pictures[i].url + "'></img></div>");
+                                        }
+                                    }
+                                }
+                            });
+                                
+                            initializeCarousel(esPrimera);
+                        })
+                        .fail(function (e) {
+                            $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
+                        });
+                }
+
+                /*function GetImagenesPublicaciones(idML) {
                     $.getJSON('https://api.mercadolibre.com/items/' + idML)
                         .done(function (json_data) {
                             if (json_data) {
@@ -569,7 +694,58 @@
                                 }
                             }
                         });
+        }*/
+
+        function initializeCarousel() {
+            var owl = $('.owl-carousel');
+            owl.owlCarousel({
+                loop: true,
+                nav: true,
+                margin: 10,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    960: {
+                        items: 5
+                    },
+                    1200: {
+                        items: 6
+                    }
                 }
+            });
+            owl.on('mousewheel', '.owl-stage', function (e) {
+                if (e.deltaY > 0) {
+                    owl.trigger('next.owl');
+                } else {
+                    owl.trigger('prev.owl');
+                }
+                e.preventDefault();
+            });
+        }
+
+        function initializeDataTable(datos, columnas) {
+                    $('.tableListing').DataTable({
+            autoWidth: true,
+                        ordering: false,
+                        searching: false, paging: false, info: false,
+            dom: '<"top"<"left-col"i><"center-col"p><"right-col"l>>',
+            language: {
+                search: '_INPUT_',
+                loadingRecords: 'Cargando...',
+                processing: '<i class="icon-spinner2 spinner icon-5x"></i>',
+                zeroRecords: 'No hay registros encontrados'
+            },
+            pageLength: 10   ,
+            filter: false,
+            data: datos.items,
+            lengthMenu: [[10, 50, 100, 500], [10, 50, 100, 500]],
+                        columns: columnas
+        });
+        }
 
     </script>
 }

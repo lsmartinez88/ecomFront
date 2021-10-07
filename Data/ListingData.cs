@@ -1,4 +1,5 @@
-﻿using ecomFront.Models;
+﻿using ecomFront.Common;
+using ecomFront.Models;
 using ecomFront.Models.DbFirstModels;
 using ecomFront.Models.ListingViewModels;
 using ecomFront.Models.SearchViewModels;
@@ -60,32 +61,42 @@ namespace ecomFront.Data
             return result;
         }
 
-        public List<ListingToDataTable> GetListingByCondition(int ExecutionId, int searchBy)
+        public List<ListingExecutionDashboardModel> GetListingByCondition(int ExecutionId, int searchBy)
         {
 
-            var result = _contextDbFirst.Listings.Include(l => l.Category)
-                           .Where(l => l.ExecutionId == ExecutionId && l.Elegible == 1)
-                           .Select(l => new ListingToDataTable
+            var result = _contextDbFirst.Listings
+                           .Where(l => l.ExecutionId == ExecutionId && l.Elegible == 1).Select(l => new ListingExecutionDashboardModel
                            {
                                IdMl = l.IdMl,
-                               Category = l.Category,
-                               DateCreated = l.DateCreated,
-                               ListingCondition = l.ListingCondition,
-                               ListingTypeId = l.ListingTypeId,
                                Price = l.Price,
-                               Permalink = l.Permalink,
-                               SellerIdMl = l.SellerIdMl,
                                SoldQuantity = l.SoldQuantity,
-                               Thumbnail = l.Thumbnail,
                                Title = l.Title,
                                TotalQuestions = l.TotalQuestions,
                                VisitsQuantity = l.VisitsQuantity,
-                               ReviewsQuantity = l.ReviewsQuantity
-                           })
-                           .OrderByDescending(l => l.SoldQuantity) 
-                           .ToList();
+                               ReviewsQuantity = l.ReviewsQuantity,
+                               IndexQuestionsxVentas = (l.SoldQuantity / l.TotalQuestions),
+                               IndexVisitsxVentas = (l.SoldQuantity / l.VisitsQuantity)
 
-            return result;
+                           });
+
+            switch(searchBy)
+            {
+                case ListingSearchType.VisitasxVentas:
+                    return result.OrderByDescending(l => (l.SoldQuantity / l.VisitsQuantity)).ToList();
+                case ListingSearchType.PreguntasxVentas:
+                    return result.OrderByDescending(l => (l.SoldQuantity / l.TotalQuestions)).ToList();
+                case ListingSearchType.CantVisitas:
+                    return result.OrderByDescending(l => l.VisitsQuantity).ToList();
+                case ListingSearchType.CantVentas:
+                    return result.OrderByDescending(l => l.SoldQuantity).ToList();
+                case ListingSearchType.CantReviews:
+                    return result.OrderByDescending(l => l.ReviewsQuantity).ToList();
+                case ListingSearchType.CantPreguntas:
+                    return result.OrderByDescending(l => l.TotalQuestions).ToList();
+            }
+
+            return null;
+
         }
     }
 }
