@@ -1,5 +1,6 @@
 ﻿using ecomFront.Common;
 using ecomFront.Models;
+using ecomFront.Models.AnalisisViewModels;
 using ecomFront.Models.DbFirstModels;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -137,6 +138,28 @@ namespace ecomFront.Data
                         TipoIndicador = x.Key.TipoIndicador,
                         Valor = x.Sum(i => i.Valor)
                     }).ToList();
+        }
+
+        public List<EventsIndicator> GetEventsIndicatorByExecution(int ExecutionId)
+        {
+            var eventos = _contextDbFirst.Events.Where(e => e.FechaDesde >= DateTime.Now.AddYears(-1) && e.FechaDesde <= DateTime.Now && e.Estado == 1).ToList();
+            List<AveragePricePerDay> salesItems = GetSalesQttyByExecution(ExecutionId);
+            var _return = new List<EventsIndicator>();
+            var promedioGeneral = salesItems.Average(s => s.CantidadVentas);
+
+            eventos.ForEach(ev =>
+            {
+                var _event = new EventsIndicator
+                {
+                    average = (int)salesItems.Where(e => e.Fecha >= ev.FechaDesdeVenta && e.Fecha <= ev.FechaHastaVenta).Average(s => s.CantidadVentas),
+                    name = ev.Name,
+                    fecha = (DateTime)ev.FechaDesde
+                };
+                _event.difference = _event.average - promedioGeneral;
+                _return.Add(_event);
+            });
+
+            return _return.OrderByDescending(e => e.difference).Take(10).ToList();
         }
     }
 }

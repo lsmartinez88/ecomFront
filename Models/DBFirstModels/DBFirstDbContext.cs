@@ -8,7 +8,7 @@ namespace ecomFront.Models.DbFirstModels
 {
     public partial class DBFirstDbContext : DbContext
     {
-      
+
         public DBFirstDbContext(DbContextOptions<DBFirstDbContext> options)
             : base(options)
         {
@@ -358,9 +358,17 @@ namespace ecomFront.Models.DbFirstModels
                     .HasColumnType("datetime")
                     .HasColumnName("fecha_desde");
 
+                entity.Property(e => e.FechaDesdeVenta)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fecha_desde_venta");
+
                 entity.Property(e => e.FechaHasta)
                     .HasColumnType("datetime")
                     .HasColumnName("fecha_hasta");
+
+                entity.Property(e => e.FechaHastaVenta)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fecha_hasta_venta");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(255)

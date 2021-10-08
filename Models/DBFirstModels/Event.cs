@@ -13,5 +13,7 @@ namespace ecomFront.Models.DbFirstModels
         public DateTime? FechaDesde { get; set; }
         public DateTime? FechaHasta { get; set; }
         public string Name { get; set; }
+        public DateTime? FechaDesdeVenta { get; set; }
+        public DateTime? FechaHastaVenta { get; set; }
     }
 }

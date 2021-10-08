@@ -70,5 +70,11 @@ namespace ecomFront.Data
         {
             return _contextModel.TopSellers.Where(ts => ts.ExecutionId == (int)executionId && ts.SellerId.Equals(sellerId) && ts.ParameterName.StartsWith("Precio_")).OrderBy(ts => ts.ParameterName).ToList();
         }
+
+        public string GetPorcentajeDeVentas(int? executionId, String sellerId)
+        {
+            var str_porcentaje = _contextModel.TopSellers.FirstOrDefault(ts => ts.ExecutionId == (int)executionId && ts.SellerId.Equals(sellerId) && ts.ParameterName.StartsWith("PorcentajeVentas")).ParameterValue;
+            return Convert.ToInt64(Convert.ToDouble(str_porcentaje.Replace(".",","))).ToString();
+        }
     }
 }

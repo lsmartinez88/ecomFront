@@ -52,7 +52,8 @@ namespace ecomFront.Controllers
                 {
                     sellerId = sellerId,
                     style = Colores.GetStyle(index),
-                    SellerData = topSellers.Where(ts => ts.SellerId == sellerId).ToList()
+                    SellerData = topSellers.Where(ts => ts.SellerId == sellerId).ToList(),
+                    porcentajeVentas = _sellerData.GetPorcentajeDeVentas(executionId, sellerId)
                 };
 
                 index++;

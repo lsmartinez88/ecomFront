@@ -32,17 +32,30 @@
 <div class="content">
     <div class="row">
         <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title ">Nube de palabras x Publicación <i class="icon-info22" data-toggle="tooltip" title="">&nbsp;</i></h5>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-body border border-secondary">
+                        <div class="media">
+                            <div class="media-body">
+                                <h6 class="font-weight-semibold mb-0">NUBE DE PALABRAS POR PUBLICACION</h6>
+                            </div>
+                            <div class=" align-self-center">
+                                <a asp-area="" asp-controller="Sales" asp-action="HomeSales" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-outline-secondary btn-sm"><i class="icon-calendar mr-2"></i>Ver detalle</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="" id="wordCloud" style="width:100%;height:500px;">
+                <div class="col-md-12">
+                    <div class="card card-body  border border-secondary">
+                        <div class="" id="wordCloud" style="width:100%;height:500px;">
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div><div class="col-md-6">
+        </div>
+
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title ">Nube de palabras x Ventas <i class="icon-info22" data-toggle="tooltip" title="">&nbsp;</i></h5>
@@ -55,6 +68,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12">
             <div class="card">

@@ -15,6 +15,7 @@ namespace ecomFront.Models.SellerViewModels
         public string sellerId { get; set; }
         public List<TopSellers> SellerData { get; set; }
         public string style { get; set; }
+        public string porcentajeVentas { get; set; }
 
     }
 }

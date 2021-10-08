@@ -18,5 +18,6 @@ namespace ecomFront.Data
         List<TopSellers> GetSalesMonthSeller(int? executionId, String sellerId);
 
         List<TopSellers> GetPriceMonthSeller(int? executionId, String sellerId);
+        string GetPorcentajeDeVentas(int? executionId, String sellerId);
     }
 }

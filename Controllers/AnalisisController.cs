@@ -46,6 +46,7 @@ namespace ecomFront.Controllers
 
             homeAnalisisListViewModel.Words = _groupData.GetBarChartOportunityByExecution((int)executionId).Take(10).ToList();
             homeAnalisisListViewModel.Trends = _groupData.GetTrendsTreemapByExecution((int)executionId).OrderByDescending(a => a.IndiceSize).Take(10).ToList();
+            homeAnalisisListViewModel.EventsIndicator = _groupData.GetEventsIndicatorByExecution((int)executionId);
             return View(homeAnalisisListViewModel);
         }
 

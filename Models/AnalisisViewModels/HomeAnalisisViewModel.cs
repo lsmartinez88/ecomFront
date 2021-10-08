@@ -22,5 +22,8 @@ namespace ecomFront.Models.AnalisisViewModels
         public List<BarChartOportunity> Words { get; set; }
 
         public List<TrendsTreemap> Trends { get; set; }
+
+        public List<EventsIndicator> EventsIndicator { get; set; }
+
     }
 }

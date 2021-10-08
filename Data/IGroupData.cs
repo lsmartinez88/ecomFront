@@ -1,4 +1,5 @@
 ﻿using ecomFront.Models;
+using ecomFront.Models.AnalisisViewModels;
 using ecomFront.Models.DbFirstModels;
 using System;
 using System.Collections.Generic;
@@ -22,5 +23,7 @@ namespace ecomFront.Data
         List<Event> GetEventsByRange(DateTime from, DateTime to);
         List<BarChartOportunity> GetBarChartOportunityByExecution(int ExecutionId);
         List<ListingIndicador> GetIndicadorFunnelByExecution(int ExecutionId);
+        List<EventsIndicator> GetEventsIndicatorByExecution(int ExecutionId);
+
     }
 }

@@ -303,7 +303,7 @@
                     <div class="col-sm-12 col-xl-6">
                         <div class="card border border-secondary">
                             <div class="card-body">
-                                <div class="media mb-2 pb-2 border-bottom ">
+                                <div class="media pb-2 border-bottom ">
                                     <div class="media-body">
                                         <h6 class="font-weight-semibold mb-0">MEJORES TENDENCIAS</h6>
                                     </div>
@@ -311,48 +311,70 @@
                                         <a asp-area="" asp-controller="Trend" asp-action="HomeTrend" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-outline-secondary btn-sm"><i class="icon-graph mr-2"></i>Ver detalle</a>
                                     </div>
                                 </div>
-                                <div class="table-responsive">
-                                    <table class="table text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center">#</th>
-                                                <th class="text-center">Tendencia </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @{ int j = 0;
-                                            }
-                                            @foreach (var item in Model.Trends)
-                                            {
-                                                j = j + 1;
-                                                <tr>
-                                                    <td class="text-center">
-                                                        @j
-                                                    </td>
-                                                    <td class="text-center">
-                                                        @item.TrendName
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
+
+                                <div class="list-group border-0 rounded-0 p-0">
+                                    @{ int j = 0;
+                                    }
+                                    @foreach (var item in Model.Trends)
+                                    {
+                                        j = j + 1;
+                                        <div class="list-group-item list-group-item-action border-bottom">
+                                            <span class="mr-4">
+                                                @if (j == 10)
+                                                {
+                                                    <i class="icon-seven-segment-1 text-secondary "></i>
+                                                    <i class="icon-seven-segment-0 text-secondary "></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="icon-seven-segment-@j text-secondary "></i>
+                                                }
+                                            </span>
+                                            <span style="font-size:1.05rem;font-weight:400;">@item.TrendName</span>
+                                        </div>
+                                    }
                                 </div>
+
+                                           
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-12 col-xl-6">
-                        <div class="card border border-secondary">
-                            <div class="card-body">
+                        <div class="card">
+                            <div class="card-body border border-pink">
                                 <div class="media mb-2 pb-2 border-bottom ">
                                     <div class="media-body">
-                                        <h6 class="font-weight-semibold mb-0">PROXIMOS EVENTOS</h6>
+                                        <h6 class="font-weight-semibold mb-0">PALABRAS CLAVE</h6>
                                     </div>
-                                    <div class=" align-self-center">
-                                        <a asp-area="" asp-controller="Sales" asp-action="HomeSales" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-outline-secondary btn-sm"><i class="icon-calendar mr-2"></i>Ver detalle</a>
+                                    <div class="ml-3 align-self-center">
+                                        <a asp-area="" asp-controller="Trend" asp-action="HomeTrend" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-outline-pink btn-sm"><i class="icon-wordpress mr-2"></i>Ver detalle</a>
                                     </div>
+                                </div>
+                                <div class="list-group border-0 rounded-0 p-0">
+                                    @{ int i = 0;
+                                    }
+                                    @foreach (var item in Model.Words)
+                                    {
+                                        i = i + 1;
+                                        <div class="list-group-item list-group-item-action border-bottom">
+                                            <span class="mr-4">
+                                                @if (i == 10)
+                                                {
+                                                    <i class="icon-seven-segment-1 text-pink "></i>
+                                                    <i class="icon-seven-segment-0 text-pink "></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="icon-seven-segment-@i text-pink "></i>
+                                                }
+                                            </span>
+                                            <span style="font-size:1.05rem;font-weight:400;">@item.Palabra</span>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -367,42 +389,61 @@
                 </div>
 
                 <div class="col-sm-6 col-xl-12">
-                    <div class="card">
-                        <div class="card-body border border-pink">
+                    <div class="card border border-secondary">
+                        <div class="card-body">
                             <div class="media mb-2 pb-2 border-bottom ">
                                 <div class="media-body">
-                                    <h6 class="font-weight-semibold mb-0">PALABRAS CLAVE</h6>
+                                    <h6 class="font-weight-semibold mb-0">PROXIMOS EVENTOS</h6>
                                 </div>
-                                <div class="ml-3 align-self-center">
-                                    <a asp-area="" asp-controller="Trend" asp-action="HomeTrend" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-outline-secondary btn-sm"><i class="icon-wordpress mr-2"></i>Ver detalle</a>
+                                <div class=" align-self-center">
+                                    <a asp-area="" asp-controller="Sales" asp-action="HomeSales" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-outline-secondary btn-sm"><i class="icon-calendar mr-2"></i>Ver detalle</a>
                                 </div>
                             </div>
-                            <div class="table-responsive">
-                                <table class="table text-nowrap">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">#</th>
-                                            <th class="text-center">Palabra </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @{ int i = 0;
-                                        }
-                                        @foreach (var item in Model.Words)
-                                        {
-                                            i = i + 1;
-                                            <tr>
-                                                <td class="text-center">
-                                                    @i
-                                                </td>
-                                                <td class="text-center">
-                                                    @item.Palabra
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
+
+                            @{ int k = 0;}
+                            <ul class="media-list">
+                                @foreach (var item in Model.EventsIndicator)
+                                {
+                                    k = k + 1;
+                                    <li class="media pt-2 pb-2 mb-0 mt-0 border-bottom">
+                                        <div class="mr-3 mt-2">
+                                            <span>
+                                                @if (k == 10)
+                                                {
+                                                    <i class="icon-seven-segment-1 text-secondary ml-0"></i>
+                                                    <i class="icon-seven-segment-0 text-secondary "></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="icon-seven-segment-@k text-secondary "></i>
+                                                }
+                                            </span>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <div>
+                                                <div>
+                                                    <span style="font-size:1.05rem;font-weight:400;">@item.name</span>
+                                                    <span class="badge badge-secondary-100 mr-2" style="float:right">@item.fecha.ToString("dd/MM/yyyy")</span>
+                                                </div>
+                                                <div class="text-muted font">
+                                                    <span class="ml-auto" style="font-weight:400;">@String.Format("{0:0}", item.average) ventas promedio por día</span>
+                                                    @if (item.difference > 0)
+                                                    {
+                                                        <span class="badge badge-success  mr-2" style="float:right;">+@String.Format("{0:0}", item.difference)</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge badge-danger  mr-2" style="float: right;"> @String.Format("{0:0}", item.difference)</span>
+                                                    }
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+
                         </div>
                     </div>
                 </div>
