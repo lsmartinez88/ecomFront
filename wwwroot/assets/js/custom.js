@@ -1140,4 +1140,158 @@ var _DashboardDonutChart = function (elemento, size, data) {
     }
 };
 
+
+var _SingleAxisScatterChart = function (element, dataSeriesPublicaciones, dataSeriesVentas, dataX, maximoPublicaciones, maximoVentas) {
+    if (typeof echarts == 'undefined') {
+        console.warn('Warning - echarts.min.js is not loaded.');
+        return;
+    }
+
+    // Define element
+    var basic_element = document.getElementById(element);
+
+
+    //
+    // Charts configuration
+    //
+
+    if (basic_element) {
+        var scatter = echarts.init(basic_element);
+
+        scatter.setOption({
+
+            tooltip: {
+                backgroundColor: 'rgba(0,0,0,0.60)',
+                padding: [10, 15],
+                textStyle: {
+                    fontSize: 13,
+                    fontFamily: 'Roboto, sans-serif'
+                },
+                formatter: function (params) {
+                    return '<div class="mb-1">De ' + params.name + ': ' + params.value[1] + ' ' + params.seriesName + '</div>';
+                }
+            },
+            title: [
+                {
+                    textBaseline: 'middle',
+                    top: ((1.5) * 100) / 7 + '%',
+                    text: "Publicaciones",
+                    textStyle: {
+                        fontFamily: 'Roboto, Arial, Verdana, sans-serif',
+                        fontSize: 16
+                    }
+                },
+                {
+                    textBaseline: 'middle',
+                    top: ((3.5) * 100) / 7 + '%',
+                    text: "Ventas",
+                    textStyle: {
+                        fontFamily: 'Roboto, Arial, Verdana, sans-serif',
+                        fontSize: 16
+                    }
+                }
+            ],
+            singleAxis: [
+                {
+                    left: 150,
+                    type: 'category',
+                    boundaryGap: false,
+                    data: dataX,
+                    top: (1 * 100) / 7 + 5 + '%',
+                    height: 100 / 7 - 10 + '%',
+                    axisLabel: {
+                        interval: 1
+                    }
+                },
+                {
+                    left: 150,
+                    type: 'category',
+                    boundaryGap: false,
+                    data: dataX,
+                    top: (3 * 100) / 7 + 5 + '%',
+                    height: 100 / 7 - 10 + '%',
+                    axisLabel: {
+                        interval: 1
+                    }
+                }
+            ],
+            series: [
+                {
+                name: "Publicaciones",
+                singleAxisIndex: 0,
+                coordinateSystem: 'singleAxis',
+                type: 'scatter',
+                data: dataSeriesPublicaciones,
+                symbolSize: function (val) {
+                    if (val[1] == 0)
+                        return 0;
+                    else
+                        return (((45) / (maximoPublicaciones)) * val[1]) + 3;
+                },
+                itemStyle: {
+                    color: colores[Math.floor(Math.random() * 5)],
+                    opacity: 0.7,
+                    shadowBlur: 6,
+                    shadowOffsetX: 0,
+                    shadowOffsetY: 0,
+                    shadowColor: 'rgba(0,0,0,0.3)'
+                },
+                animationDelay: function (idx) {
+                    return idx * 10;
+                }
+                },
+                {
+                    name: "Ventas",
+                    singleAxisIndex: 1,
+                    coordinateSystem: 'singleAxis',
+                    type: 'scatter',
+                    data: dataSeriesVentas,
+                    symbolSize: function (val) {
+                        if (val[1] == 0)
+                            return 0;
+                        else
+                            return (((45) / (maximoVentas)) * val[1]) + 3;
+                    },
+                    itemStyle: {
+                        color: colores[Math.floor(Math.random() * 5)],
+                        opacity: 0.7,
+                        shadowBlur: 6,
+                        shadowOffsetX: 0,
+                        shadowOffsetY: 0,
+                        shadowColor: 'rgba(0,0,0,0.3)'
+                    },
+                    animationDelay: function (idx) {
+                        return idx * 10;
+                    }
+                }]
+        });
+    }
+
+
+    //
+    // Resize charts
+    //
+
+    // Resize function
+    var triggerChartResize = function () {
+        basic_element && basic_element.resize();
+    };
+
+    // On sidebar width change
+    var sidebarToggle = document.querySelectorAll('.sidebar-control');
+    if (sidebarToggle) {
+        sidebarToggle.forEach(function (togglers) {
+            togglers.addEventListener('click', triggerChartResize);
+        });
+    }
+
+    // On window resize
+    var resizeCharts;
+    window.addEventListener('resize', function () {
+        clearTimeout(resizeCharts);
+        resizeCharts = setTimeout(function () {
+            triggerChartResize();
+        }, 200);
+    });
+};
    // Scatter punch chart
