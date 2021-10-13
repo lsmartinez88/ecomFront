@@ -28,6 +28,7 @@ namespace ecomFront.Data
         public virtual DbSet<BarChartOportunity> BarChartOportunity { get; set; }
         public virtual DbSet<TopSellers> TopSellers { get; set; }
         public virtual DbSet<MainDashboard> MainDashboard { get; set; }
+        public virtual DbSet<ActivityInformation> ActivityInformation { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

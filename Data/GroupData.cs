@@ -149,14 +149,18 @@ namespace ecomFront.Data
 
             eventos.ForEach(ev =>
             {
-                var _event = new EventsIndicator
+                var salesitems = salesItems.Where(e => e.Fecha >= ev.FechaDesdeVenta && e.Fecha <= ev.FechaHastaVenta);
+                if(salesitems != null && salesitems.Count() > 0)
                 {
-                    average = (int)salesItems.Where(e => e.Fecha >= ev.FechaDesdeVenta && e.Fecha <= ev.FechaHastaVenta).Average(s => s.CantidadVentas),
-                    name = ev.Name,
-                    fecha = (DateTime)ev.FechaDesde
-                };
-                _event.difference = _event.average - promedioGeneral;
-                _return.Add(_event);
+                    var _event = new EventsIndicator
+                    {
+                        average = (int)salesitems.Average(s => s.CantidadVentas),
+                        name = ev.Name,
+                        fecha = (DateTime)ev.FechaDesde
+                    };
+                    _event.difference = _event.average - promedioGeneral;
+                    _return.Add(_event);
+                }               
             });
 
             return _return.OrderByDescending(e => e.difference).Take(10).ToList();

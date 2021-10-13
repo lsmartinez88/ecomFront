@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ecomFront.Data;
 
 namespace ecomFront.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211013023204_NewActividadesTable")]
+    partial class NewActividadesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,12 +169,7 @@ namespace ecomFront.Migrations
                     b.Property<string>("TipoActividad")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("userId")
-                        .HasColumnType("varchar(255)");
-
                     b.HasKey("id");
-
-                    b.HasIndex("userId");
 
                     b.ToTable("front_activity_information");
                 });
@@ -582,15 +579,6 @@ namespace ecomFront.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ecomFront.Models.ActivityInformation", b =>
-                {
-                    b.HasOne("ecomFront.Models.ApplicationUser", "user")
-                        .WithMany()
-                        .HasForeignKey("userId");
-
-                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("ecomFront.Models.ListingGrouping", b =>
