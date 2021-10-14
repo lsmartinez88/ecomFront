@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using ecomFront.Models.SharedViewModels
 
 @inject SignInManager<ApplicationUser> signInManager;
 @inject UserManager<ApplicationUser> UserManager
@@ -70,14 +69,14 @@
         <div class="d-flex justify-content-end align-items-center flex-1 flex-lg-0 order-1 order-lg-2">
             <ul class="navbar-nav flex-row">
                 <li class="nav-item nav-item-dropdown-lg dropdown">
-                    <a href="#" class="navbar-nav-link navbar-nav-link-toggler dropdown-toggle" data-toggle="dropdown">
+                    <a id="ActivityInformation" href="#" class="navbar-nav-link navbar-nav-link-toggler dropdown-toggle" data-toggle="dropdown">
                         <i class="icon-pulse2"></i>
                         <span class="d-none d-lg-inline-block ml-2">Actividad</span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right dropdown-content wmin-lg-350">
                         <div class="dropdown-content-body dropdown-scrollable">
-                            <ul class="media-list">
+                            <ul class="media-list" id="activityList">
                                 <li class="media">
                                     <div class="mr-3">
                                         <a href="#" class="btn btn-indigo rounded-pill btn-icon"><i class="icon-graph"></i></a>
@@ -158,12 +157,12 @@
                             </ul>
                         </div>
 
-                        @*<div class="dropdown-content-footer bg-light">
+                        <div class="dropdown-content-footer bg-light">
                             <a href="#" class="font-size-sm line-height-sm text-uppercase font-weight-semibold text-body mr-auto">TODA LA ACTIVIDAD</a>
                             <div>
-                                <a href="#" class="text-body" data-popup="tooltip" title="Limpiar Lista"><i class="icon-checkmark3"></i></a>
+                                <a id="cleanList" href="javascript:;" class="text-body" data-popup="tooltip" title="Limpiar Lista"><i class="icon-checkmark3"></i></a>
                             </div>
-                        </div>*@
+                        </div>
                     </div>
                 </li>
 
@@ -298,5 +297,142 @@
     <!-- /page content -->
 
     @RenderSection("Scripts", required: false)
+
+<script type="text/javascript">
+    var isFillActivity = false;
+
+    document.addEventListener('DOMContentLoaded', function () {
+        //fillActividad();
+        }); 
+
+    $('#cleanList').click(function (e) {
+        $.ajax({
+            type: "GET",
+            url: "/Shared/CleanList",
+            contentType: "application/json"
+        }).done(function () {
+            $('#activityList').empty();
+        });
+    })
+
+    $('#ActivityInformation').click(function (e) {
+        fillActividad();
+    });
+
+
+    function fillActividad() {
+        if (!isFillActivity) {
+            $('#activityList').empty();
+            $.ajax({
+                type: "GET",
+                url: "/Shared/GetActivity",
+                contentType: "application/json"
+            }).done(function (activityList) {
+                isFillActivity = true;
+                if (activityList != null && activityList.length > 0) {
+                    activityList.forEach(function (value, index, array) {
+                        var icon = '';
+                        var color = '';
+                        switch (value.tipoActividad) {
+                            case "USER":
+                                icon = "icon-user";
+                                color = 'primary';
+                                break;
+                            case "SEARCH":
+                                icon = "icon-search4";
+                                color = 'warning';
+                                break;
+                            case "EXECUTION_START":
+                                icon = "icon-gear";
+                                color = 'pink';
+                                break;
+                            case "EXECUTION_FINISH":
+                                icon = "icon-flag3";
+                                color = 'success';
+                                break;
+                            case "EXECUTION_AVAILABLE":
+                                icon = "icon-graph";
+                                color = 'indigo';
+                                break;
+                            default:
+                                icon = "icon-question3";
+                                color = 'secondary';
+                                break;
+                        }
+
+                        var li = $('<li />',
+                            {
+                                class: "media"
+                            })
+                            .appendTo($('#activityList'));
+
+                        var divIcon = $('<div />',
+                            {
+                                class: "mr-3"
+                            })
+                            .appendTo(li);
+
+                        var aIcon = $('<a />',
+                            {
+                                href: 'javascript:;',
+                                class: "btn rounded-pill btn-icon btn-" + color,
+                            })
+                            .appendTo(divIcon);
+
+                        var icon = $('<i />',
+                            {
+                                class: icon,
+                            })
+                            .appendTo(aIcon);
+
+                        var divMediaBody = $('<div />',
+                            {
+                                class: "media-body",
+                                text: value.descripcion
+                            })
+                            .appendTo(li);
+
+                        var parsedFecha = new Date(Date.parse(value.fecha));
+                        var str_fecha = ''
+
+                        if (parsedFecha < addDays(-30)) {
+                            str_fecha = 'hace mas de un mes';
+                        }
+                        else if (parsedFecha < addDays(-15)) {
+                            str_fecha = 'hace algunas semanas';
+                        }
+                        else if (parsedFecha < addDays(-7)) {
+                            str_fecha = 'hace una semana';
+                        }
+                        else if (parsedFecha < addDays(-1)) {
+                            str_fecha = 'hace unos días';
+                        }
+                        else if (parsedFecha < addDays(0)) {
+                            str_fecha = 'hace unos minutos';
+                        }
+                        else {
+                            str_fecha = 'desconocido';
+                        }
+
+                        var divMediaFecha = $('<div />',
+                            {
+                                class: "font-size-sm text-muted mt-1",
+                                text: str_fecha
+                            })
+                            .appendTo(divMediaBody);
+                    });
+                }
+            });
+        }
+    }
+
+    function addDays(days) {
+        const date = new Date();
+        date.setDate(date.getDate() + days);
+        return date;
+    };
+
+</script>
+
 </body>
 </html>
