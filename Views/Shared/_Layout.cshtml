@@ -5,8 +5,8 @@
 
 @{
     var usuario = await UserManager.GetUserAsync(User);
-    
 }
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -69,64 +69,98 @@
         <div class="d-flex justify-content-end align-items-center flex-1 flex-lg-0 order-1 order-lg-2">
             <ul class="navbar-nav flex-row">
                 <li class="nav-item nav-item-dropdown-lg dropdown">
-                    <a href="#" class="navbar-nav-link navbar-nav-link-toggler dropdown-toggle" data-toggle="dropdown">
+                    <a id="ActivityInformation" href="#" class="navbar-nav-link navbar-nav-link-toggler dropdown-toggle" data-toggle="dropdown">
                         <i class="icon-pulse2"></i>
                         <span class="d-none d-lg-inline-block ml-2">Actividad</span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right dropdown-content wmin-lg-350">
                         <div class="dropdown-content-body dropdown-scrollable">
-                            <ul class="media-list">
+                            <ul class="media-list" id="activityList">
                                 <li class="media">
                                     <div class="mr-3">
-                                        <a href="#" class="btn btn-success rounded-pill btn-icon"><i class="icon-gear"></i></a>
+                                        <a href="#" class="btn btn-indigo rounded-pill btn-icon"><i class="icon-graph"></i></a>
                                     </div>
 
                                     <div class="media-body">
-                                        El análisis correspondiente a la ejecucion <a href="#">#1324</a> esta disponible!
-                                        <div class="font-size-sm text-muted mt-1">la semana pasada</div>
+                                        El análisis (#24) de "Soportes de Aluminio" esta disponible!
+                                        <div class="font-size-sm text-muted mt-1">hace algunos dias</div>
                                     </div>
                                 </li>
 
                                 <li class="media">
                                     <div class="mr-3">
-                                        <a href="#" class="btn btn-teal rounded-pill btn-icon"><i class="icon-spinner11"></i></a>
+                                        <a href="#" class="btn btn-success rounded-pill btn-icon"><i class="icon-check"></i></a>
                                     </div>
 
                                     <div class="media-body">
-                                        La solicitud de ejecucion fue recibida. Enviaremos un mail informando cuando este disponible!
-                                        <div class="font-size-sm text-muted mt-1">la semana pasada</div>
+                                        Ejecución #24 finalizó con éxito!
+                                        <div class="font-size-sm text-muted mt-1">hace algunos dias</div>
                                     </div>
                                 </li>
 
                                 <li class="media">
                                     <div class="mr-3">
-                                        <a href="#" class="btn btn-pink rounded-pill btn-icon"><i class="icon-cash3"></i></a>
+                                        <a href="#" class="btn btn-pink rounded-pill btn-icon"><i class="icon-gear"></i></a>
                                     </div>
 
                                     <div class="media-body">
-                                        Su pago fue acreditado con exito. <a href="#">Ver recibo.</a>
-                                        <div class="font-size-sm text-muted mt-1">la semana pasada</div>
+                                        Ejecucion #24 fue lanzada con éxito!
+                                        <div class="font-size-sm text-muted mt-1">hace algunos dias</div>
                                     </div>
                                 </li>
 
                                 <li class="media">
                                     <div class="mr-3">
-                                        <a href="#" class="btn btn-primary rounded-pill btn-icon"><i class="icon-search4"></i></a>
+                                        <a href="#" class="btn btn-warning rounded-pill btn-icon"><i class="icon-search4"></i></a>
                                     </div>
 
                                     <div class="media-body">
-                                        La busqueda <a href="#"> #12 </a> fue guardada correctamente!
-                                        <div class="font-size-sm text-muted mt-1">2 horas atrás</div>
+                                        Búsqueda "Soportes de Aluminio" creada con exito!
+                                        <div class="font-size-sm text-muted mt-1">hace una semana</div>
                                     </div>
                                 </li>
+
+                                <li class="media">
+                                    <div class="mr-3">
+                                        <a href="#" class="btn btn-indigo rounded-pill btn-icon"><i class="icon-graph"></i></a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        El análisis (#22) de "Teclado Gamer" esta disponible!
+                                        <div class="font-size-sm text-muted mt-1">hace una semana</div>
+                                    </div>
+                                </li>
+
+                                <li class="media">
+                                    <div class="mr-3">
+                                        <a href="#" class="btn btn-success rounded-pill btn-icon"><i class="icon-check"></i></a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        Ejecución #22 finalizó con éxito!
+                                        <div class="font-size-sm text-muted mt-1">hace una semana</div>
+                                    </div>
+                                </li>
+
+                                <li class="media">
+                                    <div class="mr-3">
+                                        <a href="#" class="btn btn-pink rounded-pill btn-icon"><i class="icon-gear"></i></a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        Ejecucion #22 fue lanzada con éxito!
+                                        <div class="font-size-sm text-muted mt-1">hace una semana</div>
+                                    </div>
+                                </li>
+
                             </ul>
                         </div>
 
                         <div class="dropdown-content-footer bg-light">
                             <a href="#" class="font-size-sm line-height-sm text-uppercase font-weight-semibold text-body mr-auto">TODA LA ACTIVIDAD</a>
                             <div>
-                                <a href="#" class="text-body" data-popup="tooltip" title="Limpiar Lista"><i class="icon-checkmark3"></i></a>
+                                <a id="cleanList" href="javascript:;" class="text-body" data-popup="tooltip" title="Limpiar Lista"><i class="icon-checkmark3"></i></a>
                             </div>
                         </div>
                     </div>
@@ -138,7 +172,7 @@
                     </a>
                 </li>
             </ul>
-            <form asp-area="" asp-controller="Home" asp-action="Logout" method="post" id="logoutForm" autocomplete="off"></form> 
+            <form asp-area="" asp-controller="Home" asp-action="Logout" method="post" id="logoutForm" autocomplete="off"></form>
         </div>
     </div>
     <!-- /main navbar -->
@@ -173,18 +207,18 @@
 
                             <div class="text-center">
                                 <h6 class="mb-0 text-white text-shadow-dark mt-3"> @usuario.Nombre @usuario.Apellido </h6>
-                                        <span class="font-size-sm text-white text-shadow-dark">@Context.User.Identity.Name</span>
+                                <span class="font-size-sm text-white text-shadow-dark">@Context.User.Identity.Name</span>
                             </div>
                         </div>
 
-                        <div class="sidebar-user-material-footer">
+                        @*<div class="sidebar-user-material-footer">
                             <a href="#user-nav" class="d-flex justify-content-between align-items-center text-shadow-dark dropdown-toggle" data-toggle="collapse"><span>Mi Cuenta</span></a>
-                        </div>
+                        </div>*@
                     </div>
 
-                    <div class="collapse border-bottom" id="user-nav">
+                    @*<div class="collapse border-bottom" id="user-nav">
                         <partial name="_LoginPartial" />
-                    </div>
+                    </div>*@
                 </div>
                 <!-- /user menu -->
                 <!-- Main navigation -->
@@ -201,14 +235,6 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-area="" asp-controller="Search" asp-action="Searches" class="nav-link @(ViewData["MenuOption"]?.ToString() == "Searches" ? "active" : "")">
-                                <i class="icon-search4"></i>
-                                <span>
-                                    Busquedas
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a asp-area="" asp-controller="Search" asp-action="AllExecutions" class="nav-link @(ViewData["MenuOption"]?.ToString() == "Searches" ? "active" : "")">
                                 <i class="icon-search4"></i>
                                 <span>
@@ -216,18 +242,40 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="nav-item nav-item-submenu">
-                            <a href="#" class="nav-link"><i class="icon-statistics"></i> <span>Analisis Disponibles</span></a>
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="Search" asp-action="Searches" class="nav-link @(ViewData["MenuOption"]?.ToString() == "Executions" ? "active" : "")">
+                                <i class="icon-graph"></i>
+                                <span>
+                                    Análisis Ejecutados
+                                </span>
+                            </a>
+                        </li>
 
-                            <ul class="nav nav-group-sub" data-submenu-title="Layouts">
-                                <li class="nav-item"><a href="#" class="nav-link disabled">Zapatillas Running...<span class="badge bg-transparent align-self-center ml-auto">En Proceso</span></a></li>
-                                <li class="nav-item"><a href="#" class="nav-link active">[23\07] Iphone 7 128...</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link">[23\07] Zapatillas Running...</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link">[16\07] Muñecos Impresos...</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link">[15\07] Iphone 7 128...</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link">[10\06] Muñecos Impresos...</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link">[07\06] Iphone 7 128...</a></li>
-                            </ul>
+                        <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs mt-1">Mi cuenta</div> <i class="icon-menu" title="Main"></i></li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="icon-user-plus"></i>
+                                <span>Mi Perfil</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" style="cursor:pointer;" data-popup="tooltip" title="" data-placement="top" data-original-title="Versión DEMO. No tiene pagos asociados">
+                            <a href="#" class="nav-link disabled">
+                                <i class="icon-cash3"></i>
+                                <span>Mis Pagos</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="icon-pulse2"></i>
+                                <span>Actividad</span>
+                                <span class="badge badge-teal badge-pill align-self-center ml-auto">5</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" onclick="document.getElementById('logoutForm').submit()" class="nav-link">
+                                <i class="icon-switch2"></i>
+                                <span>Salir</span>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -249,5 +297,142 @@
     <!-- /page content -->
 
     @RenderSection("Scripts", required: false)
+
+<script type="text/javascript">
+    var isFillActivity = false;
+
+    document.addEventListener('DOMContentLoaded', function () {
+        //fillActividad();
+        }); 
+
+    $('#cleanList').click(function (e) {
+        $.ajax({
+            type: "GET",
+            url: "/Shared/CleanList",
+            contentType: "application/json"
+        }).done(function () {
+            $('#activityList').empty();
+        });
+    })
+
+    $('#ActivityInformation').click(function (e) {
+        fillActividad();
+    });
+
+
+    function fillActividad() {
+        if (!isFillActivity) {
+            $('#activityList').empty();
+            $.ajax({
+                type: "GET",
+                url: "/Shared/GetActivity",
+                contentType: "application/json"
+            }).done(function (activityList) {
+                isFillActivity = true;
+                if (activityList != null && activityList.length > 0) {
+                    activityList.forEach(function (value, index, array) {
+                        var icon = '';
+                        var color = '';
+                        switch (value.tipoActividad) {
+                            case "USER":
+                                icon = "icon-user";
+                                color = 'primary';
+                                break;
+                            case "SEARCH":
+                                icon = "icon-search4";
+                                color = 'warning';
+                                break;
+                            case "EXECUTION_START":
+                                icon = "icon-gear";
+                                color = 'pink';
+                                break;
+                            case "EXECUTION_FINISH":
+                                icon = "icon-flag3";
+                                color = 'success';
+                                break;
+                            case "EXECUTION_AVAILABLE":
+                                icon = "icon-graph";
+                                color = 'indigo';
+                                break;
+                            default:
+                                icon = "icon-question3";
+                                color = 'secondary';
+                                break;
+                        }
+
+                        var li = $('<li />',
+                            {
+                                class: "media"
+                            })
+                            .appendTo($('#activityList'));
+
+                        var divIcon = $('<div />',
+                            {
+                                class: "mr-3"
+                            })
+                            .appendTo(li);
+
+                        var aIcon = $('<a />',
+                            {
+                                href: 'javascript:;',
+                                class: "btn rounded-pill btn-icon btn-" + color,
+                            })
+                            .appendTo(divIcon);
+
+                        var icon = $('<i />',
+                            {
+                                class: icon,
+                            })
+                            .appendTo(aIcon);
+
+                        var divMediaBody = $('<div />',
+                            {
+                                class: "media-body",
+                                text: value.descripcion
+                            })
+                            .appendTo(li);
+
+                        var parsedFecha = new Date(Date.parse(value.fecha));
+                        var str_fecha = ''
+
+                        if (parsedFecha < addDays(-30)) {
+                            str_fecha = 'hace mas de un mes';
+                        }
+                        else if (parsedFecha < addDays(-15)) {
+                            str_fecha = 'hace algunas semanas';
+                        }
+                        else if (parsedFecha < addDays(-7)) {
+                            str_fecha = 'hace una semana';
+                        }
+                        else if (parsedFecha < addDays(-1)) {
+                            str_fecha = 'hace unos días';
+                        }
+                        else if (parsedFecha < addDays(0)) {
+                            str_fecha = 'hace unos minutos';
+                        }
+                        else {
+                            str_fecha = 'desconocido';
+                        }
+
+                        var divMediaFecha = $('<div />',
+                            {
+                                class: "font-size-sm text-muted mt-1",
+                                text: str_fecha
+                            })
+                            .appendTo(divMediaBody);
+                    });
+                }
+            });
+        }
+    }
+
+    function addDays(days) {
+        const date = new Date();
+        date.setDate(date.getDate() + days);
+        return date;
+    };
+
+</script>
+
 </body>
 </html>

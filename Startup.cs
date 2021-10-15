@@ -72,6 +72,7 @@ namespace ecomFront
             services.AddScoped<ISearchData, SearchData>();
             services.AddScoped<IAuthData, AuthData>();
             services.AddScoped<IGroupData, GroupData>();
+            services.AddScoped<ISharedData, SharedData>();
             services.AddScoped<ISellerData, SellerData>();
             services.AddScoped<IListingData, ListingData>();
 
