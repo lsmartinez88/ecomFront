@@ -110,31 +110,6 @@ namespace ecomFront.Controllers
             return Json(viewModel);
         }
 
-        [HttpPost]
-        public JsonResult GetCantidadPorRango(int executionId)
-        {
-            List<PriceRangeGrouping> priceInfo = _groupData.GetPriceRangeGroupingByExecution(executionId, "PRICES_SOLDS");
-            var scatterInformation = new SingleAxisScatterInformation();
-            var xRanges = priceInfo.Select(pi => new { pi.RangoDesde, pi.RangoHasta }).Distinct().OrderBy(pi => pi.RangoDesde).ToList();
-            xRanges.ToList().ForEach(range => scatterInformation.xList.Add($" $ {range.RangoDesde} a $ {range.RangoHasta}"));
-            scatterInformation.dataPublicaciones = "[";
-            scatterInformation.dataVentas = "[";
-            for (int x = 0; x < xRanges.Count(); x++)
-            {
-                var pi = priceInfo.FirstOrDefault(pi => pi.RangoDesde == xRanges[x].RangoDesde && pi.RangoHasta == xRanges[x].RangoHasta && pi.ItemGroupingId == 1);
-                scatterInformation.dataPublicaciones += $"[{x},{pi.CantidadPublicaciones}],";
-                scatterInformation.dataVentas += $"[{x},{pi.CantidadVentas}],";
-            }
-            scatterInformation.dataPublicaciones = scatterInformation.dataPublicaciones.Remove(scatterInformation.dataPublicaciones.Length - 1, 1);
-            scatterInformation.dataVentas = scatterInformation.dataVentas.Remove(scatterInformation.dataVentas.Length - 1, 1);
-            scatterInformation.dataPublicaciones += "]";
-            scatterInformation.dataVentas += "]";
-
-            scatterInformation.maxValuePublicaciones = priceInfo.Max(pi => pi.CantidadPublicaciones);
-            scatterInformation.maxValueVentas = priceInfo.Max(pi => pi.CantidadVentas);
-
-            return Json(scatterInformation);
-        }
 
     }
 }

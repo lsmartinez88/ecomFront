@@ -1,0 +1,99 @@
+﻿@using ecomFront.Models.SearchViewModels
+@using ecomFront.Common
+
+@{
+    ViewData["Title"] = "Execution";
+    Layout = "_Layout";
+}
+@model AllExecutionsListViewModel
+
+<!-- Page header -->
+<div class="page-header page-header-light">
+    <div class="page-header-content header-elements-lg-inline">
+        <div class="page-title d-flex">
+         </div>
+        <div class="header-elements d-none">
+            <div class="d-flex justify-content-center">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-header page-header-light">
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                <span class="breadcrumb-item active">Ver ejecuciones</span>
+            </div>
+            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+        </div>
+        <div class="header-elements d-none">
+            <div class="breadcrumb justify-content-center">
+                <a href="#" class="breadcrumb-elements-item">
+                    <i class="icon-comment-discussion mr-2"></i>
+                    Necesito Ayuda
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+<div class="content">
+
+    <!-- Task manager table -->
+    @foreach (var search in Model.List)
+    {
+        <div class="card">
+            <div class="table-responsive">
+
+                <div class="card">
+                    <span class="font-weight-semibold mr-2">#@search.search.IdSearch. @search.search.Name</span>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr class="text-center">
+                            <th style="width:5%">#</th>
+                            <th>Creado</th>
+                            <th>Ejecutado</th>
+                            <th style="width:10%">Estado</th>
+                            <th style="width:10%">#items</th>
+                            <th class="text-center" style="width:20%"><i class="icon-gear"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var execution in search.ExecutionsList)
+                        {
+                            <tr>
+                                <td class="text-center"> #@execution.IdExecution</td>
+                                <td class="text-center">@execution.DateCreated.ToString("dd MMM HH:mm")</td>
+                                <td class="text-center">@execution.DateFinished?.ToString("dd MMM HH:mm")</td>
+                                <td>
+                                    @if (execution.ExecutionStatus == "COMPLETED")
+                                    {
+                                        <span class="badge badge-flat border-success text-success">COMPLETADO</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-flat border-primary text-primary">@execution.ExecutionStatus</span>
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    @execution.ListingQtty
+                                </td>
+                                <td class="text-center">
+                                    <a asp-area="" asp-controller="Analisis" asp-action="HomeAnalisis" asp-route-executionId="@execution.IdExecution" class="btn bg-transparent text-primary border-primary ml-1"><i class="icon-statistics mr-2"></i> Ver Análisis</a>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+    }
+        <!-- /task manager table -->
+
+    </div>

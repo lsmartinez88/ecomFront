@@ -163,6 +163,11 @@ namespace ecomFront.Data
             
         }
 
+        public List<Models.DbFirstModels.Search> GetFullExecutions(string UserId)
+        {
+            return _contextDbFirst.Searches.Include(s => s.Executions).Where(s => s.UserId == UserId && s.Status == 1).ToList();
+        }
+
         public Models.DbFirstModels.Search CloneSearch(int searchId)
         {
             var search = _contextDbFirst.Searches
