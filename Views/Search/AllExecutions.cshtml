@@ -2,23 +2,11 @@
 @using ecomFront.Common
 
 @{
-    ViewData["Title"] = "Execution";
+    ViewData["Title"] = "Analisis Ejecutados";
+    ViewData["MenuOption"] = "Executions";
     Layout = "_Layout";
 }
 @model AllExecutionsListViewModel
-
-<!-- Page header -->
-<div class="page-header page-header-light">
-    <div class="page-header-content header-elements-lg-inline">
-        <div class="page-title d-flex">
-         </div>
-        <div class="header-elements d-none">
-            <div class="d-flex justify-content-center">
-                
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="page-header page-header-light">
     <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
@@ -43,26 +31,26 @@
 <div class="content">
 
     <!-- Task manager table -->
-    @foreach (var search in Model.List)
-    {
-        <div class="card">
-            <div class="table-responsive">
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr class="text-center">
+                        <th style="width:5%">#</th>
+                        <th>Creado</th>
+                        <th>Ejecutado</th>
+                        <th style="width:10%">Estado</th>
+                        <th style="width:10%">#items</th>
+                        <th class="text-center" style="width:20%"><i class="icon-gear"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var search in Model.List)
+                    {
 
-                <div class="card">
-                    <span class="font-weight-semibold mr-2">#@search.search.IdSearch. @search.search.Name</span>
-                </div>
-                <table class="table">
-                    <thead>
-                        <tr class="text-center">
-                            <th style="width:5%">#</th>
-                            <th>Creado</th>
-                            <th>Ejecutado</th>
-                            <th style="width:10%">Estado</th>
-                            <th style="width:10%">#items</th>
-                            <th class="text-center" style="width:20%"><i class="icon-gear"></i></th>
+                        <tr class="table-primary">
+                            <th  colspan="6" style="font-size:16px; font-weight:400;"> #@search.search.IdSearch | @search.search.Name</th>
                         </tr>
-                    </thead>
-                    <tbody>
                         @foreach (var execution in search.ExecutionsList)
                         {
                             <tr>
@@ -83,17 +71,16 @@
                                     @execution.ListingQtty
                                 </td>
                                 <td class="text-center">
-                                    <a asp-area="" asp-controller="Analisis" asp-action="HomeAnalisis" asp-route-executionId="@execution.IdExecution" class="btn bg-transparent text-primary border-primary ml-1"><i class="icon-statistics mr-2"></i> Ver Análisis</a>
+                                    <a asp-area="" asp-controller="Analisis" asp-action="HomeAnalisis" asp-route-executionId="@execution.IdExecution" class="btn bg-transparent text-indigo border-indigo ml-1"><i class="icon-statistics mr-2"></i> Ver Análisis</a>
                                 </td>
                             </tr>
                         }
+                    }
 
-                    </tbody>
-                </table>
-                
-            </div>
+                </tbody>
+            </table>
         </div>
-    }
-        <!-- /task manager table -->
-
     </div>
+                    <!-- /task manager table -->
+
+                </div>
