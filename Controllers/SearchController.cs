@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
@@ -76,6 +77,25 @@ namespace ecomFront.Controllers
                 ExecutionsList = _searchData.GetFullExecutionsBySearchId(searchId)
             };
             return View(executionsListViewModel);
+        }
+
+        public IActionResult AllExecutions(int? searchId)
+        {
+            var viewModel = new AllExecutionsListViewModel();
+
+            var executions = new ExecutionsListViewModel();
+            var userid = _userManager.GetUserId(HttpContext.User);
+            List<Models.DbFirstModels.Search> lista = _searchData.GetFullExecutions(userid).Where(a => a.Executions.Count >0).ToList();
+
+            foreach (var item in lista)
+            {
+                executions = new ExecutionsListViewModel();
+                executions.search = item;
+                executions.ExecutionsList = item.Executions.ToList();
+
+                viewModel.List.Add(executions);
+            }
+            return View(viewModel);
         }
 
         public async System.Threading.Tasks.Task<IActionResult> HomeAddSearch()

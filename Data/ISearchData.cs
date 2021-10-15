@@ -23,6 +23,8 @@ namespace ecomFront.Data
 
         List<Execution> GetFullExecutionsBySearchId(int? SearchId);
 
+        List<Models.DbFirstModels.Search> GetFullExecutions(string UserId);
+
         Models.DbFirstModels.Search SaveSearch(Models.DbFirstModels.Search search);
         Criterion SaveCriteria(Criterion search);
 

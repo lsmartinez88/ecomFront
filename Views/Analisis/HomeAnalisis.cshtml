@@ -449,19 +449,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm col-xl">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title ">Cantidad de Publicaciones y Ventas por Rango de Precio <i class="icon-info22" data-toggle="tooltip" title="">&nbsp;</i></h5>
-                </div>
-                <div class="card-body">
-                    <div id="singleAxisScatter" style="height:200px;"></div>
-                </div>
-
-            </div>
-        </div>
-    </div>
+   
 </div>
 
 <style type="text/css">
@@ -491,7 +479,7 @@
                     _showGroupingInfoPaymentMethod();
                     _showGroupingInfoShippingMethod();
                     _showFunnel();
-                    _singleAxisScatter();
+                   
                     @*
                     @foreach (var item in Model.Listing)
                     {
@@ -569,15 +557,7 @@
                         });
                 }
 
-        var _singleAxisScatter = function (element, size) {
-                    $.post('/Analisis/GetCantidadPorRango', { executionId: @Model.Execution.IdExecution })
-                        .done(function (data) {
-                            _SingleAxisScatterChart("singleAxisScatter", JSON.parse(data.dataPublicaciones), JSON.parse(data.dataVentas), data.xList, data.maxValuePublicaciones, data.maxValueVentas);
-                        })
-                        .fail(function (e) {
-                            $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
-                        });
-                }
+
 
                 function getValorEmbudo(tipo) {
                     if (tipo == "VISITAS")

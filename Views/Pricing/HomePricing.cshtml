@@ -31,16 +31,31 @@
 <!-- /page header -->
 <div class="content">
     <div class="row">
-        <div class="col-sm-12 col-lg-12">
+        <div class="col-sm-6 col-lg-6">
             <div class="card ">
                 <div class="card-header">
-                    <h5 class="card-title ">Agrupaciones x rango de precio</h5>
+                    <h5 class="card-title ">Agrupaciones x rango de precio y medios de pago</h5>
                     <div class="font-size-sm text-muted"># cantidad de publicaciones</div>
                 </div>
 
-                <div id="div_scatter_punch_Grouping" class="card-body">
+                <div id="div_scatter_punch_Grouping_mp" class="card-body">
                     <div class="chart-container">
-                        <div class="chart has-fixed-height" id="scatter_punch_Grouping" style="-webkit-tap-highlight-color: transparent; user-select: none; position: relative;">
+                        <div class="chart has-fixed-height" id="scatter_punch_Grouping_mp" style="-webkit-tap-highlight-color: transparent; user-select: none; position: relative;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-6">
+            <div class="card ">
+                <div class="card-header">
+                    <h5 class="card-title ">Agrupaciones x rango de precio y formas de envio</h5>
+                    <div class="font-size-sm text-muted"># cantidad de publicaciones</div>
+                </div>
+
+                <div id="div_scatter_punch_Grouping_fe" class="card-body">
+                    <div class="chart-container">
+                        <div class="chart has-fixed-height" id="scatter_punch_Grouping_fe" style="-webkit-tap-highlight-color: transparent; user-select: none; position: relative;">
                         </div>
                     </div>
                 </div>
@@ -57,14 +72,28 @@
                 </div>
                 <div id="div_price_purchase_day" class="card-body">
                     <div class="chart-container">
-                        <div class="chart has-fixed-height" id="line_zoom"  _echarts_instance_="ec_1628826304003" style="-webkit-tap-highlight-color: transparent; user-select: none; position: relative;">
+                        <div class="chart has-fixed-height" id="line_zoom" _echarts_instance_="ec_1628826304003" style="-webkit-tap-highlight-color: transparent; user-select: none; position: relative;">
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-sm col-xl">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title ">Cantidad de Publicaciones y Ventas por Rango de Precio <i class="icon-info22" data-toggle="tooltip" title="">&nbsp;</i></h5>
+                </div>
+                <div class="card-body">
+                    <div id="singleAxisScatter" style="height:200px;"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="~/assets/js/PricingCharts.js"></script>
 @section Scripts
@@ -98,21 +127,43 @@
 
             //_scatterPunchLightExample('scatter_punch_ShippingMethod', xList2, xName2, yList2, yName2, data2, dataName2, itemColor2);
 
-            $('#div_scatter_punch_Grouping').addClass('loader');
+            $('#div_scatter_punch_Grouping_mp').addClass('loader');
+            $('#div_scatter_punch_Grouping_fe').addClass('loader');
             $('#div_price_purchase_day').addClass('loader');
 
-            _showGroupingPriceInfo();
-            _showPurchasePricePerDayInfo()
+            _showGroupingPriceInfoMP();
+            _showGroupingPriceInfoFE();
+            _showPurchasePricePerDayInfo();
+            _singleAxisScatter();
             $('#sidebar-toggle').click();
 
         });
 
-
-        var _showGroupingPriceInfo = function (element, size) {
-            $.post('/Pricing/GetGroupingPrice', { executionId: @Model.Execution.IdExecution })
+        var _singleAxisScatter = function (element, size) {
+            $.post('/Pricing/GetCantidadPorRango', { executionId: @Model.Execution.IdExecution })
                 .done(function (data) {
-                    $('#div_scatter_punch_Grouping').removeClass('loader');
-                    _scatterPlotGroupingPrice('scatter_punch_Grouping', data.xList, data.xName, data.yList, data.yName, JSON.parse(data.data), data.dataName, data.minValue, data.maxValue, JSON.parse(data.data2));
+                    _SingleAxisScatterChart("singleAxisScatter", JSON.parse(data.dataPublicaciones), JSON.parse(data.dataVentas), data.xList, data.maxValuePublicaciones, data.maxValueVentas);
+                })
+                .fail(function (e) {
+                    $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
+                });
+        }
+        var _showGroupingPriceInfoMP = function (element, size) {
+            $.post('/Pricing/GetGroupingPriceMP', { executionId: @Model.Execution.IdExecution })
+                .done(function (data) {
+                    $('#div_scatter_punch_Grouping_mp').removeClass('loader');
+                    _scatterPlotGroupingPrice('scatter_punch_Grouping_mp', data.xList, data.xName, data.yList, data.yName, JSON.parse(data.data), data.dataName, data.minValue, data.maxValue, "Medio-De-Pago");
+                })
+                .fail(function (e) {
+                    $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
+                });
+        }
+
+        var _showGroupingPriceInfoFE = function (element, size) {
+            $.post('/Pricing/GetGroupingPriceFE', { executionId: @Model.Execution.IdExecution })
+                .done(function (data) {
+                    $('#div_scatter_punch_Grouping_fe').removeClass('loader');
+                    _scatterPlotGroupingPrice('scatter_punch_Grouping_fe', data.xList, data.xName, data.yList, data.yName, JSON.parse(data.data), data.dataName, data.minValue, data.maxValue, "Forma-Envio");
                 })
                 .fail(function (e) {
                     $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
