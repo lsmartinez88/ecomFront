@@ -1,0 +1,103 @@
+﻿@using ecomFront.Models.SharedViewModels
+@using ecomFront.Common
+@using Newtonsoft.Json;
+
+@{
+    ViewData["Title"] = "Actividades";
+    ViewData["MenuOption"] = "Activities";
+
+    Layout = "_Layout";
+}
+@model ActivitiesViewModel
+<!-- Page header -->
+<div class="page-header page-header-light">
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                <span class="breadcrumb-item active">Actividades</span>
+            </div>
+            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+        </div>
+        <div class="header-elements d-none">
+            <div class="breadcrumb justify-content-center">
+                <a href="#" class="breadcrumb-elements-item">
+                    <i class="icon-comment-discussion mr-2"></i>
+                    Necesito Ayuda
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+<div class="content">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Actividades del usuario</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tipo</th>
+                        <th>Fecha</th>
+                        <th>Descripcion</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var activity in Model.ActivityInformation)
+                    {
+                        var colorFila = "";
+                        if(activity.TipoActividad == "EXECUTION_FINISH")
+                        {
+                            colorFila = "class=table-success-100";
+                        } else if (activity.TipoActividad == "EXECUTION_AVAILABLE")
+                        {
+                            colorFila = "class=table-success";
+                        }
+                        else if (activity.TipoActividad == "EXECUTION_ERROR")
+                        {
+                            colorFila = "class=table-danger";
+                        }
+
+                    <tr @colorFila>
+                        <td>@activity.id</td>
+                        @switch (activity.TipoActividad)
+                        {
+                            case "USER":
+                                <td>Usuario</td>
+                                break;
+                            case "SEARCH":
+                                <td>Búsqueda</td>
+                                break;
+                            case "EXECUTION_START":
+                            case "EXECUTION_FINISH":
+                            case "EXECUTION_ERROR":
+                                <td>Proceso Ejecución</td>
+                                break;
+                            case "EXECUTION_AVAILABLE":
+                                <td>Ejecucion Disponible</td>
+                                break;
+                        }
+                        <td>@activity.Fecha.ToString("dd/mm/yyyy HH:mm")</td>
+                        <td>@activity.Descripcion</td>
+                        <td>
+                            @if (activity.Estado == 0)
+                            {
+                                <span class="badge badge-flat border-primary text-primary ml-2">NO LEIDO</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-flat border-success text-success ml-2">LEIDO</span>
+                            }
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ecomFront.Models.SharedViewModels
 {
-    public class LayoutViewModel 
+    public class ActivitiesViewModel 
     {
-        public LayoutViewModel()
+        public ActivitiesViewModel()
         {
             ActivityInformation = new List<ActivityInformation>();
         }

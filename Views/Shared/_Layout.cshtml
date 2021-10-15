@@ -74,7 +74,7 @@
                         <span class="d-none d-lg-inline-block ml-2">Actividad</span>
                     </a>
 
-                    <div class="dropdown-menu dropdown-menu-right dropdown-content wmin-lg-350">
+                    <div class="dropdown-menu dropdown-menu-right dropdown-content wmin-lg-350" id="dropdownActividades">
                         <div class="dropdown-content-body dropdown-scrollable">
                             <ul class="media-list" id="activityList">
                                 <li class="media">
@@ -265,10 +265,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a asp-area="" asp-controller="Shared" asp-action="Activities" class="nav-link @(ViewData["MenuOption"]?.ToString() == "Activities" ? "active" : "")" >
                                 <i class="icon-pulse2"></i>
                                 <span>Actividad</span>
-                                <span class="badge badge-teal badge-pill align-self-center ml-auto">5</span>
+                                <span class="badge badge-teal badge-pill align-self-center ml-auto" id="actividadesSinLeer">0</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -303,7 +303,19 @@
 
     document.addEventListener('DOMContentLoaded', function () {
         //fillActividad();
+        updateActividadesSinLeer();
         }); 
+
+    function updateActividadesSinLeer() {
+        $.ajax({
+            type: "GET",
+            url: "/Shared/ActividadesSinLeer",
+            contentType: "application/json"
+        }).done(function (data) {
+            $('#actividadesSinLeer').text(data);
+        });
+        
+    }
 
     $('#cleanList').click(function (e) {
         $.ajax({
@@ -421,6 +433,21 @@
                             })
                             .appendTo(divMediaBody);
                     });
+                }
+                else {
+                    var li = $('<li />',
+                        {
+                            class: "media"
+                        })
+                        .appendTo($('#activityList'));
+
+                    var divIcon = $('<div />',
+                        {
+                            class: "mr-3 text-center",
+                            text: 'Todas las actividades han sido leidas!'
+                        })
+                        .appendTo(li);
+
                 }
             });
         }

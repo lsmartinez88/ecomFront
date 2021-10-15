@@ -12,5 +12,8 @@ namespace ecomFront.Data
     {
         List<ActivityInformation> GetActivityInformation(ApplicationUser userId);
         void CleanActivity(ApplicationUser userId);
+        int GetUnreadedActivities(ApplicationUser user);
+        List<ActivityInformation> GetAllActivity (ApplicationUser user);
+
     }
 }

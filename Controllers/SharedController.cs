@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ecomFront.Data;
 using ecomFront.Models;
+using ecomFront.Models.SharedViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,24 @@ namespace ecomFront.Controllers
             ApplicationUser user = await _userManager.GetUserAsync(User);
             _sharedData.CleanActivity(user);
             return Json(null);
+        }
+
+        public async Task<int> ActividadesSinLeer()
+        {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+            return _sharedData.GetUnreadedActivities(user); ;
+        }
+
+        public async Task<IActionResult> Activities()
+        {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+
+            var activitiesViewModel = new ActivitiesViewModel()
+            {
+                ActivityInformation = _sharedData.GetAllActivity(user)
+            };
+            
+            return View(activitiesViewModel);
         }
     }
 }

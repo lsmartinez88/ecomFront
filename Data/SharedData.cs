@@ -33,5 +33,16 @@ namespace ecomFront.Data
         {
             return _contextModel.ActivityInformation.Where(ac => ac.user == userId && ac.Estado == 0).OrderByDescending(ac => ac.Fecha).ToList();
         }
+
+        public int GetUnreadedActivities(ApplicationUser user)
+        {
+            return _contextModel.ActivityInformation.Where(ac => ac.user == user && ac.Estado == 0).Count();
+
+        }
+
+        public List<ActivityInformation> GetAllActivity (ApplicationUser userId)
+        {
+            return _contextModel.ActivityInformation.Where(ac => ac.user == userId).OrderByDescending(ac => ac.Fecha).ToList();
+        }
     }
 }
