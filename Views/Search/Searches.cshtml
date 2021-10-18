@@ -203,21 +203,6 @@
                     });
                 }
 
-                $(document).on('click', '#ConfirmChanges', function () {
-                    var id = $("#searchIdNuevaEjecucion").val();
-                    $.post('/Search/NewExecution', { idSearch: id })
-                                .done(function (res) {
-                                    if (res.result == "OK") {
-                                        $.jGrowl(res.successMessage, { theme: 'bg-success text-white', header: 'Excelente!', position: 'bottom-right', life: 2000 });
-                                        window.location.href = '@Url.Action("Searches", "Search")';
-                                    } else {
-                                        $.jGrowl(res.errorMessage, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 });
-                                    }
-                                });
-                    $('#modal_AgregarAtributos').modal('toggle');
-
-                });
-
                 $(document).on('click', '#confirmClone', function () {
                     selectedSearch = $(this).attr('data-search-id');
                     bootbox.confirm({
