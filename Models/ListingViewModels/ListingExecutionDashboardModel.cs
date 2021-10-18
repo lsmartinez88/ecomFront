@@ -22,8 +22,8 @@ namespace ecomFront.Models.ListingViewModels
         public long? TotalQuestions { get; set; }
         public long? VisitsQuantity { get; set; }
         public long? ReviewsQuantity { get; set; }
-        public double? IndexVisitsxVentas { get; set; }
-        public double? IndexQuestionsxVentas { get; set; }
+        public String IndexVisitsxVentas { get; set; }
+        public String IndexQuestionsxVentas { get; set; }
 
         public List<Picture> Pictures { get; set; }
 

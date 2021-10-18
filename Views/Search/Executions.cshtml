@@ -6,7 +6,6 @@
     Layout = "_Layout";
 }
 @model ExecutionsListViewModel
-
 <!-- Page header -->
 <div class="page-header page-header-light">
     <div class="page-header-content header-elements-lg-inline">
@@ -16,7 +15,7 @@
         </div>
         <div class="header-elements d-none">
             <div class="d-flex justify-content-center">
-                <a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
+                <a href="#" onclick="agregarEjecucion(@Model.search.IdSearch);" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
                     <i class="icon-cog3 icon-2x text-pink"></i>
                     <span>Nueva Ejecucion</span>
                 </a>
@@ -55,11 +54,11 @@
                 <thead>
                     <tr class="text-center">
                         <th style="width:5%">#</th>
-                        <th  >Creado</th>
-                        <th >Ejecutado</th>
+                        <th>Creado</th>
+                        <th>Ejecutado</th>
                         <th style="width:10%">Estado</th>
                         <th style="width:10%">#items</th>
-                        <th class="text-center"style="width:20%"><i class="icon-gear"></i></th>
+                        <th class="text-center" style="width:20%"><i class="icon-gear"></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,8 +66,8 @@
                     {
                         <tr>
                             <td class="text-center"> #@execution.IdExecution</td>
-                            <td class="text-center" >@execution.DateCreated.ToString("dd MMM HH:mm")</td>
-                            <td class="text-center" >@execution.DateFinished?.ToString("dd MMM HH:mm")</td>
+                            <td class="text-center">@execution.DateCreated.ToString("dd MMM HH:mm")</td>
+                            <td class="text-center">@execution.DateFinished?.ToString("dd MMM HH:mm")</td>
                             <td>
                                 @if (execution.ExecutionStatus == "COMPLETED")
                                 {
@@ -83,7 +82,7 @@
                                 @execution.ListingQtty
                             </td>
                             <td class="text-center">
-                                <a  asp-area="" asp-controller="Analisis" asp-action="HomeAnalisis" asp-route-executionId="@execution.IdExecution" class="btn bg-transparent text-primary border-primary ml-1"><i class="icon-statistics mr-2"></i> Ver Análisis</a>
+                                <a asp-area="" asp-controller="Analisis" asp-action="HomeAnalisis" asp-route-executionId="@execution.IdExecution" class="btn bg-transparent text-primary border-primary ml-1"><i class="icon-statistics mr-2"></i> Ver Análisis</a>
                             </td>
                         </tr>
                     }
@@ -95,3 +94,39 @@
     <!-- /task manager table -->
 
 </div>
+<script src="~/global_assets/js/plugins/notifications/bootbox.min.js"></script>
+@section Scripts
+    {
+    <script type="text/javascript">
+
+        function agregarEjecucion(idSearch) {
+            bootbox.confirm({
+                title: 'Confirmar Creación de Ejecución',
+                message: 'Estás seguro que querés crear una nueva ejecución ',
+                buttons: {
+                    confirm: {
+                        label: 'Aceptar',
+                        className: 'btn-danger'
+                    },
+                    cancel: {
+                        label: 'Cancelar',
+                        className: 'btn-link'
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+                        $.post('/Search/NewExecution', { idSearch: idSearch })
+                            .done(function (res) {
+                                if (res.result == "OK") {
+                                    $.jGrowl(res.successMessage, { theme: 'bg-success text-white', header: 'Excelente!', position: 'bottom-right', life: 2000 });
+                                    window.location.reload();
+                                } else {
+                                    $.jGrowl(res.errorMessage, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 });
+                                }
+                            });
+                    }
+                }
+            });
+        }
+    </script>
+}

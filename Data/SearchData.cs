@@ -228,5 +228,23 @@ namespace ecomFront.Data
 
             return newSearch;
         }
+
+        public bool NewExecution(int searchId)
+        {
+            try
+            {
+                var exe = new Execution();
+                exe.Version = 0;
+                exe.SearchId = searchId;
+                exe.DateCreated = DateTime.Now;
+                exe.ExecutionStatus = "PENDING";
+                exe.ListingQtty = 0;
+
+                _contextDbFirst.Executions.Add(exe);
+                _contextDbFirst.SaveChanges();
+            }
+            catch (Exception) { return false; }
+            return true;
+        }
     }
 }

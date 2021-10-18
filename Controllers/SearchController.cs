@@ -402,5 +402,27 @@ namespace ecomFront.Controllers
             }
         }
 
+
+        [HttpPost]
+        public JsonResult NewExecution (int idSearch)
+        {
+            try
+            {
+                var newExecution = _searchData.NewExecution(idSearch);
+                if (newExecution)
+                {
+                    return Json(new { result = "OK", successMessage = "La ejecución se generó con éxito!" });
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = "ERROR", errorMessage = "No se pudo generar la ejecución" });
+            }
+        }
+
     }
 }

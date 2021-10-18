@@ -85,7 +85,7 @@
 
                                     <ul class="list list-unstyled mb-0 mt-3 mt-sm-0 ml-auto text-sm-right">
                                         <li class="mb-2">
-                                            <button type="button" class="btn btn-outline-success btn-sm"><i class="icon-play mr-2"></i>Ejecutar</button>
+                                            <button type="button" class="btn btn-outline-success btn-sm" onclick="agregarEjecucion(@search.IdSearch);"><i class="icon-play mr-2"></i>Ejecutar</button>
                                         </li>
                                         <li>
                                             @if (search.SearchType == SearchType.Categoria)
@@ -136,7 +136,6 @@
                 }
             </div>
         </div>
-
     <script src="~/global_assets/js/plugins/notifications/bootbox.min.js"></script>
     @section Scripts
     {
@@ -174,6 +173,50 @@
                     });
                 });
 
+                function agregarEjecucion(idSearch) {
+                   bootbox.confirm({
+                        title: 'Confirmar Creación de Ejecución',
+                       message: 'Estás seguro que querés crear una nueva ejecución ',
+                        buttons: {
+                            confirm: {
+                                label: 'Aceptar',
+                                className: 'btn-danger'
+                            },
+                            cancel: {
+                                label: 'Cancelar',
+                                className: 'btn-link'
+                            }
+                        },
+                        callback: function (result) {
+                            if (result) {
+                                $.post('/Search/NewExecution', { idSearch: idSearch })
+                                .done(function (res) {
+                                    if (res.result == "OK") {
+                                        $.jGrowl(res.successMessage, { theme: 'bg-success text-white', header: 'Excelente!', position: 'bottom-right', life: 2000 });
+                                        window.location.reload();
+                                    } else {
+                                        $.jGrowl(res.errorMessage, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 });
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+
+                $(document).on('click', '#ConfirmChanges', function () {
+                    var id = $("#searchIdNuevaEjecucion").val();
+                    $.post('/Search/NewExecution', { idSearch: id })
+                                .done(function (res) {
+                                    if (res.result == "OK") {
+                                        $.jGrowl(res.successMessage, { theme: 'bg-success text-white', header: 'Excelente!', position: 'bottom-right', life: 2000 });
+                                        window.location.href = '@Url.Action("Searches", "Search")';
+                                    } else {
+                                        $.jGrowl(res.errorMessage, { theme: 'alert-bordered alert-styled-left alert-danger', position: 'bottom-right', header: 'Ups, ocurrió un error!', life: 5000 });
+                                    }
+                                });
+                    $('#modal_AgregarAtributos').modal('toggle');
+
+                });
 
                 $(document).on('click', '#confirmClone', function () {
                     selectedSearch = $(this).attr('data-search-id');

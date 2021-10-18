@@ -74,8 +74,8 @@ namespace ecomFront.Data
                                TotalQuestions = l.TotalQuestions,
                                VisitsQuantity = l.VisitsQuantity,
                                ReviewsQuantity = l.ReviewsQuantity,
-                               IndexQuestionsxVentas = (l.SoldQuantity / l.TotalQuestions),
-                               IndexVisitsxVentas = (l.SoldQuantity / l.VisitsQuantity)
+                               IndexQuestionsxVentas = String.Format("{0:#,##0.00}", Math.Round((double)(l.SoldQuantity / l.TotalQuestions),2)),
+                               IndexVisitsxVentas = String.Format("{0:#,##0.00}", Math.Round((double)(l.SoldQuantity / l.VisitsQuantity), 2))
 
                            });
 
