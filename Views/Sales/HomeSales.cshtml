@@ -8,6 +8,35 @@
 @model HomeSalesViewModel
 <!-- Page header -->
 <div class="page-header page-header-light">
+    <div class="page-header-content header-elements-lg-inline">
+        <div class="page-title d-flex">
+            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+        </div>
+        <div class="header-elements d-none">
+            <div class="d-flex  order-2 justify-content-center">
+                <a asp-area="" asp-controller="Pricing" asp-action="HomePricing" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-link btn-float font-size-xs font-weight-semibold text-body" style="width:120px">
+                    <i class="icon-coin-dollar icon-2x text-teal"></i>
+                    <span>Precios</span>
+                </a>
+                <a asp-area="" asp-controller="Sales" asp-action="HomeSales" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-link btn-float font-size-xs font-weight-semibold text-body" style="width:120px">
+                    <i class="mi-shopping-cart  mi-2x text-teal"></i>
+                    <span>Ventas</span>
+                </a>
+                <a asp-area="" asp-controller="Trend" asp-action="HomeTrend" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-link btn-float font-size-xs font-weight-semibold text-body" style="width:120px">
+                    <i class="mi-trending-up  mi-2x text-teal"></i>
+                    <span>Tendencias</span>
+                </a>
+                <a asp-area="" asp-controller="Seller" asp-action="HomeSellers" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-link btn-float font-size-xs font-weight-semibold text-body" style="width:120px">
+                    <i class="mi-people-outline  mi-2x text-teal"></i>
+                    <span>Competidores</span>
+                </a>
+                <a asp-area="" asp-controller="Listing" asp-action="ListingList" asp-route-executionId="@Model.Execution.IdExecution" class="btn btn-link btn-float font-size-xs font-weight-semibold text-body" style="width:120px">
+                    <i class="icon-coin-dollar icon-2x text-teal"></i>
+                    <span>PUBLICACIONES</span>
+                </a>
+            </div>
+        </div>
+    </div>
     <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
         <div class="d-flex">
             <div class="breadcrumb">
@@ -30,54 +59,197 @@
 </div>
 <!-- /page header -->
 <div class="content">
-    <div class="card">
-        <div class="card-header">
-            <h5 class="card-title ">Cantidad de Ventas Historicas</h5>
-            <div class="font-size-sm text-muted"># ventas</div>
-        </div>
+    <div class="row">
+        <div class="col-sm-12 col-lg-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card  border border-secondary">
+                        <div class="card-header bg-transparent header-elements-inline p-2">
+                            <h5 class="font-weight-normal mb-0">CANTIDAD DE VENTAS HISTÓRICAS</h5>
+                            <div class="header-elements">
+                                <div class="list-icons">
+                                    <button data-toggle="modal" data-target="#modal_info_heatmap" class="btn btn-outline-secondary btn-icon border-2 rounded-pill">
+                                        <i class="fas fa-info  "></i>
+                                    </button>
 
-        <div class="card-body" id="calendarSoldQtty">
-            <div class="chart-container">
-                <div class="chart" id="calendar_single" style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" id="calendarSoldQtty">
+                            <div class="chart-container">
+                                <div class="chart" id="calendar_single" style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="card">
-        <div class="card-header">
-            <h5 class="card-title ">Cantidad de Ventas Y Eventos</h5>
-            <div class="font-size-sm text-muted"># ventas</div>
-        </div>
+    <div class="row">
+        <div class="col-sm-12 col-lg-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card  border border-secondary">
+                        <div class="card-header bg-transparent header-elements-inline p-2">
+                            <h5 class="font-weight-normal mb-0">CANTIDAD DE VENTAS Y EVENTOS</h5>
+                            <div class="header-elements">
+                                <div class="list-icons">
+                                    <button data-toggle="modal" data-target="#modal_info_eventos" class="btn btn-outline-secondary btn-icon border-2 rounded-pill">
+                                        <i class="fas fa-info  "></i>
+                                    </button>
 
-        <div class="card-body" id="SoldQttyAndEvents">
-            <div class="chart-container">
-                <div class="chart has-fixed-height" id="line_zoom" _echarts_instance_="ec_1631658474244" style="-webkit-tap-highlight-color: transparent; user-select: none; position: relative;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" id="SoldQttyAndEvents">
+                            <div class="chart-container">
+                                <div class="chart has-fixed-height" id="line_zoom" _echarts_instance_="ec_1631658474244" style="-webkit-tap-highlight-color: transparent; user-select: none; position: relative;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-sm-12 col-lg-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card  border border-secondary">
+                        <div class="card-header bg-transparent header-elements-inline p-2">
+                            <h5 class="font-weight-normal mb-0">MAPA DE VENDEDORES - COMPRADORES </h5>
+                            <div class="header-elements">
+                                <div class="list-icons">
+                                    <button data-toggle="modal" data-target="#modal_info_mapa" class="btn btn-outline-secondary btn-icon border-2 rounded-pill">
+                                        <i class="fas fa-info  "></i>
+                                    </button>
 
-    <div class="card">
-        <div class="card-header">
-            <h5 class="card-title ">Mapa de Vendedores - Compradores</h5>
-        </div>
-
-        <div class="card-body">
-            <div class="custom-control custom-switch custom-switch-square custom-control-vendedor mb-2">
-                <input type="checkbox" class="custom-control-input" id="sc_s_vendedores" checked="">
-                <label class="custom-control-label" for="sc_s_vendedores">Vendedores</label>
-            </div>
-            <div class="custom-control custom-switch custom-switch-square custom-control-comprador mb-2">
-                <input type="checkbox" class="custom-control-input" id="sc_s_compradores" checked="">
-                <label class="custom-control-label" for="sc_s_compradores">Compradores</label>
-            </div>
-            <div class="map-container" id="mapaVentas" style="position: relative; overflow: hidden;">
-                @*<div style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; background-color: rgb(229, 227, 223);">*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="custom-control custom-switch custom-switch-square custom-control-vendedor mb-2">
+                                <input type="checkbox" class="custom-control-input" id="sc_s_vendedores" checked="">
+                                <label class="custom-control-label" for="sc_s_vendedores">Vendedores</label>
+                            </div>
+                            <div class="custom-control custom-switch custom-switch-square custom-control-comprador mb-2">
+                                <input type="checkbox" class="custom-control-input" id="sc_s_compradores" checked="">
+                                <label class="custom-control-label" for="sc_s_compradores">Compradores</label>
+                            </div>
+                            <div class="map-container" id="mapaVentas" style="position: relative; overflow: hidden;">
+                                @*<div style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; background-color: rgb(229, 227, 223);">*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
+<div id="modal_info_heatmap" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="~/global_assets/images/historialdeventas.png" alt="First slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="~/global_assets/images/historialdeventas.png" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="~/global_assets/images/historialdeventas.png" alt="Third slide">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal_info_eventos" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="~/global_assets/images/historialdeventas.png" alt="First slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="~/global_assets/images/historialdeventas.png" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="~/global_assets/images/historialdeventas.png" alt="Third slide">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal_info_mapa" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" src="~/global_assets/images/historialdeventas.png" alt="First slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="~/global_assets/images/historialdeventas.png" alt="Second slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="~/global_assets/images/historialdeventas.png" alt="Third slide">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 <style type="text/css">
     .custom-control-vendedor .custom-control-input:checked ~ .custom-control-label::before, .custom-control-success .custom-control-input:disabled:checked ~ .custom-control-label::before {
         background-color: #f35c86;
@@ -379,9 +551,9 @@
                 .fail(function (e) {
                     $.jGrowl(e.responseText, { theme: 'growl-error', header: ' ERROR ', life: 3000 });
                 });
-            
 
-            
+
+
 
         }
 

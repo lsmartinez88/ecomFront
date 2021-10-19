@@ -55,7 +55,7 @@ namespace ecomFront.Controllers
             };
 
             var xRanges = priceInfo.Select(pi => new { pi.RangoDesde, pi.RangoHasta }).Distinct().OrderBy(pi => pi.RangoDesde).ToList();
-            xRanges.ToList().ForEach(range => scatterPunchInformation.xList.Add($"{range.RangoDesde} a {range.RangoHasta}"));
+            xRanges.ToList().ForEach(range => scatterPunchInformation.xList.Add($" ${range.RangoDesde} a ${range.RangoHasta}"));
 
             var yRanges = priceInfo.Select(pi => new { pi.ItemGrouping.NamemlShort, pi.ItemGroupingId }).OrderBy(pi => pi.ItemGroupingId).Distinct().ToList();
             yRanges.ToList().ForEach(range => scatterPunchInformation.yList.Add($"{range.NamemlShort}"));
@@ -93,7 +93,7 @@ namespace ecomFront.Controllers
             yRanges.ToList().ForEach(range => scatterPunchInformation.yList.Add($"{range.NamemlShort}"));
 
             var xRanges = shippingInfo.Select(pi => new { pi.RangoDesde, pi.RangoHasta }).Distinct().OrderBy(pi => pi.RangoDesde).ToList();
-            xRanges.ToList().ForEach(range => scatterPunchInformation.xList.Add($"{range.RangoDesde} a {range.RangoHasta}"));
+            xRanges.ToList().ForEach(range => scatterPunchInformation.xList.Add($" ${range.RangoDesde} a ${range.RangoHasta}"));
             scatterPunchInformation.data = "[";
             for (int x = 0; x < xRanges.Count(); x++)
             {
@@ -121,7 +121,7 @@ namespace ecomFront.Controllers
 
             priceItems.ForEach(pi =>
            {
-               pricingChatInformartion.Prices.Add(pi.PrecioMedio);
+               pricingChatInformartion.Prices.Add(Math.Round(pi.PrecioMedio,2));
                pricingChatInformartion.Dates.Add(pi.Fecha.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture));
            });
 

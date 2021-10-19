@@ -282,6 +282,9 @@ var _purchasePricePerDayInfo = function (divName,Dates, Prices) {
                 textStyle: {
                     fontSize: 13,
                     fontFamily: 'Roboto, sans-serif'
+                },
+                formatter: function (params) {
+                    return '<div class="mb-1">' + params[0].name + '</br>' + params[0].marker +" Precio de Venta:  $" +  params[0].value.toLocaleString("es-AR") + '</div>';
                 }
             },
 
