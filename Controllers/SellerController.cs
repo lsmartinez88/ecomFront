@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Web;
 
 namespace ecomFront.Controllers
 {
@@ -45,6 +46,7 @@ namespace ecomFront.Controllers
             homeSellerViewModel.Criteria = _searchData.GetFullCriteriasBySearchId((int)homeSellerViewModel.Search.IdSearch);
 
             var topSellers = _sellerData.GetSellersListByExecution(executionId);
+            topSellers.Where(b => b.ParameterName.Equals("NombreVendedor")).ToList().ForEach(b => b.ParameterValue = HttpUtility.UrlDecode(b.ParameterValue));
             int index = 0;
             foreach(var sellerId in topSellers.Select(ts => ts.SellerId).Distinct())
             {

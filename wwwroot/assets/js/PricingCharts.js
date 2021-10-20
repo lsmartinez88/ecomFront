@@ -307,7 +307,9 @@ var _purchasePricePerDayInfo = function (divName,Dates, Prices) {
             yAxis: [{
                 type: 'value',
                 axisLabel: {
-                    formatter: '$ {value} ',
+                    formatter: function (params) {
+                        return '$' + params.toLocaleString("es-AR");
+                    },
                     color: '#333'
                 },
                 axisLine: {

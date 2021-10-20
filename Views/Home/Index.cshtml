@@ -207,8 +207,10 @@
                 if (data.xList.length == 1) {
                     $("#avgGraph_" + id).hide();
                     $("#priceInfo_" + id).show();
-                    $("#listingAvgPrice_" + id).text('$ ' + parseFloat(data.dataSeries[0].yList[0]).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
-                    $("#soldAvgPrice_" + id).text('$ ' + parseFloat(data.dataSeries[1].yList[0]).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
+                   // $("#listingAvgPrice_" + id).text('$ ' + parseFloat(data.dataSeries[0].yList[0]).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
+                   // $("#soldAvgPrice_" + id).text('$ ' + parseFloat(data.dataSeries[1].yList[0]).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
+                    $("#listingAvgPrice_" + id).text('$ ' + parseFloat(data.dataSeries[0].yList[0]).toLocaleString("es-AR"));
+                    $("#soldAvgPrice_" + id).text('$ ' + parseFloat(data.dataSeries[1].yList[0]).toLocaleString("es-AR"));
                 } else {
                     $("#avgGraph_" + id).show();
                     $("#priceInfo_" + id).hide();

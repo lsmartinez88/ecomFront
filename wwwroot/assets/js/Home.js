@@ -38,7 +38,7 @@
             .direction('e')
             .html(function (d) {
                 return '<ul class="list-unstyled mb-1">' +
-                    '<li>' + '<div class="font-size-base mb-1 mt-1">' + d.data.text + '</div>' + '</li>' +
+                    '<li>' + '<div class="font-size-base mb-1 mt-1">' + d.data.text.replace('_',' ') + '</div>' + '</li>' +
                     '<li>' + 'Cantidad: &nbsp;' + '<span class="font-weight-semibold float-right">' + d.value + '</span>' + '</li>' +
                     '</ul>';
             });
@@ -146,7 +146,7 @@
                 return 'border-bottom: 2px solid ' + d.data.color;
             })
             .text(function (d, i) {
-                return d.data.text + ': ';
+                return d.data.text.replace('_',' ') + ': ';
             });
 
         // Add value

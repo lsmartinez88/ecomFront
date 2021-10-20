@@ -108,8 +108,8 @@ var _barChartOportunity = function (divName, data, minValue, maxValue) {
                 fontFamily: 'Roboto, sans-serif'
             }
         },
-        grid: { containLabel: true },
-        xAxis: { name: 'Tendencias' },
+        grid: { containLabel: true, left: 'left' },
+        xAxis: { name: 'Tendencias', nameLocation: 'middle', nameGap:25 },
         yAxis: { name: 'Palabra', type: 'category'  },
         visualMap: {
             orient: 'horizontal',

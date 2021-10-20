@@ -779,7 +779,7 @@ var _linesStacked = function (element, dataX, dataLegend,dataSeries) {
                     fontFamily: 'Roboto, sans-serif'
                 },
                 formatter: function (params, ticket, callback) {
-                    return "Ejecucion: " + params[0].axisValue + "<br> " + params[0].marker + " $ " + parseFloat(params[0].data).toFixed(2) + "<br> " + params[1].marker + " $ " + parseFloat(params[1].data).toFixed(2);
+                    return "Ejecucion: " + params[0].axisValue + "<br> " + params[0].marker + " $ " + parseFloat(params[0].data).toLocaleString("es-AR") + "<br> " + params[1].marker + " $ " + parseFloat(params[1].data).toLocaleString("es-AR");
                 },
             },
 
@@ -807,6 +807,9 @@ var _linesStacked = function (element, dataX, dataLegend,dataSeries) {
             yAxis: [{
                 type: 'value',
                 axisLabel: {
+                    formatter: function (params) {
+                        return '$' + params.toLocaleString("es-AR");
+                    },
                     color: '#333'
                 },
                 axisLine: {
