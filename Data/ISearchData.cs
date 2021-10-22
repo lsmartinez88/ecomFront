@@ -40,6 +40,8 @@ namespace ecomFront.Data
         bool DeleteSearchById(int searchId);
         Models.DbFirstModels.Search CloneSearch(int searchId);
         bool NewExecution(int searchId);
+        ApplicationUser GetUsuario(string userId);
 
+        bool SaveUsuario(ApplicationUser user);
     }
 }

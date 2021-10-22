@@ -246,5 +246,28 @@ namespace ecomFront.Data
             catch (Exception) { return false; }
             return true;
         }
+
+        public ApplicationUser GetUsuario(string userId)
+        {
+            return _contextModel.Users.Where(a => a.Id.Equals(userId)).FirstOrDefault();
+        }
+
+        public bool SaveUsuario(ApplicationUser user)
+        {
+            ApplicationUser usuarioModificar = _contextModel.Users.Where(a => a.Id.Equals(user.Id)).FirstOrDefault();
+
+            if(usuarioModificar != null)
+            {
+                usuarioModificar.Nombre = user.Nombre;
+                usuarioModificar.Apellido = user.Apellido;
+                usuarioModificar.PhoneNumber = user.PhoneNumber;
+                usuarioModificar.Email = user.Email;
+                usuarioModificar.Empresa = user.Empresa;
+                _contextModel.Entry(usuarioModificar).State = EntityState.Modified;
+                _contextModel.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }

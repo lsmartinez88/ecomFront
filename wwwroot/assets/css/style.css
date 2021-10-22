@@ -95,3 +95,7 @@
     max-height: 150px !important;
     object-fit: scale-down;
 }
+
+.carousel-control-next-icon, .carousel-control-prev-icon, .carousel-indicators > li {
+    filter: invert(1);
+}

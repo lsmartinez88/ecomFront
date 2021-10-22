@@ -13,6 +13,7 @@ using ecomFront.Data;
 using ecomFront.Models.MLModels;
 using ecomFront.Models.DashboardViewModel;
 using System.Globalization;
+using ecomFront.Models.UserViewModels;
 
 namespace ecomFront.Controllers
 {
@@ -148,6 +149,26 @@ namespace ecomFront.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Profile()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var usuario = _searchData.GetUsuario(_signInManager.UserManager.GetUserId(User));
+                return View(usuario);
+            }
+
+
+            return LocalRedirect("/Static/HomeStatic");
+        }
+
+        [HttpPost]
+        public IActionResult Profile(ApplicationUser user)
+        {
+
+            var usuario = _searchData.SaveUsuario(user);
+            return LocalRedirect("/");
         }
     }
 }
