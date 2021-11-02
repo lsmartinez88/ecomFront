@@ -376,7 +376,7 @@ namespace ecomFront.Controllers
             }
             catch
             {
-                return Json(new { result = "ERROR", errorMessage = "No se pudo borrar la busqueda"});
+                return Json(new { result = "ERROR", errorMessage = "No se pudo borrar la búsqueda"});
             }
         }
 

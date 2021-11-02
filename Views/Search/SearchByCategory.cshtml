@@ -2,7 +2,7 @@
 @using ecomFront.Common
 
 @{
-    ViewData["Title"] = "Nueva Busqueda Por Categoria";
+    ViewData["Title"] = "Nueva Búsqueda Por Categoria";
     ViewData["MenuOption"] = "NewSearch";
     Layout = "_Layout";
 }
@@ -272,7 +272,7 @@
                                 title: '',
                                 'data-popup': 'tooltip',
                                 'data-placement': 'right',
-                                'data-original-title': 'Esta categoria no es seleccionable, por favor detalle mas su busqueda'
+                                'data-original-title': 'Esta categoria no es seleccionable, por favor detalle mas su búsqueda'
                             })
                             .appendTo(h4)
                             .tooltip();
@@ -612,7 +612,6 @@
                 var aRemove = $('<i />', { class: "icon-trash", }).appendTo(aRemove);
 
                 var url = 'https://api.mercadolibre.com/sites/MLA/search?category=' + data.categoryId + attributesList;
-                alert(url);
                 $.getJSON(url, function (json_data) {
                     cantPublicaciones = cantPublicaciones + json_data.paging.total;
                     $('#CantPublicaciones').text(cantPublicaciones);

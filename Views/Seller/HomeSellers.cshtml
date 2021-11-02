@@ -42,7 +42,7 @@
         <div class="d-flex">
             <div class="breadcrumb">
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-                <a asp-area="" asp-controller="Search" asp-action="Searches" class="breadcrumb-item"> Busqueda</a>
+                <a asp-area="" asp-controller="Search" asp-action="Searches" class="breadcrumb-item"> Búsqueda</a>
                 <a asp-area="" asp-controller="Analisis" asp-action="HomeAnalisis" asp-route-executionId="@Model.Execution.IdExecution" class="breadcrumb-item"> @Model.Search.Description</a>
                 <span class="breadcrumb-item active">Análisis de Competidores</span>
             </div>
@@ -135,13 +135,13 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="card card-body text-center border border-@style">
-                        <h6 class="font-weight-semibold mb-3 mt-2">Taza de Cancelaciones</h6>
+                        <h6 class="font-weight-semibold mb-3 mt-2">Tasa de Cancelaciones</h6>
                         <div class="svg-center mb-3" id="cancelationRate_@sellerId"></div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="card card-body text-center border border-@style">
-                        <h6 class="font-weight-semibold mb-3 mt-2">Taza de Reclamos</h6>
+                        <h6 class="font-weight-semibold mb-3 mt-2">Tasa de Reclamos</h6>
                         <div class="svg-center mb-3" id="claimsRate_@sellerId"></div>
                     </div>
                 </div>
