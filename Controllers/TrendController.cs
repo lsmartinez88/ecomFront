@@ -106,7 +106,7 @@ namespace ecomFront.Controllers
 
             items.ForEach(pi =>
             {
-                barChartViewModel.data.Add(new BarChartOportunityItem { Palabra = pi.Palabra, CantidadApariciones = pi.CantidadAparicionesTendencia.Value, Indice = pi.IndicadorOportunidad.Value, MejorTendencia= pi.PosicionMejorTendencia.Value});
+                barChartViewModel.data.Add(new BarChartOportunityItem { Palabra = pi.Palabra, CantidadApariciones = (pi.CantidadAparicionesTendencia == null ? 0 : pi.CantidadAparicionesTendencia.Value), Indice = (pi.IndicadorOportunidad == null  ? 0 : pi.IndicadorOportunidad.Value), MejorTendencia= (pi.PosicionMejorTendencia == null ? 0 : pi.PosicionMejorTendencia.Value)});
             });
 
             return Json(barChartViewModel);
