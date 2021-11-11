@@ -9,6 +9,8 @@ namespace ecomFront.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ForgotPasswordConfirmation : PageModel
     {
+        public string ReturnUrl { get; set; }
+
         public void OnGet()
         {
         }
