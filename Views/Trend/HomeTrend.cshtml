@@ -2,7 +2,7 @@
 @using ecomFront.Common
 
 @{
-    ViewData["Title"] = "Home Tendencias";
+    ViewData["Title"] = "Tendencias";
     Layout = "_Layout";
 }
 @model HomeTrendViewModel
@@ -43,13 +43,13 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
                 <a asp-area="" asp-controller="Search" asp-action="Searches" class="breadcrumb-item"> Búsqueda</a>
                 <a asp-area="" asp-controller="Analisis" asp-action="HomeAnalisis" asp-route-executionId="@Model.Execution.IdExecution" class="breadcrumb-item"> @Model.Search.Description</a>
-                <span class="breadcrumb-item active">Tendencias / Oportunidades</span>
+                <span class="breadcrumb-item active">Tendencias y Oportunidades</span>
             </div>
             <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
         </div>
         <div class="header-elements d-none">
             <div class="breadcrumb justify-content-center">
-                <a href="#" class="breadcrumb-elements-item">
+                <a href="mailto:unlamecom@gmail.com" class="breadcrumb-elements-item">
                     <i class="icon-comment-discussion mr-2"></i>
                     Necesito Ayuda
                 </a>
@@ -65,7 +65,7 @@
                 <div class="col-md-12">
                     <div class="card  border border-secondary">
                         <div class="card-header bg-transparent header-elements-inline p-2">
-                            <h5 class="font-weight-normal mb-0">NUBE DE PALABRAS POR PUBLICACION</h5>
+                            <h5 class="font-weight-normal mb-0">NUBE DE PALABRAS POR PUBLICACIÓN</h5>
                             <div class="header-elements">
                                 <div class="list-icons">
                                     <button data-toggle="modal" data-target="#modal_info_nube_publicacion" class="btn btn-outline-secondary btn-icon border-2 rounded-pill">
