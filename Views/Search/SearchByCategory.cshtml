@@ -2,7 +2,7 @@
 @using ecomFront.Common
 
 @{
-    ViewData["Title"] = "Nueva Búsqueda Por Categoria";
+    ViewData["Title"] = "Nueva Búsqueda Por Categoría";
     ViewData["MenuOption"] = "NewSearch";
     Layout = "_Layout";
 }
@@ -14,7 +14,7 @@
         <div class="page-title d-flex breadcrumb pt-0">
             <h4>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-                <span class="breadcrumb-item active">Nueva búsqueda por categoria</span>
+                <span class="breadcrumb-item active">Nueva búsqueda por categoría</span>
             </h4>
         </div>
 
@@ -47,7 +47,7 @@
         <div id="infoBusqueda" class="col-lg-8 col-sm-12">
             <div class="card">
                 <div class="card-header  bg-info-100 header-elements-inline">
-                    <div class="card-title font-weight-semibold"> 1. Selección de Categoria <div class="card-title font-weight-light ">Navegá hasta la categoria de interés.</div></div>
+                    <div class="card-title font-weight-semibold"> 1. Selección de Categoría <div class="card-title font-weight-light ">Navegá hasta la categoría de interés.</div></div>
                 </div>
                 <div class="card-header bg-transparent" id="CategoryPath">
 
@@ -272,7 +272,7 @@
                                 title: '',
                                 'data-popup': 'tooltip',
                                 'data-placement': 'right',
-                                'data-original-title': 'Esta categoria no es seleccionable, por favor detalle mas su búsqueda'
+                                'data-original-title': 'Esta categoría no es seleccionable, por favor detalle mas su búsqueda'
                             })
                             .appendTo(h4)
                             .tooltip();
@@ -356,7 +356,7 @@
                                                 title: '',
                                                 'data-popup': 'tooltip',
                                                 'data-placement': 'right',
-                                                'data-original-title': 'Cantidad de items en categoria'
+                                                'data-original-title': 'Cantidad de items en categoría'
                                             })
                                             .appendTo(h4)
                                             .tooltip();
@@ -551,7 +551,7 @@
             });
             categorySelectedList.push({ categoryId: selectedCategory, categoryName: selectedCategoryName, attributes: selected });
             UpdateCategoryList();
-            $.jGrowl('La categoria fue agregada con exito!', { theme: 'bg-success text-white', header: 'Excelente!', position: 'bottom-right', life: 2000 });
+            $.jGrowl('La categoría fue agregada con éxito!', { theme: 'bg-success text-white', header: 'Excelente!', position: 'bottom-right', life: 2000 });
 
             $('#modal_AgregarAtributos').modal('toggle');
 
