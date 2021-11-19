@@ -14,7 +14,8 @@
         <div class="page-title d-flex breadcrumb pt-0">
             <h4>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-                <span class="breadcrumb-item active">Nueva búsqueda por categoría</span>
+                <a asp-area="" asp-controller="Search" asp-action="HomeAddSearch" class="breadcrumb-item"> Nueva Búsqueda</a>
+                <span class="breadcrumb-item active">Por categoría</span>
             </h4>
         </div>
 
@@ -22,7 +23,7 @@
             <div class="d-flex justify-content-center border-left ">
                 <a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-body">
                     <h2 class="p-0 m-0 font-weight-normal" id="CantCategorias">0</h2>
-                    <span class="font-weight-normal">CATEGORIAS</span>
+                    <span class="font-weight-normal">CATEGORÍAS</span>
                 </a>
             </div>
             <div class="d-flex justify-content-center border-left ">
@@ -75,13 +76,13 @@
                             <div class="form-group row">
                                 <label class="col-lg-4 col-form-label">Descripción:</label>
                                 <div class="col-lg-8">
-                                    <textarea rows="1" class="form-control form-control-sm" placeholder="Ingresá la descripcion de la búsqueda" id="searchDescription"></textarea>
+                                    <textarea rows="1" class="form-control form-control-sm" placeholder="Ingresá la descripción de la búsqueda" id="searchDescription"></textarea>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="card-header bg-success-100">
-                        <span class="card-title font-weight-semibold">Resumen De Categorias </span>
+                        <span class="card-title font-weight-semibold">Resúmen De Categorías </span>
                         @*<span class="badge badge-info badge-pill float-right">15</span>*@
                     </div>
                     <div class="sidebar-section-body">
@@ -97,7 +98,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-info text-white">
-                <h5 class="modal-title">Agrega los atributos opcionales</h5>
+                <h5 class="modal-title">Agregá los atributos opcionales</h5>
                 <button type="button" class="close" data-dismiss="modal">×</button>
             </div>
 
@@ -287,7 +288,7 @@
                             {
                                 type: 'button',
                                 class: 'btn btn-outline-secondary btn-sm btnVerMas',
-                                text: 'Ver Mas',
+                                text: 'Ver Más',
                                 'data-id': value.id
                             })
                             .appendTo(spanIcon);
@@ -372,7 +373,7 @@
                                                 {
                                                     type: 'button',
                                                     class: 'btn btn-outline-secondary btn-sm btnVerMas',
-                                                    text: 'Ver Mas',
+                                                    text: 'Ver Más',
                                                     'data-id': value.id
                                                 })
                                                 .appendTo(spanIcon);

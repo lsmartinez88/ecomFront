@@ -2,7 +2,7 @@
 @using ecomFront.Common
 
 @{
-    ViewData["Title"] = "Searches";
+    ViewData["Title"] = "Búsquedas";
     ViewData["MenuOption"] = "Searches";
     Layout = "_Layout";
 }
@@ -22,7 +22,7 @@
 
         <div class="header-elements d-none">
             <div class="breadcrumb justify-content-center">
-                <a href="#" class="breadcrumb-elements-item">
+                <a href="mailto:unlamecom@gmail.com" class="breadcrumb-elements-item">
                     <i class="icon-comment-discussion mr-2"></i>
                     Necesito Ayuda
                 </a>
@@ -48,13 +48,17 @@
                                         </h6>
                                         @if (search.SearchType == "CATEGORY")
                                         {
-                                            <p class="mb-3">Categorias: <span class="font-weight-semibold">@search.Criteria.Count()</span> <i class="icon-seven-segment-1 mr-1"></i> Ejecuciones: <span class="font-weight-semibold">@search.Executions.Count()</span> </p>
+                                            <p class="mb-3">Categorías: <span class="font-weight-semibold">@search.Criteria.Count()</span> <i class="icon-seven-segment-1 mr-1"></i> Ejecuciones: <span class="font-weight-semibold">@search.Executions.Count()</span> </p>
                                             var listaDeCategoriasConImagen = search.Criteria.Where(c => !string.IsNullOrEmpty(c.Category.Pictureml)).OrderByDescending(c => c.Quantity).Take(10).Select(c => c.Category).ToList();
                                             @foreach (var category in listaDeCategoriasConImagen)
                                             {
-                                                <a href="@category.Linkml">
-                                                    <img src="@category.Pictureml" class="rounded-circle" width="36" height="36" alt="" data-popup="tooltip" title="" data-original-title="@category.Nameml">
-                                                </a>
+                                                @foreach (var imagen in category.Pictureml.Split("|"))
+                                                {
+                                                    <a href="@category.Linkml">
+                                                        <img src="@imagen" class="rounded-circle" width="36" height="36" alt="" data-popup="tooltip" title="" data-original-title="@category.Nameml">
+                                                    </a>
+                                                }
+
                                             }
                                             <a asp-area="" asp-controller="Search" asp-action="Criteria" asp-route-searchId="@search.IdSearch" asp- class="text-body">&nbsp;<i class="icon-elipsis"></i></a>
                                         }
@@ -69,6 +73,8 @@
                                                     Link: <a href="@search.ListingPermalink">
                                                         @searchItem.item.title
                                                     </a>
+                                                    <i class="icon-seven-segment-1 mr-1"></i>
+                                                    Ejecuciones: <span class="font-weight-semibold">@search.Executions.Count()</span>
                                                 </p>
                                                 //imagenes de la publicacion seleccionada
                                                 @foreach (var picture in searchItem.item.pictures.Take(5))

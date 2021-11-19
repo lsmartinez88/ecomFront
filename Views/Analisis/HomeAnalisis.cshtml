@@ -2,7 +2,7 @@
 @using ecomFront.Common
 
 @{
-    ViewData["Title"] = "Home Analisis";
+    ViewData["Title"] = "Análisis";
     Layout = "_Layout";
 }
 @model HomeAnalisisViewModel
@@ -210,17 +210,6 @@
 
                             </span>
                         </div>
-
-                        @if (Model.Search.Criteria.Count() > 1)
-                        {
-                            <div class="col-sm col-xl">
-                                <p></p>
-                                <h5 class="font-weight-semibold mb-0">CATEGORIAS</h5>
-                                <span class="text-muted font-size-sm">
-                                    <span class="text-muted">Ver indicadores por categoría  <i class="mi-keyboard-arrow-right mi-2x text-dark"></i></span>
-                                </span>
-                            </div>
-                        }
                     }
                 </div>
             </div>
@@ -288,7 +277,7 @@
                     <div class="card-body">
                         <div class="media mb-2 pb-2 border-bottom ">
                             <div class="media-body">
-                                <h6 class="font-weight-semibold mb-0">IMAGENES DE PUBLICACIONES MAS RELEVANTES</h6>
+                                <h6 class="font-weight-semibold mb-0">IMÁGENES DE PUBLICACIONES MAS RELEVANTES</h6>
                             </div>
                         </div>
                         <div class="owl-carousel">

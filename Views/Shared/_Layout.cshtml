@@ -14,7 +14,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>@ViewData["Title"] - ecomFront</title>
+    <title>@ViewData["Title"] - ecom UNLAM</title>
 
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -189,9 +189,9 @@
                         <div class="sidebar-section-body">
                             <div class="d-flex">
                                 <div class="flex-1">
-                                    <button type="button" class="btn btn-outline-light border-transparent btn-icon btn-sm rounded-pill">
+                                    <a href="/Home/Profile" class="btn btn-outline-light border-transparent btn-icon btn-sm rounded-pill">
                                         <i class="icon-wrench"></i>
-                                    </button>
+                                    </a>
                                 </div>
                                 <a href="#" class="flex-1 text-center"><img src="../../../../global_assets/images/logo_unlam.png" class="img-fluid rounded-circle shadow-sm" width="80" height="80" alt=""></a>
                                 <div class="flex-1 text-right">
@@ -226,6 +226,14 @@
                     <ul class="nav nav-sidebar" data-nav-type="accordion">
                         <!-- Main -->
                         <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs mt-1">Principal</div> <i class="icon-menu" title="Main"></i></li>
+                        <li class="nav-item">
+                            <a  asp-area="" asp-controller="Home" asp-action="Index"  class="nav-link @(ViewData["MenuOption"]?.ToString() == "Home" ? "active" : "")">
+                                <i class="icon-home"></i>
+                                <span>
+                                    Home
+                                </span>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a asp-area="" asp-controller="Search" asp-action="HomeAddSearch" class="nav-link @(ViewData["MenuOption"]?.ToString() == "NewSearch" ? "active" : "")">
                                 <i class="icon-new"></i>

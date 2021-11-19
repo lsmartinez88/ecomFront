@@ -2,7 +2,7 @@
 @using ecomFront.Common
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Criterios";
     Layout = "_Layout";
 }
 @model CriteriaListViewModel
@@ -37,7 +37,7 @@
         </div>
         <div class="header-elements d-none">
             <div class="breadcrumb justify-content-center">
-                <a href="#" class="breadcrumb-elements-item">
+                <a href="mailto:unlamecom@gmail.com" class="breadcrumb-elements-item">
                     <i class="icon-comment-discussion mr-2"></i>
                     Necesito Ayuda
                 </a>
@@ -55,7 +55,7 @@
                 <thead>
                     <tr class="text-center">
                         <th >#</th>
-                        <th style="width:30%" class="text-left">Descripcion</th>
+                        <th style="width:30%" class="text-left">Descripción</th>
                         <th style="width:20%" class="text-left">Filtro</th>
                         <th># items</th>
                         <th>Condicion</th>
@@ -67,7 +67,7 @@
                     @foreach (var criteriaItem in Model.criteriaItems)
                     {
                         <tr>
-                            <td class="text-center"> #@criteriaItem.criteria.IdCriteria</td>
+                            <td class="text-center"> @criteriaItem.criteria.IdCriteria</td>
                             <td>
                                 <div class="font-weight-semibold"><a href="@criteriaItem.criteria.Category.Linkml">@criteriaItem.criteria.Category.Nameml</a></div>
                             </td>

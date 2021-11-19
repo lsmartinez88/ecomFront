@@ -67,7 +67,7 @@ namespace ecomFront.Areas.Identity.Pages.Account
             public string Phone { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "El telefono debe tener al menos 8 caracteres", MinimumLength = 8)]
+            [StringLength(100, ErrorMessage = "El Usuario debe tener al menos 8 caracteres", MinimumLength = 8)]
             [Display(Name = "Usuario")]
             public string UserName { get; set; }
 

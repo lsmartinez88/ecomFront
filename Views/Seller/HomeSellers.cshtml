@@ -3,7 +3,7 @@
 @using Newtonsoft.Json;
 
 @{
-    ViewData["Title"] = "Home Sellers";
+    ViewData["Title"] = "Competidores";
     Layout = "_Layout";
 }
 @model HomeSellerViewModel
@@ -378,7 +378,7 @@
             if (delayRate > 0) {
                 _progressArcSingle("#delay_" + sellerId, 75, '#45748a', 0, 100, delayRate);
             } else {
-                $("#delay_" + sellerId).text('No hay datos para mostrar en este indicador!');
+                _progressArcSingle("#delay_" + sellerId, 75, '#45748a', 0, 100, 0);
             }
 
 
@@ -387,7 +387,7 @@
             if (cancelationRate > 0) {
                 _segmentedGauge("#cancelationRate_" + sellerId, 150, 0, 5, 5, '#d9dcf0', '#3F51B5', cancelationRate / 5);
             } else {
-                $("#cancelationRate_" + sellerId).text('No hay datos para mostrar en este indicador!');
+                _segmentedGauge("#cancelationRate_" + sellerId, 150, 0, 5, 5, '#d9dcf0', '#3F51B5', 0);
             }
 
             //Taza de reclamos
@@ -395,7 +395,7 @@
             if (claimsRate > 0) {
                 _segmentedGauge("#claimsRate_" + sellerId, 150, 0, 10, 4, '#cceae7', '#009688', claimsRate / 10);
             } else {
-                $("#claimsRate_" + sellerId).text('No hay datos para mostrar en este indicador!');
+                _segmentedGauge("#claimsRate_" + sellerId, 150, 0, 10, 4, '#cceae7', '#009688', 0 );
             }
 
             //info estatica de cantidades
